@@ -1,0 +1,12 @@
+<IfModule mod_rewrite.c>
+   RewriteEngine On 
+   RewriteRule ^(.*)$ /public/$1 [L]
+</IfModule>
+
+#order deny,allow
+#deny from all
+#allow from 202.142.184.203
+
+
+#Order Allow,Deny
+#Allow from 202.142.184.203

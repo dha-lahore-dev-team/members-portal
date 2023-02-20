@@ -1,0 +1,99 @@
+.login-page,
+.register-page
+{
+    background: url('../img/dha_bg.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+[class*="sidebar-dark-"] {
+  background-color: #3d3f7e;
+}
+
+.sidebar-dark-primary .nav-sidebar > .nav-item > .nav-link.active,
+.sidebar-light-primary .nav-sidebar > .nav-item > .nav-link.active 
+{
+  background-color: #fff;
+  color: #212529;
+}
+
+.card-primary.card-outline
+{
+border-top:3px solid #3d3f7e;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #3d3f7e;
+  border-color: #3d3f7e;
+  box-shadow: none;
+}
+
+.btn-primary:hover
+{
+color:#fff;
+background-color:#3d3f7e;
+border-color:#3d3f7e;
+}
+
+a {
+  color: #3d3f7e;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+a:hover {
+  color: #3d3f7e;
+  text-decoration: none;
+}
+
+.custom-control-input:checked ~ .custom-control-label::before 
+{
+  color: #fff;
+  border-color: #3d3f7e;
+  background-color: #3d3f7e;
+  box-shadow: none;
+}
+
+.select2-container--default .select2-results__option--highlighted[aria-selected], .select2-container--default .select2-results__option--highlighted[aria-selected]:hover 
+{
+  background-color: #3d3f7e;
+  color: #fff;
+}
+
+.select2-container--default.select2-container--focus .select2-selection--multiple, .select2-container--default.select2-container--focus .select2-selection--single 
+{
+  border-color: #3d3f7e;
+}
+
+.page-item.active .page-link {
+  color: #fff;
+  background-color: #3d3f7e;
+  border-color: #3d3f7e;
+}
+
+.page-link:hover {
+  color: #3d3f7e;
+  text-decoration: none;
+  background-color: #e9ecef;
+  border-color: #dee2e6;
+}
+
+.elevation-3 {
+  box-shadow: none !important;
+}
+.img-circle {
+  border-radius: none !important;
+}
+
+.brand-link {
+  background-color: white;
+}
+.brand-text {
+  color: #3d3f7e;
+  font-weight: bold !important;
+  padding-left: 10px;
+}
+
