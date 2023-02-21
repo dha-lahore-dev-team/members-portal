@@ -1,5 +1,5 @@
 <?php
-
+ini_set('max_execution_time', 50000);
 return [
 
     /*
@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'DHA Lahore Members Portal'),
 
     /*
     |--------------------------------------------------------------------------

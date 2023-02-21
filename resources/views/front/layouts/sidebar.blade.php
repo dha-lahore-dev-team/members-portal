@@ -16,8 +16,8 @@
             <div class="info">
                 <a href="#" class="d-block">Super Admin</a>
             </div>
-        </div>-->
-        <!-- Sidebar Menu -->
+        </div>
+         Sidebar Menu -->
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
@@ -30,34 +30,56 @@
                         </p>
                     </a>
                 </li>
+                <li class="nav-item menu-open">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-calculator"></i>
+                        <p>
+                            Plot Dues
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item ">
+                            <a href="{{route('schedule',['qey_id'=>Auth::user()->qey_id,'key'=>1])}}" class="nav-link {{  request()->is('schedule/*/1') ? 'active':'' }} ">
+                                <i class="nav-icon fas fa-calendar-alt" style="font-size:22px"></i>
+                                <p>
+                                    View Schedule
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item ">
+                            <a href="{{route('challan',['qey_id'=>Auth::user()->qey_id,'key'=>3])}}" class="nav-link {{  request()->is('challan/*/3') ? 'active':'' }} ">
+                                <i class="nav-icon fas fa-receipt" style="font-size:22px"></i>
+                                <p>
+                                    Generate Challan
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item ">
+                            <a href="{{route('challan',['qey_id'=>Auth::user()->qey_id,'key'=>3])}}" class="nav-link {{  request()->is('challan/*/3') ? 'active':'' }} ">
+                                <i class="nav-icon fas fa-history" style="font-size:22px"></i>
+                                <p>
+                                    Financial History
+                                </p>
+                            </a>
+                        </li>
+<!--                        <li class="nav-item ">
+                            <a href="{{route('surcharge',['qey_id'=>Auth::user()->qey_id,'key'=>2])}}" class="nav-link {{  request()->is('surcharge/*/2') ? 'active':'' }} ">
+                                <i class="nav-icon fas fa-newspaper" style="font-size:22px"></i>
+                                <p>
+                                    Surcharge
+                                    <span class="right badge badge-danger">New</span>
+                                </p>
+                            </a>
+                        </li>-->
+                    </ul>
+                </li>
 
-                <li class="nav-item ">
-                    <a href="{{route('schedule',['qey_id'=>Auth::user()->qey_id,'key'=>1])}}" class="nav-link {{  request()->is('schedule/*/1') ? 'active':'' }} ">
-                        <i class="nav-icon fas fa-calendar-alt" style="font-size:22px"></i>
-                        <p>
-                            Schedule
-                        </p>
-                    </a>
-                </li>
-<!--
-                <li class="nav-item ">
-                    <a href="{{route('surcharge',['qey_id'=>Auth::user()->qey_id,'key'=>2])}}" class="nav-link {{  request()->is('surcharge/*/2') ? 'active':'' }} ">
-                        <i class="nav-icon fas fa-edit" style="font-size:22px"></i>
-                        <p>
-                            Surcharge
-                        </p>
-                    </a>
-                </li>
 
-                <li class="nav-item ">
-                    <a href="{{route('challan',['qey_id'=>Auth::user()->qey_id,'key'=>3])}}" class="nav-link {{  request()->is('challan/*/3') ? 'active':'' }} ">
-                        <i class="nav-icon fas fa-receipt" style="font-size:22px"></i>
-                        <p>
-                            Challan
-                        </p>
-                    </a>
-                </li>
--->
+
+
+
+
                 <li class="nav-item">
                     <a href="{{ route('logout') }}" class="nav-link "
                        onclick="event.preventDefault();
