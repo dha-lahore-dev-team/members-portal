@@ -23,12 +23,16 @@ Route::post('/details', [App\Http\Controllers\PostGuzzleController::class, 'getD
 Route::post('/otp/send', [App\Http\Controllers\PostGuzzleController::class, 'otpSend'])->name('otp.send');
 Route::post('/otp/verify', [App\Http\Controllers\PostGuzzleController::class, 'otpVerify'])->name('otp.verify');
 Route::get('/resend/{id}', [App\Http\Controllers\PostGuzzleController::class, 'resend'])->name('resend');
-Route::get('/front/index', [App\Http\Controllers\PostGuzzleController::class, 'frontIndex'])->name('front.index')->middleware('role');
-Route::get('/schedule/{qey_id}/{key}', [App\Http\Controllers\PostGuzzleController::class, 'schedule'])->name('schedule')->middleware('role');
-Route::get('/surcharge/{qey_id}/{key}', [App\Http\Controllers\PostGuzzleController::class, 'surcharge'])->name('surcharge')->middleware('role');
-Route::get('/challan/{qey_id}/{key}', [App\Http\Controllers\PostGuzzleController::class, 'challan'])->name('challan')->middleware('role');
-
-
+Route::get('/home', [App\Http\Controllers\PostGuzzleController::class, 'frontIndex'])->name('front.index')->middleware('role');
+Route::get('/schedule/{plot_id}', [App\Http\Controllers\PostGuzzleController::class, 'schedule'])->name('schedule')->middleware('role');
+Route::get('/surcharge/{plot_id}', [App\Http\Controllers\PostGuzzleController::class, 'surcharge'])->name('surcharge')->middleware('role');
+Route::get('/challan/{plot_id}', [App\Http\Controllers\PostGuzzleController::class, 'challan'])->name('challan')->middleware('role');
+Route::get('/schedule', [App\Http\Controllers\PostGuzzleController::class, 'scheduleTwo'])->name('schedule.two')->middleware('role');
+Route::get('/challan', [App\Http\Controllers\PostGuzzleController::class, 'challanTwo'])->name('challan.two')->middleware('role');
+Route::get('/history', [App\Http\Controllers\PostGuzzleController::class, 'historyTwo'])->name('history.two')->middleware('role');
+Route::get('/search/schedule/{plot_id}', [App\Http\Controllers\PostGuzzleController::class, 'searchSchedule'])->name('search.schedule')->middleware('role');
+Route::get('/search/challan/{plot_id}', [App\Http\Controllers\PostGuzzleController::class, 'searchChallan'])->name('search.challan')->middleware('role');
+Route::get('/search/history/{plot_id}', [App\Http\Controllers\PostGuzzleController::class, 'searchHistory'])->name('search.history')->middleware('role');
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

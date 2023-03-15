@@ -73,6 +73,7 @@ class PostGuzzleController extends Controller
         ]);
 
         $phase = json_decode($response->getBody()->getContents());
+        $user  = User::where('qey_id','=',$phase->QEY_ID)->first();
         if ($phase->RESPONSE_MESSAGE == 'VERIFIED') {
             $detials = new Details();
             $detials->phase = $request->phase;
@@ -83,8 +84,8 @@ class PostGuzzleController extends Controller
             $detials->CELL_NO = $phase->CELL_NO;
             $detials->EMAIL = $phase->EMAIL;
             $detials->RESPONSE_MESSAGE = $phase->RESPONSE_MESSAGE;
-
             $detials->save();
+
             $user = new User();
             $user->email = $detials->EMAIL;
             $user->qey_id = $phase->QEY_ID;
@@ -118,11 +119,7 @@ class PostGuzzleController extends Controller
             $password = "f8c98f7e4c394b0796baaab0108b028f";
             $credentials = base64_encode("{$username}:{$password}");
             $headers = [
-                'Authorization' => 'Basic ' . $credentials,
-                'X-API-KEY' => 'b8e25326-dfc4-4788-DHA-1011141',
-                'Content-Type' => 'application/json',
-                'Accept' => 'application/json',
-                'HOST' => 'members.dhalahore.org',
+                'Cookie' => 'cookiesession1=678A8C88OPQRSTUVWXYZBCDEGHIJ7398',
             ];
             // Available alpha caracters
             $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -130,13 +127,18 @@ class PostGuzzleController extends Controller
                 . mt_rand(1000000000, 9999999999)
                 . $characters[rand(0, strlen($characters) - 1)];
             $string = str_shuffle($pin);
-            $response = $client->request('get', 'https://api.itelservices.net/send.php?transaction_id=' . $string . '&api_key=WUMKp21gth2UKEpsLp5I7yKABrmyi673&number=92' . $request->phone . '&text=' . $otpp . '&from=4473&type=sms', [
-                'headers' => $headers,
-            ]);
+            //$iteL_uri = 'https://api.itelservices.net/send.php?transaction_id=' . $string . '&api_key=WUMKp21gth2UKEpsLp5I7yKABrmyi673&number=92' . $request->phone . '&text=' . $otpp . '&from=4473&type=sms';
+            $m3tech_uri = 'https://secure.m3techservice.com/GenericService/webservice_4_1.asmx/SendSMS?UserId=sms1@dhalahore&Password=E9B30A-cd1d1f&MobileNo=92' . $request->phone . '&MsgId=' . $string . '&SMS=' . $otpp . '&MsgHeader=9460&HandsetPort=0&SMSChannel=0&Telco=0';
+            $response = $client->request('get', $m3tech_uri, $headers);
+            if($response){
+                $otp->save();
+                Toastr::success('PIN Sent Successfully','Success');
+                return view('front.auth.otp_verify', compact('otp'));
+            }else{
+                Toastr::error('Failed to send PIN Code. Please try again :)','danger');
+                return view('front.auth.otp_verify', compact('otp'));
+            }
         }
-        $otp->save();
-        return view('front.auth.otp_verify', compact('otp'));
-
     }
 
     public function otpVerify(Request $request)
@@ -156,7 +158,8 @@ class PostGuzzleController extends Controller
                 ];
                 if (Auth::attempt($credentials)) {
                     $user = Auth::user();
-                    return view('front.index',compact('user'));
+                    //return view('front.index',compact('user'));
+                    return redirect()->route('front.index');
                 }
 
             } else {
@@ -168,8 +171,6 @@ class PostGuzzleController extends Controller
         else{
             Toastr::error('OTP Expired. Please Try again :)','Success');
             return view('front.auth.otp_verify', compact('otp'));
-
-
         }
 
     }
@@ -203,20 +204,37 @@ class PostGuzzleController extends Controller
                 . mt_rand(1000000000, 9999999999)
                 . $characters[rand(0, strlen($characters) - 1)];
             $string = str_shuffle($pin);
-            $response = $client->request('get', 'https://api.itelservices.net/send.php?transaction_id=' . $string . '&api_key=WUMKp21gth2UKEpsLp5I7yKABrmyi673&number=92' . $otp->send . '&text=' . $otp->otp . '&from=4473&type=sms', [
-                'headers' => $headers,
-            ]);
-    }
-
-        Toastr::success('Otp Again Send :)','Success');
-        return view('front.auth.otp_verify', compact('otp'));
+            //$iteL_uri = 'https://api.itelservices.net/send.php?transaction_id=' . $string . '&api_key=WUMKp21gth2UKEpsLp5I7yKABrmyi673&number=92' . $request->phone . '&text=' . $otpp . '&from=4473&type=sms';
+            $m3tech_uri = 'https://secure.m3techservice.com/GenericService/webservice_4_1.asmx/SendSMS?UserId=sms1@dhalahore&Password=E9B30A-cd1d1f&MobileNo=92' . $request->phone . '&MsgId=' . $string . '&SMS=' . $otpp . '&MsgHeader=9460&HandsetPort=0&SMSChannel=0&Telco=0';
+            $response = $client->request('get', $m3tech_uri, $headers);
+            if($response){
+                $otp->save();
+                Toastr::success('PIN Sent Successfully','Success');
+                return view('front.auth.otp_verify', compact('otp'));
+            }else{
+                Toastr::error('Failed to send PIN Code. Please try again :)','danger');
+                return view('front.auth.otp_verify', compact('otp'));
+            }
+        }
     }
     public function frontIndex()
     {
         $user = Auth::user();
-        return view('front.index',compact('user'));
+        $username = 'lkasoidrhfpaspoe';
+        $password = "f8c98f7e4c394b0796baaab0108b028f";
+        $credentials = base64_encode("{$username}:{$password}");
+        $client = new Client();
+        $headers = [
+            'Authorization' => 'Basic ' . $credentials,
+            'X-API-KEY' => 'b8e25326-dfc4-4788-DHA-1011141'
+        ];
+        $response = $client->request('get', 'http://192.168.43.120/mems_infoportal/api/wb_info/memasset?qry_id='.$user->qey_id, [
+            'headers' => $headers,
+        ]);
+        $data = json_decode($response->getBody()->getContents());
+        return view('front.index',compact('data'));
     }
-    public function schedule($qey_id,$key)
+    public function schedule($plot_id)
     {
         $username = 'lkasoidrhfpaspoe';
         $password = "f8c98f7e4c394b0796baaab0108b028f";
@@ -226,15 +244,19 @@ class PostGuzzleController extends Controller
             'Authorization' => 'Basic ' . $credentials,
             'X-API-KEY' => 'b8e25326-dfc4-4788-DHA-1011141'
         ];
-        $response = $client->request('get', 'http://192.168.43.120/mems_infoportal/api/wb_info/memplotdues?qry_id='.$qey_id, [
+        $response = $client->request('get', 'http://192.168.43.120/mems_infoportal/api/wb_info/memplotdues?plot_id='.$plot_id, [
             'headers' => $headers,
         ]);
         $data = json_decode($response->getBody()->getContents());
-        return view('front.data.schedule',compact('data','key'));
-
+        $user = Auth::user();
+        $response = $client->request('get', 'http://192.168.43.120/mems_infoportal/api/wb_info/memasset?qry_id=' . $user->qey_id, [
+            'headers' => $headers,
+        ]);
+        $dataSanple = json_decode($response->getBody()->getContents());
+        return view('front.data.schedule',compact('data','dataSanple'));
 
     }
-    public function surcharge($qey_id,$key)
+    public function surcharge($plot_id)
     {
         $username = 'lkasoidrhfpaspoe';
         $password = "f8c98f7e4c394b0796baaab0108b028f";
@@ -244,15 +266,15 @@ class PostGuzzleController extends Controller
             'Authorization' => 'Basic ' . $credentials,
             'X-API-KEY' => 'b8e25326-dfc4-4788-DHA-1011141'
         ];
-        $response = $client->request('get', 'http://192.168.43.120/mems_infoportal/api/wb_info/memplotdues?qry_id='.$qey_id, [
+        $response = $client->request('get', 'http://192.168.43.120/mems_infoportal/api/wb_info/memplotdues?plot_id='.$plot_id, [
             'headers' => $headers,
         ]);
         $data = json_decode($response->getBody()->getContents());
-        return view('front.data.surcharge',compact('data','key'));
+        return view('front.data.surcharge',compact('data'));
 
 
     }
-    public function challan($qey_id,$key)
+    public function challan($plot_id)
     {
         $username = 'lkasoidrhfpaspoe';
         $password = "f8c98f7e4c394b0796baaab0108b028f";
@@ -262,12 +284,131 @@ class PostGuzzleController extends Controller
             'Authorization' => 'Basic ' . $credentials,
             'X-API-KEY' => 'b8e25326-dfc4-4788-DHA-1011141'
         ];
-        $response = $client->request('get', 'http://192.168.43.120/mems_infoportal/api/wb_info/memplotdues?qry_id='.$qey_id, [
+        $response = $client->request('get', 'http://192.168.43.120/mems_infoportal/api/wb_info/memplotdues?plot_id='.$plot_id, [
             'headers' => $headers,
         ]);
         $data = json_decode($response->getBody()->getContents());
-        return view('front.data.challan',compact('data','key'));
+        return view('front.data.challan',compact('data'));
 
+
+    }
+
+    public function scheduleTwo()
+    {
+        $username = 'lkasoidrhfpaspoe';
+        $password = "f8c98f7e4c394b0796baaab0108b028f";
+        $credentials = base64_encode("{$username}:{$password}");
+        $client = new Client();
+        $headers = [
+            'Authorization' => 'Basic ' . $credentials,
+            'X-API-KEY' => 'b8e25326-dfc4-4788-DHA-1011141'
+        ];
+        $user = Auth::user();
+        $response = $client->request('get', 'http://192.168.43.120/mems_infoportal/api/wb_info/memasset?qry_id=' . $user->qey_id, [
+            'headers' => $headers,
+        ]);
+        $dataSanple = json_decode($response->getBody()->getContents());
+        $memasset = $dataSanple[0];
+        $response = $client->request('get', 'http://192.168.43.120/mems_infoportal/api/wb_info/memplotdues?plot_id='.$memasset->PLOT_ID, [
+            'headers' => $headers,
+        ]);
+        $data = json_decode($response->getBody()->getContents());
+        return view('front.data.schedule',compact('data','dataSanple'));
+
+
+    }
+    public function historyTwo()
+    {
+        $username = 'lkasoidrhfpaspoe';
+        $password = "f8c98f7e4c394b0796baaab0108b028f";
+        $credentials = base64_encode("{$username}:{$password}");
+        $client = new Client();
+        $headers = [
+            'Authorization' => 'Basic ' . $credentials,
+            'X-API-KEY' => 'b8e25326-dfc4-4788-DHA-1011141'
+        ];
+        $user = Auth::user();
+        $response = $client->request('get', 'http://192.168.43.120/mems_infoportal/api/wb_info/memasset?qry_id=' . $user->qey_id, [
+            'headers' => $headers,
+        ]);
+        $dataSanple = json_decode($response->getBody()->getContents());
+        $memasset = $dataSanple[0];
+        $response = $client->request('get', 'http://192.168.43.120/mems_infoportal/api/wb_info/challan_history?plot_id='.$memasset->PLOT_ID, [
+            'headers' => $headers,
+        ]);
+        $data = json_decode($response->getBody()->getContents());
+        return view('front.data.history',compact('data','dataSanple'));
+
+
+    }
+
+    public function challanTwo()
+    {
+        $username = 'lkasoidrhfpaspoe';
+        $password = "f8c98f7e4c394b0796baaab0108b028f";
+        $credentials = base64_encode("{$username}:{$password}");
+        $client = new Client();
+        $headers = [
+            'Authorization' => 'Basic ' . $credentials,
+            'X-API-KEY' => 'b8e25326-dfc4-4788-DHA-1011141'
+        ];
+        $user = Auth::user();
+        $response = $client->request('get', 'http://192.168.43.120/mems_infoportal/api/wb_info/memasset?qry_id=' . $user->qey_id, [
+            'headers' => $headers,
+        ]);
+        $dataSanple = json_decode($response->getBody()->getContents());
+        $insurance = $dataSanple[0];
+        $response = $client->request('get', 'http://192.168.43.120/mems_infoportal/api/wb_info/mempolicydues?ins_id='.$insurance->PLOT_ID, [
+            'headers' => $headers,
+        ]);
+        $data = json_decode($response->getBody()->getContents());
+        return view('front.data.challan',compact('data','dataSanple'));
+
+
+    }
+    public function searchSchedule($plot_id)
+    {
+        $username = 'lkasoidrhfpaspoe';
+        $password = "f8c98f7e4c394b0796baaab0108b028f";
+        $credentials = base64_encode("{$username}:{$password}");
+        $client = new Client();
+        $headers = [
+            'Authorization' => 'Basic ' . $credentials,
+            'X-API-KEY' => 'b8e25326-dfc4-4788-DHA-1011141'
+        ];
+        $response = $client->request('get', 'http://192.168.43.120/mems_infoportal/api/wb_info/memplotdues?plot_id='.$plot_id, [
+            'headers' => $headers,
+        ]);
+        $data = json_decode($response->getBody()->getContents());
+        $user = Auth::user();
+        $response = $client->request('get', 'http://192.168.43.120/mems_infoportal/api/wb_info/memasset?qry_id=' . $user->qey_id, [
+            'headers' => $headers,
+        ]);
+        $dataSanple = json_decode($response->getBody()->getContents());
+        return view('front.data.schedule',compact('data','dataSanple'));
+
+    }
+
+    public function searchHistory($plot_id)
+    {
+        $username = 'lkasoidrhfpaspoe';
+        $password = "f8c98f7e4c394b0796baaab0108b028f";
+        $credentials = base64_encode("{$username}:{$password}");
+        $client = new Client();
+        $headers = [
+            'Authorization' => 'Basic ' . $credentials,
+            'X-API-KEY' => 'b8e25326-dfc4-4788-DHA-1011141'
+        ];
+        $response = $client->request('get', 'http://192.168.43.120/mems_infoportal/api/wb_info/challan_history?plot_id='.$plot_id, [
+            'headers' => $headers,
+        ]);
+        $data = json_decode($response->getBody()->getContents());
+        $user = Auth::user();
+        $response = $client->request('get', 'http://192.168.43.120/mems_infoportal/api/wb_info/memasset?qry_id=' . $user->qey_id, [
+            'headers' => $headers,
+        ]);
+        $dataSanple = json_decode($response->getBody()->getContents());
+        return view('front.data.history',compact('data','dataSanple'));
 
     }
 }

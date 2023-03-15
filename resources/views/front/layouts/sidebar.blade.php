@@ -23,7 +23,7 @@
                 <!-- Add icons to the links using the .nav-icon class
                      with font-awesome or any other icon font library -->
                 <li class="nav-item">
-                    <a href="{{route('front.index')}}" class="nav-link {{  request()->is('front/index') ? 'active':'' }} ">
+                    <a href="{{route('front.index')}}" class="nav-link {{  request()->is('home') ? 'active':'' }} ">
                         <i class="nav-icon fas fa-tachometer-alt" style="font-size:22px"></i>
                         <p>
                             Dashboard
@@ -39,24 +39,24 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
-                        <li class="nav-item ">
-                            <a href="{{route('schedule',['qey_id'=>Auth::user()->qey_id,'key'=>1])}}" class="nav-link {{  request()->is('schedule/*/1') ? 'active':'' }} ">
-                                <i class="nav-icon fas fa-calendar-alt" style="font-size:22px"></i>
+                        <li class="nav-item">
+                            <a href="{{route('schedule.two')}}" class="nav-link {{  request()->is('schedule/*') || request()->is('schedule') || request()->is('search/schedule/*') ? 'active':'' }} ">
+                                <i class="nav-icon fas fa-edit"></i>
                                 <p>
                                     View Schedule
                                 </p>
                             </a>
                         </li>
-                        <li class="nav-item ">
-                            <a href="{{route('challan',['qey_id'=>Auth::user()->qey_id,'key'=>3])}}" class="nav-link {{  request()->is('challan/*/3') ? 'active':'' }} ">
-                                <i class="nav-icon fas fa-receipt" style="font-size:22px"></i>
+                        <li class="nav-item">
+                            <a href="{{route('challan.two')}}" class="nav-link {{  request()->is('challan/*') || request()->is('challan') ||  request()->is('search/challan/*') ? 'active':'' }} ">
+                                <i class="nav-icon fas fa-edit"></i>
                                 <p>
-                                    Generate Challan
+                                   Generate Challan
                                 </p>
                             </a>
                         </li>
                         <li class="nav-item ">
-                            <a href="{{route('challan',['qey_id'=>Auth::user()->qey_id,'key'=>3])}}" class="nav-link {{  request()->is('challan/*/3') ? 'active':'' }} ">
+                            <a href="{{route('history.two')}}" class="nav-link {{  request()->is('history/*') || request()->is('history') ||  request()->is('search/history/*') ? 'active':'' }} ">
                                 <i class="nav-icon fas fa-history" style="font-size:22px"></i>
                                 <p>
                                     Financial History
@@ -64,7 +64,7 @@
                             </a>
                         </li>
 <!--                        <li class="nav-item ">
-                            <a href="{{route('surcharge',['qey_id'=>Auth::user()->qey_id,'key'=>2])}}" class="nav-link {{  request()->is('surcharge/*/2') ? 'active':'' }} ">
+                            <a href="">
                                 <i class="nav-icon fas fa-newspaper" style="font-size:22px"></i>
                                 <p>
                                     Surcharge

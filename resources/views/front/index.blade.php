@@ -39,20 +39,18 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <?php $details = \App\Models\Details::where('QEY_ID','=',$user->qey_id)->first()?>
-                                    <td>{{$details->phase}}/{{$details->sector}}/{{$details->plot_no}}</td>
-                                    <td><a href="{{route('schedule',['qey_id'=>$user->qey_id,'key'=>1])}}">View</a></td>
-                                    <!-- <td>
-                                        <a href="{{route('schedule',['qey_id'=>$user->qey_id,'key'=>2])}}">View</a>
-                                    </td> -->
-                                </tr>
+                                @foreach($data as $row)
+                                    <tr>
+                                        <td>{{$row->PHASE_NO}}/{{$row->SECTOR_NAME}}/{{$row->PLOT_NO}}</td>
+                                        <td><a href="{{route('schedule',['plot_id'=>$row->PLOT_ID])}}">View</a></td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                </div>		
-            </div>          
+                </div>
+            </div>
         </div>
 	<!-- /.container-fluid -->
     </section>
@@ -105,7 +103,7 @@
                       <td>490,900</td>
                     </tr>
                   </tbody>
-                </table>		                
+                </table>
               </div>
             </div>
           </div>
@@ -120,31 +118,31 @@
 			<div class="custom-control custom-radio">
                           <input class="custom-control-input" type="radio" id="customRadio1" name="customRadio">
                           <label for="customRadio1" class="custom-control-label">Total Amount</label>
-                        </div>		
+                        </div>
 		</div>
                 <div class="form-group">
 			<div class="custom-control custom-radio">
                           <input class="custom-control-input" type="radio" id="customRadio1" name="customRadio">
                           <label for="customRadio1" class="custom-control-label">Amount Received</label>
-                        </div>		
+                        </div>
 		</div>
                 <div class="form-group">
 			<div class="custom-control custom-radio">
                           <input class="custom-control-input" type="radio" id="customRadio1" name="customRadio">
                           <label for="customRadio1" class="custom-control-label">Current Overdue Amount</label>
-                        </div>		
+                        </div>
 		</div>
                 <div class="form-group">
 			<div class="custom-control custom-radio">
                           <input class="custom-control-input" type="radio" id="customRadio1" name="customRadio">
                           <label for="customRadio1" class="custom-control-label">Balance Amount</label>
-                        </div>		
+                        </div>
 		</div>
                 <div class="form-group">
 			<div class="custom-control custom-radio">
                           <input class="custom-control-input" type="radio" id="customRadio1" name="customRadio">
                           <label for="customRadio1" class="custom-control-label">Total Dues Till (Date)</label>
-                        </div>		
+                        </div>
 		</div>
 
 
@@ -163,7 +161,7 @@
     <!-- /.content -->
     <!-- /End of Summary -->
 
-          
+
 
         </div>
         <!-- /.row -->
