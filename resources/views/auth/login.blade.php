@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Member Portal DHA Lahore | Log in</title>
+    <title>Member Portal DHA Lahore | Login</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -40,12 +40,14 @@
 
 </head>
 <body class="hold-transition register-page">
-<div class="register-box">
+<div class="register-box" style="width: 25%">
     <div class="card card-outline card-primary">
         <div class="card-header text-center">
             <img src="{{url('front/dist/img/logo_dhalahore.png')}}" alt="DHA Lahore Logo" height="80" width="80">
     		<br>
-	    <a href="#" class="h1"><b>Member's </b> Login</a>
+    		<br>
+
+	    <h1><b>Member's </b> Login<h1>
         </div>
         <div class="card-body">
 
@@ -80,7 +82,7 @@
 		    <div class="form-group" >
                      <div class="custom-control custom-checkbox">
                         <input type="checkbox" class="custom-control-input" id="terms_conditions" required>
-                        <label class="custom-control-label" for="terms_conditions">I have read and agree to the <a  style="color: #3d3f7e;cursor: pointer;background-color: transparent;" class="TermsConditions">Terms & Policies</a>.</label>
+                        <label class="custom-control-label" for="terms_conditions">I have read and agree to the <a  style="color: #3d3f7e;cursor: pointer;background-color: transparent;" class="TermsConditions"><u>Terms & Policies</u></a>.</label>
                      </div>
                    </div>
                     <!-- /.col -->

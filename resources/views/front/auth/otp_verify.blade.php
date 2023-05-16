@@ -42,10 +42,10 @@ $createdAt = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $otp->created_at);
 $now = \Carbon\Carbon::now();
 $diffInMinutes = $createdAt->diffInMinutes($now);
 ?>
-<div class="register-box">
+<div class="register-box" style="width: 35%">
     <div class="card card-outline card-primary">
         <div class="card-header text-center">
-            <a href="#" class="h1"><b>OTP</b> Verification</a>
+            <h1><b>Authentication</b> PIN Code<h1>
         </div>
         <div class="card-body">
 
@@ -55,8 +55,8 @@ $diffInMinutes = $createdAt->diffInMinutes($now);
                 <input type="hidden" value="{{$otp->qey_id}}" name="qey_id">
                 <input type="hidden" value="{{$otp->otp}}" name="otp">
                 <div class="form-group">
-                    <label>OTP </label>
-                    <input type="text" class="form-control"  name="otp" placeholder=" Type OTP here...  ">
+                    <label>Enter PIN Code </label>
+                    <input type="text" class="form-control"  name="otp" placeholder=" Type Authentication PIN Code here...  ">
                 </div>
 
                 <div class="row">

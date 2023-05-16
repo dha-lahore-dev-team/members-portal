@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Mail;
 use Auth;
+use illuminate\support\Str;
 
 
 class PostGuzzleController extends Controller
@@ -92,6 +93,8 @@ class PostGuzzleController extends Controller
             $user->password = Hash::make('12345678');
             $user->save();
             $data['details'] = $detials;
+            $data['masked_cell_no'] = Str::mask($detials->CELL_NO, '*', 2, -2);
+            $data['masked_email'] = Str::mask($detials->EMAIL,'*', 2, -13);
             return view('front.auth.otp_send', compact('data'));
         }else{
             Toastr::error($phase->RESPONSE_MESSAGE,'Login Failed!');
@@ -101,17 +104,22 @@ class PostGuzzleController extends Controller
 
     public function otpSend(Request $request)
     {
-        $otpp = mt_rand(1000000, 9999999);
+        //$otpp = mt_rand(1000000, 9999999);
+        $otpp = '123456';
         $otp = new OtpDetails();
         $otp->details_id = $request->details_id;
         $otp->qey_id = $request->qey_id;
         $otp->otp = $otpp;
-        $otp->check = $request->customCheckbox2; ;
+        $otp->check = $request->customCheckbox2;
+        //{{dd($request->customCheckbox2);}}
         if ($request->customCheckbox2 == 'on') {
             $otp->send = $request->email;
             $details = [
                 'otp' => $otpp,];
             Mail::to($request->email)->send(new NotifyMail($details));
+            $otp->save();
+            Toastr::success('PIN Code Sent at Registered Email Address!','Success');
+            return view('front.auth.otp_verify', compact('otp'));
         } else {
             $otp->send = $request->phone;
             $client = new Client();
@@ -177,7 +185,8 @@ class PostGuzzleController extends Controller
     public function resend($id)
     {
         $otp = OtpDetails::find($id);
-        $otp->otp = mt_rand(1000000, 9999999);
+       //$otp->otp = mt_rand(1000000, 9999999);
+        $otp->otp = '123456';
         $otp->created_at = Carbon::now();
         $otp->update();
         if($otp->check=="on"){
@@ -244,11 +253,11 @@ class PostGuzzleController extends Controller
             'Authorization' => 'Basic ' . $credentials,
             'X-API-KEY' => 'b8e25326-dfc4-4788-DHA-1011141'
         ];
-        $response = $client->request('get', 'http://192.168.43.120/mems_infoportal/api/wb_info/memplotdues?plot_id='.$plot_id, [
+        $user = Auth::user();
+        $response = $client->request('get', 'http://192.168.43.120/mems_infoportal/api/wb_info/memplotdues?plot_id='.$plot_id.'&qry_id'.$user->qey_id, [
             'headers' => $headers,
         ]);
         $data = json_decode($response->getBody()->getContents());
-        $user = Auth::user();
         $response = $client->request('get', 'http://192.168.43.120/mems_infoportal/api/wb_info/memasset?qry_id=' . $user->qey_id, [
             'headers' => $headers,
         ]);
@@ -276,6 +285,7 @@ class PostGuzzleController extends Controller
     }
     public function challan($plot_id)
     {
+
         $username = 'lkasoidrhfpaspoe';
         $password = "f8c98f7e4c394b0796baaab0108b028f";
         $credentials = base64_encode("{$username}:{$password}");
@@ -284,7 +294,7 @@ class PostGuzzleController extends Controller
             'Authorization' => 'Basic ' . $credentials,
             'X-API-KEY' => 'b8e25326-dfc4-4788-DHA-1011141'
         ];
-        $response = $client->request('get', 'http://192.168.43.120/mems_infoportal/api/wb_info/memplotdues?plot_id='.$plot_id, [
+        $response = $client->request('get', 'http://192.168.43.120/mems_infoportal/api/wb_info/memplotdue?plot_id='.$plot_id, [
             'headers' => $headers,
         ]);
         $data = json_decode($response->getBody()->getContents());
@@ -309,7 +319,7 @@ class PostGuzzleController extends Controller
         ]);
         $dataSanple = json_decode($response->getBody()->getContents());
         $memasset = $dataSanple[0];
-        $response = $client->request('get', 'http://192.168.43.120/mems_infoportal/api/wb_info/memplotdues?plot_id='.$memasset->PLOT_ID, [
+        $response = $client->request('get', 'http://192.168.43.120/mems_infoportal/api/wb_info/memplotdues?plot_id='.$memasset->PLOT_ID.'&qry_id='.$user->qey_id, [
             'headers' => $headers,
         ]);
         $data = json_decode($response->getBody()->getContents());
@@ -353,12 +363,13 @@ class PostGuzzleController extends Controller
             'X-API-KEY' => 'b8e25326-dfc4-4788-DHA-1011141'
         ];
         $user = Auth::user();
+        //{{dd($user->qey_id);}}
         $response = $client->request('get', 'http://192.168.43.120/mems_infoportal/api/wb_info/memasset?qry_id=' . $user->qey_id, [
             'headers' => $headers,
         ]);
         $dataSanple = json_decode($response->getBody()->getContents());
-        $insurance = $dataSanple[0];
-        $response = $client->request('get', 'http://192.168.43.120/mems_infoportal/api/wb_info/mempolicydues?ins_id='.$insurance->PLOT_ID, [
+        $plot_detail = $dataSanple[0];
+        $response = $client->request('get', 'http://192.168.43.120/mems_infoportal/api/wb_info/amount_detail?plot_id=' . $plot_detail->PLOT_ID.'&qry_id='.$user->qey_id, [
             'headers' => $headers,
         ]);
         $data = json_decode($response->getBody()->getContents());
@@ -376,11 +387,11 @@ class PostGuzzleController extends Controller
             'Authorization' => 'Basic ' . $credentials,
             'X-API-KEY' => 'b8e25326-dfc4-4788-DHA-1011141'
         ];
-        $response = $client->request('get', 'http://192.168.43.120/mems_infoportal/api/wb_info/memplotdues?plot_id='.$plot_id, [
+        $user = Auth::user();
+        $response = $client->request('get', 'http://192.168.43.120/mems_infoportal/api/wb_info/memplotdues?plot_id='.$plot_id.'&qry_id='.$user->qey_id, [
             'headers' => $headers,
         ]);
         $data = json_decode($response->getBody()->getContents());
-        $user = Auth::user();
         $response = $client->request('get', 'http://192.168.43.120/mems_infoportal/api/wb_info/memasset?qry_id=' . $user->qey_id, [
             'headers' => $headers,
         ]);
@@ -410,5 +421,24 @@ class PostGuzzleController extends Controller
         $dataSanple = json_decode($response->getBody()->getContents());
         return view('front.data.history',compact('data','dataSanple'));
 
+    }
+    public function fetchAmount(Request $request)
+    {
+        $client = new Client();
+        $username = 'lkasoidrhfpaspoe';
+        $password = "f8c98f7e4c394b0796baaab0108b028f";
+        $credentials = base64_encode("{$username}:{$password}");
+        $headers = [
+            'Authorization' => 'Basic ' . $credentials,
+            'X-API-KEY' => 'b8e25326-dfc4-4788-DHA-1011141',
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+            'Cookie' => 'ci_session=499e480351880278b3b10c6e9d7bf550070f78ba',
+        ];
+        $response = $client->request('get', 'http://192.168.43.120/mems_infoportal/api/wb_info/amount_detail?plot_id=' . $request->plot_id . '&qry_id=' . $request->qey_id, [
+            'headers' => $headers,
+        ]);
+        $data['amount'] = json_decode($response->getBody()->getContents());
+        return response()->json($data);;
     }
 }

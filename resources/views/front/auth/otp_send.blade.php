@@ -38,10 +38,10 @@
 
 </head>
 <body class="hold-transition register-page">
-<div class="register-box" style="width: 40%">
+<div class="register-box" style="width: 50%">
     <div class="card card-outline card-primary">
         <div class="card-header text-center">
-            <a href="#" class="h1">PIN <b>Verification</b></a>
+            <h1>PIN Code <b>Verification</b><h1>
         </div>
         <div class="card-body">
 
@@ -49,12 +49,13 @@
                 @csrf
                 <input type="hidden" value="{{$data['details']->id}}" name="details_id">
                 <input type="hidden" value="{{$data['details']->QEY_ID}}" name="qey_id">
+
                 <?php $a=7;?>
                 @if($data['details']->CELL_NO)
                 <div class="input-group mb-3">
                     <div class="custom-control custom-checkbox">
                         <input class="custom-control-input" name="customCheckbox3" type="checkbox" id="customCheckbox3" checked>
-                        <label for="customCheckbox3" class="custom-control-label">I want to receive PIN Code on my registered Mobile No.</label>
+                        <label for="customCheckbox3" class="custom-control-label">I want to receive PIN Code on my registered Mobile No. ({{$data['masked_cell_no']}})</label>
                         <input type="hidden" name="phone" value="{{$data['details']->CELL_NO}}" class="form-control" placeholder="Phone#">
                     </div>
                 </div>
@@ -63,7 +64,7 @@
                 <div class="input-group mb-3 email">
                     <div class="custom-control custom-checkbox">
                         <input class="custom-control-input"  name="customCheckbox2" type="checkbox" id="customCheckbox2">
-                        <label for="customCheckbox2" class="custom-control-label">I want to receive PIN Code on my registered Email Address</label>
+                        <label for="customCheckbox2" class="custom-control-label">I want to receive PIN Code on my registered Email Address ({{$data['masked_email']}})</label>
                         <input type="hidden"  name="email" value="{{$data['details']->email}}" class="form-control" placeholder="email">
                     </div>
                 </div>
@@ -71,7 +72,7 @@
                 <div class="row">
                     <!-- /.col -->
                     <div class="col-4">
-                        <button type="submit" class="btn btn-primary btn-block">Send OTP</button>
+                        <button type="submit" class="btn btn-primary btn-block">Send PIN Code</button>
                     </div>
 
                     <!-- /.col -->

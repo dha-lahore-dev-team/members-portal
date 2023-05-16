@@ -33,6 +33,7 @@ Route::get('/history', [App\Http\Controllers\PostGuzzleController::class, 'histo
 Route::get('/search/schedule/{plot_id}', [App\Http\Controllers\PostGuzzleController::class, 'searchSchedule'])->name('search.schedule')->middleware('role');
 Route::get('/search/challan/{plot_id}', [App\Http\Controllers\PostGuzzleController::class, 'searchChallan'])->name('search.challan')->middleware('role');
 Route::get('/search/history/{plot_id}', [App\Http\Controllers\PostGuzzleController::class, 'searchHistory'])->name('search.history')->middleware('role');
+Route::post('/fetchamount', [App\Http\Controllers\PostGuzzleController::class, 'fetchAmount'])->name('fetchamount');
 Auth::routes();
 
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

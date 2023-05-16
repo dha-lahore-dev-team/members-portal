@@ -65,45 +65,20 @@
           <div class="col-lg-6">
             <div class="card">
                    <div class="card-header" style="background-color: #3d3f7e; color: white">
-                       <h3 class="card-title">Summary</h3>
+                       <h3 class="card-title">Payment Through 1-Bill</h3>
                    </div>
               <div class="card-body">
-		<table class="table table-bordered">
-                  <thead>
-                    <tr>
-                      <th>Ser #</th>
-                      <th>Description</th>
-                      <th>Amount (PKR)</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>1.</td>
-                      <td>Total Amount</td>
-                      <td>2,650,000</td>
-                    </tr>
-                    <tr>
-                      <td>2.</td>
-                      <td>Amount Received</td>
-                      <td>159,100</td>
-                    </tr>
-                    <tr>
-                      <td>3.</td>
-                      <td>Current Overdue Amount</td>
-                      <td>1,490,900</td>
-                    </tr>
-                    <tr>
-                      <td>4.</td>
-                      <td>Balance Amount</td>
-                      <td>2,490,900</td>
-                    </tr>
-		    <tr>
-                      <td>5.</td>
-                      <td>Total Dues Till (Date)</td>
-                      <td>490,900</td>
-                    </tr>
-                  </tbody>
-                </table>
+                  <p class="text-muted well well-sm shadow-none" style="margin-top: 20px;">
+                    <ol>
+                      <li>Log into your respective Online Banking Application (Any Bank).</li>
+                      <li>Go to Bill Payments section.</li>
+                      <li>Click on <strong>"1 Bill"</strong> option.</li>
+                      <li>Click on <strong>"Invoice / Fixed Payments"</strong> Biller Option.</li>
+                      <li>Enter your Reference Number e.g. 342547XXXXXXXXXXX and proceed to next step.</li>
+                      <li>Billing details will be displayed.</li>
+                      <li>Proceed further and make payment as advised by the application.</li>
+                    </ol>
+                  </p>
               </div>
             </div>
           </div>
@@ -111,46 +86,26 @@
           <div class="col-lg-6">
             <div class="card">
                    <div class="card-header" style="background-color: #3d3f7e; color: white">
-                       <h3 class="card-title">Generate Challan</h3>
+                       <h3 class="card-title">Payment Through Bank Deposit / Credit & Debit Card</h3>
                    </div>
-              <div class="card-body">
-                <div class="form-group">
-			<div class="custom-control custom-radio">
-                          <input class="custom-control-input" type="radio" id="customRadio1" name="customRadio">
-                          <label for="customRadio1" class="custom-control-label">Total Amount</label>
-                        </div>
-		</div>
-                <div class="form-group">
-			<div class="custom-control custom-radio">
-                          <input class="custom-control-input" type="radio" id="customRadio1" name="customRadio">
-                          <label for="customRadio1" class="custom-control-label">Amount Received</label>
-                        </div>
-		</div>
-                <div class="form-group">
-			<div class="custom-control custom-radio">
-                          <input class="custom-control-input" type="radio" id="customRadio1" name="customRadio">
-                          <label for="customRadio1" class="custom-control-label">Current Overdue Amount</label>
-                        </div>
-		</div>
-                <div class="form-group">
-			<div class="custom-control custom-radio">
-                          <input class="custom-control-input" type="radio" id="customRadio1" name="customRadio">
-                          <label for="customRadio1" class="custom-control-label">Balance Amount</label>
-                        </div>
-		</div>
-                <div class="form-group">
-			<div class="custom-control custom-radio">
-                          <input class="custom-control-input" type="radio" id="customRadio1" name="customRadio">
-                          <label for="customRadio1" class="custom-control-label">Total Dues Till (Date)</label>
-                        </div>
-		</div>
+                   <div class="card-body">
+                       <!-- accepted payments column -->
+                       <div>
+                           <img src="{{asset('front/dist/img/credit/visa.png')}}" alt="Visa">
+                           <img src="{{asset('front/dist/img/credit/mastercard.png')}}" alt="Mastercard">
+                       {{--<img src="{{asset('front/dist/img/credit/american-express.png')}}" alt="American Express">--}}
+                       {{--<img src="{{asset('front/dist/img/credit/paypal2.png')}}" alt="Paypal">--}}
 
-
-		<div class="form-group">
-			<input type="text"  name="partial_payment" class="form-control" id="partial_payment" placeholder="Enter Partial Payment Amount">
-		</div>
-		<a href="#" class="btn btn-primary">Generate</a>
-              </div>
+                           <p class="text-muted well well-sm shadow-none" style="margin-top: 20px;">
+                                <ol>
+                                    <li>Once you are at the detail page of the application, you need to choose <strong>"Pay Through Debit/ Credit Card"</strong>.</li>
+                                    <li>Specify the type of card i.e. Debit / Credit Card and whether it is a Visa or Mastercard.</li>
+                                    <li>Please provide the information on the Payment Page.</li>
+                                </ol>
+                           </p>
+                       </div>
+                       <!-- /.col -->
+                   </div>
             </div>
           </div>
           <!-- /.col-md-6 -->
