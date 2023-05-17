@@ -35,7 +35,7 @@
                                     <div class="col-md-3">
                                         <div class="form-group">
 
-                                            <select name="plot_id" class="form-control"  >
+                                            <select name="plot_id" id="plot_id" class="form-control"  >
                                                 <option value="" selected>Please Select Plot No</option>
                                                 @foreach($dataSanple as $key=>$row)
                                                     <option value="{{$row->PLOT_ID}}">{{$row->PHASE_NO}}/{{$row->SECTOR_NAME}}/{{$row->PLOT_NO}}</option>
@@ -137,10 +137,49 @@
                                     </div>
                                     <div class="col-md-3 hideclass" style="display: none">
                                         <div class="form-group">
-                                            <input type="submit" class="btn btn-primary" value="Generate" >
+                                            <input type="submit" class="btn btn-primary" value="Generate" id="genrate_chalan">
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+        <!-- Main content -->
+        <section class="content" id="content" style="display: none">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header" style="background-color: green; color: white">
+                                <h5>Challan Details</h5>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>Plot No</th>
+                                        <th>Challan No</th>
+                                        <th>Refenrece No</th>
+                                        <th>Total Amount</th>
+                                        <th>Due Date</th>
+                                        <th>Action</th>
+                                        {{--                                            <th>Action</th>--}}
+                                    </tr>
+                                    </thead>
+                                    <tbody id="myTable">
+
+                                    </tbody>
+                                </table>
                             </div>
                             <!-- /.card-body -->
                         </div>
@@ -199,6 +238,51 @@
                 }
 
             })
+        });
+        $("#genrate_chalan").on("click", function () {
+            var plot_id = $("#plot_id option:selected").val();
+            var amount = $("#amount").val();
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('fetchchallan') }}',
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    plot_id: plot_id,
+                    amount: amount,
+                },
+                success: function (response) {
+                    if (response == 0) {
+                        alert('Could not Generate Challan. Please Try Again')
+                    } else {
+
+                        $('#content').show();
+// select the table body element
+                        var tableBody = $('#myTable');
+                        $("#myTable").empty();
+                        // create an array of data
+                        var data = response;
+// loop through the data and create a new row for each element
+                        $.each(data, function (index, item) {
+                            // create a new row element
+                            var row = $('<tr></tr>');
+
+                            // create a new cell for each property in the data object
+                            $.each(item, function (key, value) {
+                                var cell = $('<td></td>').text(value);
+                                row.append(cell);
+                            });
+
+                            // append the new row to the table body
+                            tableBody.append(row);
+                        });
+
+                    }
+
+                    console.log(response)
+                }
+
+            });
+
         });
     </script>
 @endsection
