@@ -36,7 +36,7 @@
                                         <div class="form-group">
 
                                             <select name="plot_id" id="plot_id" class="form-control"  >
-                                                <option value="" selected>Please Select Plot No</option>
+                                                <option value="" selected>Choose Plot No</option>
                                                 @foreach($dataSanple as $key=>$row)
                                                     <option value="{{$row->PLOT_ID}}">{{$row->PHASE_NO}}/{{$row->SECTOR_NAME}}/{{$row->PLOT_NO}}</option>
                                                     <input type="text" name="qey_id" id="qey_id" value="{{$row->QRY_ID}}" hidden>
@@ -237,7 +237,7 @@
                     $('#up_amt').text(response.amount[0].UPCOMING_INST_DUE_AMT);
                 }
 
-            })
+            });
         });
         $("#genrate_chalan").on("click", function () {
             var plot_id = $("#plot_id option:selected").val();
@@ -258,27 +258,31 @@
                         $('#content').show();
 // select the table body element
                         var tableBody = $('#myTable');
-                        $("#myTable").empty();
                         // create an array of data
                         var data = response;
 // loop through the data and create a new row for each element
-                        $.each(data, function (index, item) {
-                            // create a new row element
-                            var row = $('<tr></tr>');
+                        var event_data = '';
+                        $.each(data, function (index, value) {
+                            // Replace the placeholder ":ch_id" with the actual value of value.ch_id
 
-                            // create a new cell for each property in the data object
-                            $.each(item, function (key, value) {
-                                var cell = $('<td></td>').text(value);
-                                row.append(cell);
+                            event_data += '<tr class="'+ value.CH_NO + '">';
+                            event_data += '<td class="co">' + value.PLOT_NO + '</td>';
+                            event_data += '<td class="co">' + value.CH_NO + '</td>';
+                            event_data += '<td class="po">' + value.REF_NO + '</td>';
+                            event_data += '<td class="sa">' + value.TOT_AMT + '</td>';
+                            event_data += '<td class="pr">' + value.DUE_DATE + '</td>';
+                            event_data += '<td><a href="{{route('challan.details',['ch_no'=>":CH_NO"])}}" class="btn btn-primary edit" id=" '+ value.CH_NO + '">View</a>    <a href="#" class="btn btn-success editt"   id=" '+ value.CH_NO + '">Pay</a></td>';
+                            event_data += '</tr>';
+                            event_data = event_data.replace(':CH_NO', value.CH_NO);
+                            //event_data = event_data.replace(':plot_id', plot_id);
                             });
 
                             // append the new row to the table body
-                            tableBody.append(row);
-                        });
-
+                            $("#myTable").empty();
+                            $("#myTable").append(event_data);
                     }
 
-                    console.log(response)
+                    //console.log(response)
                 }
 
             });

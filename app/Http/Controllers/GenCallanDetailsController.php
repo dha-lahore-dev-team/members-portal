@@ -34,7 +34,7 @@ class GenCallanDetailsController extends Controller
             $response2 = $client->request('get', 'http://192.168.43.120/mems_infoportal/api/wb_info/all_challan_history?plot_id=' .$request->plot_id, [
                 'headers' => $headers,
             ]);
-            $data = json_decode($response2->getBody(),true);
+            $data = json_decode($response2->getBody()->getContents());
             //{{dd($data[0]['PLOT_NO']);}}
             return response()->json($data);
         }
@@ -42,5 +42,28 @@ class GenCallanDetailsController extends Controller
             return 0;
         }
 
+    }
+    public function detailsChallan($ch_no)
+    {
+        $username = 'lkasoidrhfpaspoe';
+        $password = "f8c98f7e4c394b0796baaab0108b028f";
+        $credentials = base64_encode("{$username}:{$password}");
+        $client = new Client();
+        $headers = [
+            'Authorization' => 'Basic ' . $credentials,
+            'X-API-KEY' => 'b8e25326-dfc4-4788-DHA-1011141'
+        ];
+        $user = Auth::user();
+        $response = $client->request('get', 'http://192.168.43.120/mems_infoportal/api/wb_info/challan_view?challan_id='.$ch_no, [
+            'headers' => $headers,
+        ]);
+        $data = json_decode($response->getBody()->getContents());
+        foreach ($data as $row) {
+            if($row->CH_NO==$ch_no){
+                $find = $row;
+                return view('pdf.challan_details',compact('find'));
+            }
+
+        }
     }
 }

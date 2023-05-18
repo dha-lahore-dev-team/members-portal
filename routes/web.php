@@ -35,6 +35,7 @@ Route::get('/search/challan/{plot_id}', [App\Http\Controllers\PostGuzzleControll
 Route::get('/search/history/{plot_id}', [App\Http\Controllers\PostGuzzleController::class, 'searchHistory'])->name('search.history')->middleware('role');
 Route::post('/fetchamount', [App\Http\Controllers\PostGuzzleController::class, 'fetchAmount'])->name('fetchamount');
 Route::post('/fetchchallan', [App\Http\Controllers\GenCallanDetailsController::class, 'challanDetails'])->name('fetchchallan');
+Route::get('/challan/details/{ch_no}', [App\Http\Controllers\GenCallanDetailsController::class, 'detailsChallan'])->name('challan.details')->middleware('role');
 Auth::routes();
 
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
