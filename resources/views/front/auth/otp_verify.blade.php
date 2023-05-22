@@ -110,7 +110,7 @@ $diffInMinutes = $createdAt->diffInMinutes($now);
 
 <script>
     // Set the timer duration in milliseconds
-    var duration = 183 * 1000;
+    var duration = 300 * 1000;
 
     // Update the timer display every second
     var intervalId = setInterval(function() {

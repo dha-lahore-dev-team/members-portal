@@ -48,31 +48,16 @@
                                         <!-- Info boxes -->
                                         <div class="row">
                                             <div class="col-12 col-sm-6 col-md-3 hideclass" style="display: none">
-                                                <div class="info-box bg-info">
+                                                <div class="info-box bg-danger">
                                                     <div class="info-box-content">
-                                                        <span class="info-box-text">Total Amount</span>
-                                                        <span class="info-box-number">PKR. <span id="tot_amt"></span>/-</span>
+                                                        <span class="info-box-text">Total Outstanding</span>
+                                                        <span class="info-box-number">PKR. <span id="up_amt"></span>/-</span>
                                                     </div>
                                                     <!-- /.info-box-content -->
                                                 </div>
                                                 <!-- /.info-box -->
                                             </div>
                                             <!-- /.col -->
-                                            <div class="col-12 col-sm-6 col-md-3 hideclass" style="display: none">
-                                                <div class="info-box bg-success">
-                                                    <div class="info-box-content">
-                                                        <span class="info-box-text">Amount Paid</span>
-                                                        <span class="info-box-number">PKR. <span id="tot_paid"></span>/-</span>
-                                                    </div>
-                                                    <!-- /.info-box-content -->
-                                                </div>
-                                                <!-- /.info-box -->
-                                            </div>
-                                            <!-- /.col -->
-
-                                            <!-- fix for small devices only -->
-                                            <div class="clearfix hidden-md-up"></div>
-
                                             <div class="col-12 col-sm-6 col-md-3 hideclass" style="display: none">
                                                 <div class="info-box bg-warning">
                                                     <div class="info-box-content">
@@ -84,11 +69,25 @@
                                                 <!-- /.info-box -->
                                             </div>
                                             <!-- /.col -->
+                                            <!-- fix for small devices only -->
+                                            <div class="clearfix hidden-md-up"></div>
+
                                             <div class="col-12 col-sm-6 col-md-3 hideclass" style="display: none">
-                                                <div class="info-box bg-danger">
+                                                <div class="info-box bg-success">
                                                     <div class="info-box-content">
-                                                        <span class="info-box-text">Upcoming Payment</span>
-                                                        <span class="info-box-number">PKR. <span id="up_amt"></span>/-</span>
+                                                        <span class="info-box-text">Amount Paid</span>
+                                                        <span class="info-box-number">PKR. <span id="tot_paid"></span>/-</span>
+                                                    </div>
+                                                    <!-- /.info-box-content -->
+                                                </div>
+                                                <!-- /.info-box -->
+                                            </div>
+                                            <!-- /.col -->
+                                            <div class="col-12 col-sm-6 col-md-3 hideclass" style="display: none">
+                                                <div class="info-box bg-info">
+                                                    <div class="info-box-content">
+                                                        <span class="info-box-text">Total Amount</span>
+                                                        <span class="info-box-number">PKR. <span id="tot_amt"></span>/-</span>
                                                     </div>
                                                     <!-- /.info-box-content -->
                                                 </div>
@@ -106,23 +105,23 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-3 hideclass" style="display: none">
+<!--                                    <div class="col-md-3 hideclass" style="display: none">
                                         <div class="form-group">
                                             <div class="custom-control custom-radio">
                                                 <input class="custom-control-input" type="radio" id="customRadio2" name="amount_total" >
                                                 <label for="customRadio2" class="custom-control-label">Upcoming Payment</label>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>-->
                                     <div class="col-md-3 hideclass" style="display: none">
                                         <div class="form-group">
                                             <div class="custom-control custom-radio">
                                                 <input class="custom-control-input" type="radio" id="customRadio3" name="amount_total" >
-                                                <label for="customRadio3" class="custom-control-label">Full Payment</label>
+                                                <label for="customRadio3" class="custom-control-label">Balance Amount</label>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-3 hideclass" style="display: none">
+                                    <div class="col-md-6 hideclass" style="display: none">
                                         <div class="form-group">
                                             <div class="custom-control custom-radio">
                                                 <input class="custom-control-input" value="0" type="radio" id="customRadio4" name="amount_total" >
@@ -160,7 +159,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header" style="background-color: green; color: white">
-                                <h5>Challan Details</h5>
+                                <h5>Unpaid Challans</h5>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
@@ -169,7 +168,7 @@
                                     <tr>
                                         <th>Plot No</th>
                                         <th>Challan No</th>
-                                        <th>Refenrece No</th>
+                                        <th>Reference No</th>
                                         <th>Total Amount</th>
                                         <th>Due Date</th>
                                         <th>Action</th>
@@ -226,15 +225,17 @@
                     else{
                         $(".hideclass").show();
                     }
+                    // Radio Button with Values set here
                     $("#customRadio1").val(response.amount[0].TOT_OVERDUE);
-                    $("#customRadio2").val(response.amount[0].TOT_RECEIVABLE_TILL_MONTH);
+                    /*$("#customRadio2").val(response.amount[0].TOT_RECEIVABLE_TILL_MONTH);*/
                     $("#customRadio3").val(response.amount[0].TOT_BAL);
                     $("#amount").val(response.amount[0].TOT_OVERDUE);
                     $('input[id="customRadio1"]').prop('checked', true);
+                    // Info Box Values Display here
                     $('#tot_amt').text(response.amount[0].TOT_AMT);
                     $('#tot_paid').text(response.amount[0].TOT_PAID);
                     $('#tot_bal').text(response.amount[0].TOT_BAL);
-                    $('#up_amt').text(response.amount[0].UPCOMING_INST_DUE_AMT);
+                    $('#up_amt').text(response.amount[0].TOT_OVERDUE);
                 }
 
             });
@@ -271,7 +272,7 @@
                             event_data += '<td class="po">' + value.REF_NO + '</td>';
                             event_data += '<td class="sa">' + value.TOT_AMT + '</td>';
                             event_data += '<td class="pr">' + value.DUE_DATE + '</td>';
-                            event_data += '<td><a href="{{route('challan.details',['ch_no'=>":CH_NO"])}}" class="btn btn-primary edit" id=" '+ value.CH_NO + '">View</a>    <a href="#" class="btn btn-success editt"   id=" '+ value.CH_NO + '">Pay</a></td>';
+                            event_data += '<td><a href="{{route('challan.details',['ch_no'=>":CH_NO"])}}" class="btn btn-primary edit" target="_blank" id=" '+ value.CH_NO + '">View Challan</a>    <a href="#" class="btn btn-success editt"   id=" '+ value.CH_NO + '">Pay Now</a>    <a href="#" class="btn btn-info editt">Pay Online</a></td>';
                             event_data += '</tr>';
                             event_data = event_data.replace(':CH_NO', value.CH_NO);
                             //event_data = event_data.replace(':plot_id', plot_id);
