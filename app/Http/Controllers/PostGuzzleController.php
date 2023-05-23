@@ -106,7 +106,7 @@ class PostGuzzleController extends Controller
     {
         //$otpp = mt_rand(1000000, 9999999);
         $otpp = '123456';
-        $otp_text = 'Dear Member, Your PIN Code for Member Area Portal Login is'. $otpp .'. Never share it with anyone ever.';
+        $otp_text = 'Dear Member, Your PIN Code for Member Area Portal Login is '. $otpp . '. Never share it with anyone ever.';
         $otp = new OtpDetails();
         $otp->details_id = $request->details_id;
         $otp->qey_id = $request->qey_id;
@@ -139,6 +139,7 @@ class PostGuzzleController extends Controller
             //$iteL_uri = 'https://api.itelservices.net/send.php?transaction_id=' . $string . '&api_key=WUMKp21gth2UKEpsLp5I7yKABrmyi673&number=92' . $request->phone . '&text=' . $otpp . '&from=4473&type=sms';
             //$m3tech_uri = 'https://secure.m3techservice.com/GenericService/webservice_4_1.asmx/SendSMS?UserId=sms1@dhalahore&Password=E9B30A-cd1d1f&MobileNo=92' . $request->phone . '&MsgId=' . $string . '&SMS=' . $otpp . '&MsgHeader=9460&HandsetPort=0&SMSChannel=0&Telco=0';
             $zongsms_uri = 'http://192.168.44.103/sms/send_sms.php?app=member_portal&cell=92' . $request->phone . '&msg=' . $otp_text;
+            //die($zongsms_uri);
             $response = $client->request('get', $zongsms_uri, $headers);
             if($response){
                 $otp->save();
@@ -217,11 +218,11 @@ class PostGuzzleController extends Controller
             $string = str_shuffle($pin);
             //$iteL_uri = 'https://api.itelservices.net/send.php?transaction_id=' . $string . '&api_key=WUMKp21gth2UKEpsLp5I7yKABrmyi673&number=92' . $request->phone . '&text=' . $otpp . '&from=4473&type=sms';
             //$m3tech_uri = 'https://secure.m3techservice.com/GenericService/webservice_4_1.asmx/SendSMS?UserId=sms1@dhalahore&Password=E9B30A-cd1d1f&MobileNo=92' . $request->phone . '&MsgId=' . $string . '&SMS=' . $otpp . '&MsgHeader=9460&HandsetPort=0&SMSChannel=0&Telco=0';
-            $zongsms_uri = 'http://192.168.44.103/sms/send_sms.php?app=member_portal&cell=92' . $request->phone . '&msg=' . $otpp;
-            $response = $client->request('get', $m3tech_uri, $headers);
+            $zongsms_uri = 'http://192.168.44.103/sms/send_sms.php?app=member_portal&cell=92' . $otp->send . '&msg=' . $otp;
+            $response = $client->request('get', $zongsms_uri , $headers);
             if($response){
                 $otp->save();
-                Toastr::success('PIN Code Sent at Registered Cell No Successfully','Success');
+                Toastr::success('PIN Code Re-Sent at Registered Cell No Successfully','Success');
                 return view('front.auth.otp_verify', compact('otp'));
             }else{
                 Toastr::error('Failed to send PIN Code. Please try again :)','danger');
@@ -257,7 +258,7 @@ class PostGuzzleController extends Controller
             'X-API-KEY' => 'b8e25326-dfc4-4788-DHA-1011141'
         ];
         $user = Auth::user();
-        $response = $client->request('get', 'http://192.168.43.120/mems_infoportal/api/wb_info/memplotdues?plot_id='.$plot_id.'&qry_id'.$user->qey_id, [
+        $response = $client->request('get', 'http://192.168.43.120/mems_infoportal/api/wb_info/memplotdues?plot_id='.$plot_id.'&qry_id='.$user->qey_id, [
             'headers' => $headers,
         ]);
         $data = json_decode($response->getBody()->getContents());

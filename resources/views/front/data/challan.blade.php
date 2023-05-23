@@ -192,6 +192,51 @@
         </section>
         <!-- /.content -->
     </div>
+    <!-- /.Card Payment-Modal -->
+    <div class="modal fade" id="CardPaymentPopupModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                </div>
+                <div class="modal-body" style="padding-top: 0px;">
+                    <h3 align="center">Credit Card Payment</h3>
+                    <p>Payment Through Credit / Debit Card Will be Available Soon!</p>
+                    <div style="clear:both;"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.Online Payment-Modal -->
+    <div class="modal fade" id="OnlinePaymentPopupModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+
+                </div>
+                <div class="modal-body" style="padding-top: 0px;">
+                    <h3 align="centre">Payment Through 1-Bill</h3>
+                    <ol>
+                        <li>Log into your respective Online Banking Application (Any Bank).</li>
+                        <li>Go to Bill Payments section.</li>
+                        <li>Click on <strong>"1 Bill"</strong> option.</li>
+                        <li>Click on <strong>"Invoice / Fixed Payments"</strong> Biller Option.</li>
+                        <li>Enter your Reference Number e.g. 342547XXXXXXXXXXX and proceed to next step.</li>
+                        <li>Billing details will be displayed.</li>
+                        <li>Proceed further and make payment as advised by the application.</li>
+                    </ol>
+                    <div style="clear:both;"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="jquery-3.6.3.min.js"></script>
     <script>
         $('#amount').prop('readonly', true);
@@ -239,6 +284,45 @@
                 }
 
             });
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('fetchunpaidchallans') }}',
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    plot_id: plot_id,
+                },
+                success: function (response) {
+                    if (response == 0) {
+                        alert('Could not Generate Challan. Please Try Again')
+                    } else {
+                        $('#content').show();
+                        // select the table body element
+                        var tableBody = $('#myTable');
+                        // create an array of data
+                        var data = response;
+// loop through the data and create a new row for each element
+                        var event_data = '';
+                        $.each(data, function (index, value) {
+                            // Replace the placeholder ":ch_id" with the actual value of value.ch_id
+
+                            event_data += '<tr class="'+ value.CH_NO + '">';
+                            event_data += '<td class="co">' + value.PLOT_NO + '</td>';
+                            event_data += '<td class="co">' + value.CH_NO + '</td>';
+                            event_data += '<td class="po">' + value.REF_NO + '</td>';
+                            event_data += '<td class="sa">' + value.TOT_AMT + '</td>';
+                            event_data += '<td class="pr">' + value.DUE_DATE + '</td>';
+                            event_data += '<td><a href="{{route('challan.details',['ch_no'=>":CH_NO"])}}" class="btn btn-primary edit" target="_blank" id="'+ value.CH_NO + '">View Challan</a>    <button type="button" class="btn btn-success edit CardPaymentPopup" id="'+ value.CH_NO + '">Pay Now</button>    <button type="button" class="btn btn-info edit OnlinePaymentPopup" id="'+ value.CH_NO + '">Pay Online</button></td>';
+                            event_data += '</tr>';
+                            event_data = event_data.replace(':CH_NO', value.CH_NO);
+                            //event_data = event_data.replace(':plot_id', plot_id);
+                        });
+
+                        // append the new row to the table body
+                        $("#myTable").empty();
+                        $("#myTable").append(event_data);
+                    }
+                }
+            });
         });
         $("#genrate_chalan").on("click", function () {
             var plot_id = $("#plot_id option:selected").val();
@@ -272,7 +356,7 @@
                             event_data += '<td class="po">' + value.REF_NO + '</td>';
                             event_data += '<td class="sa">' + value.TOT_AMT + '</td>';
                             event_data += '<td class="pr">' + value.DUE_DATE + '</td>';
-                            event_data += '<td><a href="{{route('challan.details',['ch_no'=>":CH_NO"])}}" class="btn btn-primary edit" target="_blank" id=" '+ value.CH_NO + '">View Challan</a>    <a href="#" class="btn btn-success editt"   id=" '+ value.CH_NO + '">Pay Now</a>    <a href="#" class="btn btn-info editt">Pay Online</a></td>';
+                            event_data += '<td><a href="{{route('challan.details',['ch_no'=>":CH_NO"])}}" class="btn btn-primary edit" target="_blank" id="'+ value.CH_NO + '">View Challan</a>    <button type="button" class="btn btn-success edit CardPaymentPopup" id="'+ value.CH_NO + '">Pay Now</button>    <button type="button" class="btn btn-info edit OnlinePaymentPopup" id="'+ value.CH_NO + '">Pay Online</button></td>';
                             event_data += '</tr>';
                             event_data = event_data.replace(':CH_NO', value.CH_NO);
                             //event_data = event_data.replace(':plot_id', plot_id);
@@ -288,6 +372,13 @@
 
             });
 
+        });
+        // Card Payment Popup Light Box display Called
+        $("#myTable").on("click",".CardPaymentPopup", function(){
+            $('#CardPaymentPopupModal').modal('show');
+        });
+        $("#myTable").on("click",".OnlinePaymentPopup", function(){
+            $('#OnlinePaymentPopupModal').modal('show');
         });
     </script>
 @endsection

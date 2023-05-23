@@ -89,17 +89,23 @@
 <script>
     $(function () {
         $("#example1").DataTable({
-            "responsive": true, "lengthChange": false, "autoWidth": false,
+            "paging": false,
+            "responsive": true,
+            "lengthChange": false,
+            "searching": false,
+            "autoWidth": false,
+            "ordering": false,
+            "info": false,
             "buttons": ["excel", "pdf", "print"]
         }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
         $('#example2').DataTable({
-            "paging": true,
+            "paging": false,
+            "responsive": true,
             "lengthChange": false,
             "searching": false,
-            "ordering": true,
-            "info": true,
             "autoWidth": false,
-            "responsive": true,
+            "ordering": false,
+            "info": false,
         });
     });
 </script>

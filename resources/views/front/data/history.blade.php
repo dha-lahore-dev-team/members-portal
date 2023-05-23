@@ -39,15 +39,15 @@
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Plot No</th>
-                                    <th>Owner Name</th>
-                                    <th>Challan No</th>
-                                    <th>Reference No</th>
-                                    <th>Issue Date</th>
-                                    <th>Due Date</th>
-                                    <th>Pay Date</th>
-                                    <th>Amount (PKR)</th>
-                                    <th>Amount (In Words)</th>
+                                    <th style="min-width: 45px">Plot No</th>
+                                    <th style="min-width: 45px">Owner Name</th>
+                                    <th style="min-width: 45px">Challan No</th>
+                                    <th style="min-width: 45px">Reference No</th>
+                                    <th style="min-width: 90px">Issue Date</th>
+                                    <th style="min-width: 90px">Due Date</th>
+                                    <th style="min-width: 45px">Pay Date</th>
+                                    <th style="min-width: 110px">Amount (PKR)</th>
+                                    <th style="min-width: 45px">Amount (In Words)</th>
                                 </tr>
                                 </thead>
                               <tbody>

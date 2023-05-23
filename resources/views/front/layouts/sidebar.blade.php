@@ -43,7 +43,7 @@
                             <a href="{{route('schedule.two')}}" class="nav-link {{  request()->is('schedule/*') || request()->is('schedule') || request()->is('search/schedule/*') ? 'active':'' }} ">
                                 <i class="nav-icon fas fa-edit"></i>
                                 <p>
-                                    View Schedule
+                                    Schedule
                                 </p>
                             </a>
                         </li>
@@ -76,7 +76,7 @@
                 </li>
 
 
-		<li class="nav-item menu-open">
+		<li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-calculator"></i>
                         <p>
@@ -84,7 +84,7 @@
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
-                    <ul class="nav nav-treeview">                        
+                    <ul class="nav nav-treeview">
 			<li class="nav-item ">
                             <a href="#" class="nav-link {{  request()->is('history/*') || request()->is('history') ||  request()->is('search/history/*') ? 'active':'' }} ">
                                 <i class="nav-icon fas fa-history" style="font-size:22px"></i>

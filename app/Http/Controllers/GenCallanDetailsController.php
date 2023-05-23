@@ -43,6 +43,30 @@ class GenCallanDetailsController extends Controller
         }
 
     }
+    public function fetchUnpidChallans(Request $request)
+    {
+        $username = 'lkasoidrhfpaspoe';
+        $password = "f8c98f7e4c394b0796baaab0108b028f";
+        $credentials = base64_encode("{$username}:{$password}");
+        $client = new Client();
+        $headers = [
+            'Authorization' => 'Basic ' . $credentials,
+            'X-API-KEY' => 'b8e25326-dfc4-4788-DHA-1011141'
+        ];
+        $user = Auth::user();
+        $response = $client->request('get', 'http://192.168.43.120/mems_infoportal/api/wb_info/all_challan_history?plot_id=' .$request->plot_id, [
+                'headers' => $headers,
+            ]);
+        if($response){
+        $data = json_decode($response->getBody()->getContents());
+        return response()->json($data);
+        }
+        else{
+            return 0;
+        }
+
+    }
+
     public function detailsChallan($ch_no)
     {
         $username = 'lkasoidrhfpaspoe';

@@ -39,35 +39,35 @@
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Ser #</th>
-                                    <th>Description</th>
-                                    <th>Due Date</th>
-                                    <th>Inst Amount (PKR)</th>
+                                    <th style="min-width: 45px">Ser #</th>
+                                    <th style="min-width: 45px">Description</th>
+                                    <th style="min-width: 75px">Due Date</th>
+                                    <th style="min-width: 135px">Inst Amount (PKR)</th>
                                     <th>Challan No</th>
-                                    <th>Payment Date</th>
-                                    <th>Paid Amount (PKR)</th>
-                                    <th>Payment Status</th>
-                                    <th>Balance Amount (PKR)</th>
+                                    <th style="min-width: 100px">Payment Date</th>
+                                    <th style="min-width: 140px">Paid Amount (PKR)</th>
+                                    <th style="min-width: 45px">Payment Status</th>
+                                    <th style="min-width: 170px">Balance Amount (PKR)</th>
                                 </tr>
                                 </thead>
                               <tbody>
                               @foreach($data as $k=>$row)
                                 <tr>
-                                    <td>{{$row->SERIAL_NO}}</td>
+                                    <td style="text-align: center">{{$row->SERIAL_NO}}</td>
                                     <td>{{$row->COA_DESCRIPTION}}</td>
                                     <td>{{$row->DUE_DATE}}</td>
-                                    <td>{{number_format($row->INST_AMT,2)}}</td>
+                                    <td style="text-align: center">{{number_format($row->INST_AMT)}}</td>
                                     <td>{{$row->CH_NO}}</td>
                                     <td>{{$row->PAY_DATE}}</td>
-                                    <td>{{$row->PAID_AMT}}</td>
+                                    <td style="text-align: center">{{number_format($row->PAID_AMT)}}</td>
                                     @if($row->BAL_AMT=='0.00')
-                                        <td><span class="badge badge-success">Paid</span></td>
+                                        <td style="text-align: center"><span class="badge badge-success">Paid</span></td>
                                     @elseif($row->SUR_AMT!=null)
-                                        <td><span class="badge badge-danger">Overdue Payment</span></td>
+                                        <td style="text-align: center"><span class="badge badge-danger">Overdue Payment</span></td>
                                     @else
-                                        <td><span class="badge badge-warning">Upcoming Payment</span></td>
+                                        <td style="text-align: center"><span class="badge badge-warning">Upcoming Payment</span></td>
                                     @endif
-                                    <td>{{number_format($row->BAL_AMT,2)}}</td>
+                                    <td style="text-align: center">{{number_format($row->BAL_AMT)}}</td>
                                 </tr>
                               @endforeach
                               </tbody>
