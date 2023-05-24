@@ -33,8 +33,12 @@
     <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
     <!-- Custom style -->
     <link rel="stylesheet" href="{{asset('front/dist/css/custom.css')}}">
-
-
+    <style>
+        .disabled {
+            pointer-events: none;
+            color: gray;
+        }
+    </style>
 </head>
 <body class="hold-transition register-page">
 <?php
@@ -56,7 +60,7 @@ $diffInMinutes = $createdAt->diffInMinutes($now);
                 <input type="hidden" value="{{$otp->otp}}" name="otp">
                 <div class="form-group">
                     <label>Enter PIN Code </label>
-                    <input type="text" class="form-control"  name="otp" placeholder=" Type Authentication PIN Code here...  ">
+                    <input type="text" required class="form-control"  name="otp" placeholder=" Type Authentication PIN Code here...  ">
                 </div>
 
                 <div class="row">
@@ -66,14 +70,9 @@ $diffInMinutes = $createdAt->diffInMinutes($now);
                     </div>
                     <div class="col-4">
                         <p id="timer" style="color: #ced4da;font-size: 25px"></p>
-
                     </div>
                     <div class="col-4">
-
-                    </div>
-                    <div class="col-4" style="margin-left: 20px">
-                        <a href="{{ route('resend',['id'=>$otp->id]) }}">Resend</a>
-
+                        <a href="{{ route('resend',['id'=>$otp->id]) }}" id="disabled" class="disabled">Resend</a>
                     </div>
                     <!-- /.col -->
                 </div>
@@ -121,6 +120,7 @@ $diffInMinutes = $createdAt->diffInMinutes($now);
         if (duration <= 0) {
             clearInterval(intervalId);
             $("#timer").text("Time's up!");
+            $('#disabled').removeClass('disabled');
         }
     }, 1000);
 </script>

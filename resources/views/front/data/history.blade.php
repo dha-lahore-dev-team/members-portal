@@ -60,7 +60,7 @@
                                     <td>{{$row->ISSUE_DATE}}</td>
                                     <td>{{$row->DUE_DATE}}</td>
                                     <td>{{$row->PAY_DATE}}</td>
-                                    <td>{{number_format($row->TOT_AMT,2)}}</td>
+                                    <td  style="text-align:center">{{number_format($row->TOT_AMT)}}</td>
                                     <td>{{$row->AMT_IN_WORDS}}</td>
                                 </tr>
                               @endforeach

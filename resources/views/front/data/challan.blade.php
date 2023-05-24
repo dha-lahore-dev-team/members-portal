@@ -44,24 +44,50 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="col-12 col-sm-6 col-md-3 hideclass" style="display: none">
+                                        <div class="info-box bg-light">
+                                            <div class="info-box-content">
+                                                <span class="info-box-text text-center text-muted">Total Dues</span>
+                                                <span class="info-box-number text-center text-muted mb-0">PKR. <span id="tot_amt_info"></span>/-</span>
+                                            </div>
+                                            <!-- /.info-box-content -->
+                                        </div>
+                                        <!-- /.info-box -->
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-3 hideclass" style="display: none">
+                                        <div class="info-box bg-light">
+                                            <div class="info-box-content">
+                                                <span class="info-box-text text-center text-muted">Amount Paid (till To-date)</span>
+                                                <span class="info-box-number text-center text-muted mb-0">PKR. <span id="tot_paid_info"></span>/-</span>
+                                            </div>
+                                            <!-- /.info-box-content -->
+                                        </div>
+                                        <!-- /.info-box -->
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-md-3 hideclass" style="display: none">
+                                        <div class="info-box bg-light">
+                                            <div class="info-box-content">
+                                                <span class="info-box-text text-center text-muted">Balance Amount</span>
+                                                <span class="info-box-number text-center text-muted mb-0">PKR. <span id="tot_bal_info"></span>/-</span>
+                                            </div>
+                                            <!-- /.info-box-content -->
+                                        </div>
+                                        <!-- /.info-box -->
+                                    </div>
                                 </div>
                                         <!-- Info boxes -->
                                         <div class="row">
-                                            <div class="col-12 col-sm-6 col-md-3 hideclass" style="display: none">
-                                                <div class="info-box bg-danger">
-                                                    <div class="info-box-content">
-                                                        <span class="info-box-text">Total Outstanding</span>
-                                                        <span class="info-box-number">PKR. <span id="up_amt"></span>/-</span>
-                                                    </div>
-                                                    <!-- /.info-box-content -->
+                                            <div class="col-12 hideclass" style="display: none">
+                                                <div class="callout callout-success">
+                                                    <h5><i class="fas fa-info"></i> Payment Info:</h5>
+                                                    Following Info Boxes will reflect the complete Payment Details against the selected Plot No..
                                                 </div>
-                                                <!-- /.info-box -->
                                             </div>
                                             <!-- /.col -->
                                             <div class="col-12 col-sm-6 col-md-3 hideclass" style="display: none">
                                                 <div class="info-box bg-warning">
                                                     <div class="info-box-content">
-                                                        <span class="info-box-text">Balance Amount</span>
+                                                        <span class="info-box-text">All Dues</span>
                                                         <span class="info-box-number">PKR. <span id="tot_bal"></span>/-</span>
                                                     </div>
                                                     <!-- /.info-box-content -->
@@ -69,30 +95,40 @@
                                                 <!-- /.info-box -->
                                             </div>
                                             <!-- /.col -->
-                                            <!-- fix for small devices only -->
-                                            <div class="clearfix hidden-md-up"></div>
-
                                             <div class="col-12 col-sm-6 col-md-3 hideclass" style="display: none">
-                                                <div class="info-box bg-success">
+                                                <div class="info-box bg-danger">
                                                     <div class="info-box-content">
-                                                        <span class="info-box-text">Amount Paid</span>
-                                                        <span class="info-box-number">PKR. <span id="tot_paid"></span>/-</span>
-                                                    </div>
-                                                    <!-- /.info-box-content -->
-                                                </div>
-                                                <!-- /.info-box -->
-                                            </div>
-                                            <!-- /.col -->
-                                            <div class="col-12 col-sm-6 col-md-3 hideclass" style="display: none">
-                                                <div class="info-box bg-info">
-                                                    <div class="info-box-content">
-                                                        <span class="info-box-text">Total Amount</span>
+                                                        <span class="info-box-text">Over Due</span>
                                                         <span class="info-box-number">PKR. <span id="tot_amt"></span>/-</span>
                                                     </div>
                                                     <!-- /.info-box-content -->
                                                 </div>
                                                 <!-- /.info-box -->
                                             </div>
+                                            <!-- fix for small devices only -->
+                                            <div class="clearfix hidden-md-up"></div>
+
+                                            <div class="col-12 col-sm-6 col-md-3 hideclass" style="display: none">
+                                                <div class="info-box bg-success">
+                                                    <div class="info-box-content">
+                                                        <span class="info-box-text">Upcoming Payment</span>
+                                                        <span class="info-box-number">PKR. <span id="up_amt"></span>/-</span>
+                                                    </div>
+                                                    <!-- /.info-box-content -->
+                                                </div>
+                                                <!-- /.info-box -->
+                                            </div>
+                                            <!-- /.col -->
+<!--                                            <div class="col-12 col-sm-6 col-md-3 hideclass" style="display: none">
+                                                <div class="info-box bg-info">
+                                                    <div class="info-box-content">
+                                                        <span class="info-box-text">Total Amount</span>
+                                                        <span class="info-box-number">PKR. <span id="tot_amt"></span>/-</span>
+                                                    </div>
+                                                    &lt;!&ndash; /.info-box-content &ndash;&gt;
+                                                </div>
+                                                &lt;!&ndash; /.info-box &ndash;&gt;
+                                            </div>-->
                                             <!-- /.col -->
                                         </div>
                                         <!-- /.row -->
@@ -100,35 +136,38 @@
                                     <div class="col-md-3 hideclass" style="display: none">
                                         <div class="form-group">
                                             <div class="custom-control custom-radio">
-                                                <input class="custom-control-input" type="radio" id="customRadio1" name="amount_total" >
-                                                <label for="customRadio1" class="custom-control-label">Total Outstanding</label>
+                                                <input class="custom-control-input" type="radio" id="customRadio3" name="amount_total" >
+                                                <label for="customRadio3" class="custom-control-label">All Dues</label>
                                             </div>
                                         </div>
                                     </div>
-<!--                                    <div class="col-md-3 hideclass" style="display: none">
+
+                                    <div class="col-md-3 hideclass" style="display: none">
+                                        <div class="form-group">
+                                            <div class="custom-control custom-radio">
+                                                <input class="custom-control-input" type="radio" id="customRadio1" name="amount_total" >
+                                                <label for="customRadio1" class="custom-control-label">Over Due</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 hideclass" style="display: none">
                                         <div class="form-group">
                                             <div class="custom-control custom-radio">
                                                 <input class="custom-control-input" type="radio" id="customRadio2" name="amount_total" >
                                                 <label for="customRadio2" class="custom-control-label">Upcoming Payment</label>
                                             </div>
                                         </div>
-                                    </div>-->
-                                    <div class="col-md-3 hideclass" style="display: none">
-                                        <div class="form-group">
-                                            <div class="custom-control custom-radio">
-                                                <input class="custom-control-input" type="radio" id="customRadio3" name="amount_total" >
-                                                <label for="customRadio3" class="custom-control-label">Balance Amount</label>
-                                            </div>
-                                        </div>
                                     </div>
-                                    <div class="col-md-6 hideclass" style="display: none">
+
+<!--                                    <div class="col-md-6 hideclass" style="display: none">
                                         <div class="form-group">
                                             <div class="custom-control custom-radio">
                                                 <input class="custom-control-input" value="0" type="radio" id="customRadio4" name="amount_total" >
                                                 <label for="customRadio4" class="custom-control-label">Partial Payment</label>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>-->
                                     <div class="col-md-3 hideclass" style="display: none">
                                         <div class="form-group">
                                             <input type="text" class="form-control" id="amount" placeholder="Amount" >
@@ -239,14 +278,14 @@
     </div>
     <script src="jquery-3.6.3.min.js"></script>
     <script>
-        $('#amount').prop('readonly', true);
+        $('#amount').prop('readonly', false);
         $('input[type="radio"]').change(function() {
             if ($(this).val() == 0) {
                 $("#amount").val(0);
                 $('#amount').prop('readonly', false);
             } else{
                 $("#amount").val($(this).val());
-                $('#amount').prop('readonly', true);
+                $('#amount').prop('readonly', false);
             }
         });
         $(document).on('change', 'select', function(event) {
@@ -271,16 +310,22 @@
                         $(".hideclass").show();
                     }
                     // Radio Button with Values set here
-                    $("#customRadio1").val(response.amount[0].TOT_OVERDUE);
-                    /*$("#customRadio2").val(response.amount[0].TOT_RECEIVABLE_TILL_MONTH);*/
                     $("#customRadio3").val(response.amount[0].TOT_BAL);
-                    $("#amount").val(response.amount[0].TOT_OVERDUE);
-                    $('input[id="customRadio1"]').prop('checked', true);
-                    // Info Box Values Display here
-                    $('#tot_amt').text(response.amount[0].TOT_AMT);
-                    $('#tot_paid').text(response.amount[0].TOT_PAID);
+                    $("#customRadio1").val(response.amount[0].TOT_OVERDUE);
+                    $("#customRadio2").val(response.amount[0].TOT_RECEIVABLE_TILL_MONTH);
+                    $("#amount").val(response.amount[0].TOT_BAL);
+                    $('input[id="customRadio3"]').prop('checked', true);
+                    //TOP Info Boxes
+                    $('#tot_amt_info').text(response.amount[0].TOT_AMT);
+                    $('#tot_paid_info').text(response.amount[0].TOT_PAID);
+                    $('#tot_bal_info').text(response.amount[0].TOT_BAL);
+
+                    // Detail Info Box Values Display here
                     $('#tot_bal').text(response.amount[0].TOT_BAL);
-                    $('#up_amt').text(response.amount[0].TOT_OVERDUE);
+                    $('#tot_amt').text(response.amount[0].TOT_OVERDUE);
+/*                  $('#tot_paid').text(response.amount[0].TOT_PAID);*/
+
+                    $('#up_amt').text(response.amount[0].TOT_RECEIVABLE_TILL_MONTH);
                 }
 
             });

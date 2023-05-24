@@ -84,6 +84,7 @@ class PostGuzzleController extends Controller
             $detials->QEY_ID = $phase->QEY_ID;
             $detials->CELL_NO = $phase->CELL_NO;
             $detials->EMAIL = $phase->EMAIL;
+            //$detials->MEM_NAME = $phase->MAM_NAME;
             $detials->RESPONSE_MESSAGE = $phase->RESPONSE_MESSAGE;
             $detials->save();
 

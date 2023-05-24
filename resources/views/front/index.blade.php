@@ -7,7 +7,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Dashboard</h1>
+                        <h1>Welcome <strong></strong>!</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -35,7 +35,7 @@
                                 <tr>
                                     <th>Phase / Sector / Plot No</th>
                                     <th>Payment Schedule</th>
-                                    <!-- <th>Payment Challan</th> -->
+                                    <th>Financial History</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -43,6 +43,7 @@
                                     <tr>
                                         <td>{{$row->PHASE_NO}}/{{$row->SECTOR_NAME}}/{{$row->PLOT_NO}}</td>
                                         <td><a href="{{route('schedule',['plot_id'=>$row->PLOT_ID])}}">View</a></td>
+                                        <td><a href="{{route('history.two')}}">View</a></td>
                                     </tr>
                                 @endforeach
                                 </tbody>

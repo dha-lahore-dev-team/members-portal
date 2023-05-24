@@ -287,7 +287,7 @@
         <td>&nbsp;</td>
         <td>&nbsp;</td>
         <td>&nbsp;</td>
-        <td colspan="5" style="border:1px solid black;"><div align="right"><strong>{{$find->AMOUNT}}</strong></div></td>
+        <td colspan="5" style="border:1px solid black;"><div align="right"><strong>{{$find->TOT_AMT}}</strong></div></td>
         <td>&nbsp;</td>
     </tr>
     <tr>
@@ -412,7 +412,7 @@
         <td>&nbsp;</td>
         <td>&nbsp;</td>
         <td>&nbsp;</td>
-        <td colspan="5" style="border:1px solid black;"><div align="right"><strong>{{$find->AMOUNT}}</strong></div></td>
+        <td colspan="5" style="border:1px solid black;"><div align="right"><strong>{{$find->TOT_AMT}}</strong></div></td>
         <td>&nbsp;</td>
     </tr>
     <tr>
@@ -551,7 +551,7 @@
         <td>&nbsp;</td>
         <td>&nbsp;</td>
         <td>&nbsp;</td>
-        <td colspan="5" style="border:1px solid black;"><div align="right"><strong>{{$find->AMOUNT}}</strong></div></td>
+        <td colspan="5" style="border:1px solid black;"><div align="right"><strong>{{$find->TOT_AMT}}</strong></div></td>
         <td>&nbsp;</td>
     </tr>
     <tr>
