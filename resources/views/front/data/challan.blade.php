@@ -250,7 +250,7 @@
         </div>
     </div>
     <!-- /.Online Payment-Modal -->
-    <div class="modal fade" id="OnlinePaymentPopupModal" role="dialog">
+    <div class="modal fade" id="OnlinePaymentDialogue" role="dialog">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -264,7 +264,7 @@
                         <li>Go to Bill Payments section.</li>
                         <li>Click on <strong>"1 Bill"</strong> option.</li>
                         <li>Click on <strong>"Invoice / Fixed Payments"</strong> Biller Option.</li>
-                        <li>Enter your Reference Number e.g. 342547XXXXXXXXXXX and proceed to next step.</li>
+                        <li>Enter your Reference Number i.e. <strong><span id="ChallanId"></span></strong> and proceed to next step.</li>
                         <li>Billing details will be displayed.</li>
                         <li>Proceed further and make payment as advised by the application.</li>
                     </ol>
@@ -316,16 +316,15 @@
                     $("#amount").val(response.amount[0].TOT_BAL);
                     $('input[id="customRadio3"]').prop('checked', true);
                     //TOP Info Boxes
-                    $('#tot_amt_info').text(response.amount[0].TOT_AMT);
-                    $('#tot_paid_info').text(response.amount[0].TOT_PAID);
-                    $('#tot_bal_info').text(response.amount[0].TOT_BAL);
+                    $('#tot_amt_info').text(parseInt(response.amount[0].TOT_AMT).toLocaleString());
+                    $('#tot_paid_info').text(parseInt(response.amount[0].TOT_PAID).toLocaleString());
+                    $('#tot_bal_info').text(parseInt(response.amount[0].TOT_BAL).toLocaleString());
 
                     // Detail Info Box Values Display here
-                    $('#tot_bal').text(response.amount[0].TOT_BAL);
-                    $('#tot_amt').text(response.amount[0].TOT_OVERDUE);
+                    $('#tot_bal').text(parseInt(response.amount[0].TOT_BAL).toLocaleString());
+                    $('#tot_amt').text(parseInt(response.amount[0].TOT_OVERDUE).toLocaleString());
 /*                  $('#tot_paid').text(response.amount[0].TOT_PAID);*/
-
-                    $('#up_amt').text(response.amount[0].TOT_RECEIVABLE_TILL_MONTH);
+                    $('#up_amt').text(parseInt(response.amount[0].TOT_RECEIVABLE_TILL_MONTH).toLocaleString());
                 }
 
             });
@@ -349,14 +348,14 @@
                         var event_data = '';
                         $.each(data, function (index, value) {
                             // Replace the placeholder ":ch_id" with the actual value of value.ch_id
-
+                            var TOT_AMT = value.TOT_AMT;
                             event_data += '<tr class="'+ value.CH_NO + '">';
                             event_data += '<td class="co">' + value.PLOT_NO + '</td>';
                             event_data += '<td class="co">' + value.CH_NO + '</td>';
                             event_data += '<td class="po">' + value.REF_NO + '</td>';
-                            event_data += '<td class="sa">' + value.TOT_AMT + '</td>';
+                            event_data += '<td class="sa">' + parseInt(TOT_AMT).toLocaleString() + '</td>';
                             event_data += '<td class="pr">' + value.DUE_DATE + '</td>';
-                            event_data += '<td><a href="{{route('challan.details',['ch_no'=>":CH_NO"])}}" class="btn btn-primary edit" target="_blank" id="'+ value.CH_NO + '">View Challan</a>    <button type="button" class="btn btn-success edit CardPaymentPopup" id="'+ value.CH_NO + '">Pay Now</button>    <button type="button" class="btn btn-info edit OnlinePaymentPopup" id="'+ value.CH_NO + '">Pay Online</button></td>';
+                            event_data += '<td><a href="{{route('challan.details',['ch_no'=>":CH_NO"])}}" class="btn btn-primary edit" target="_blank" id="'+ value.CH_NO + '">View Challan</a>    <button type="button" class="btn btn-success edit CardPaymentPopup" id="'+ value.CH_NO + '">Pay Now</button>    <a href="#OnlinePaymentDialogue" class="btn btn-info edit OnlinePaymentPopup" data-toggle="modal" data-id="'+ value.REF_NO + '">Pay Online</a></td>';
                             event_data += '</tr>';
                             event_data = event_data.replace(':CH_NO', value.CH_NO);
                             //event_data = event_data.replace(':plot_id', plot_id);
@@ -394,14 +393,14 @@
                         var event_data = '';
                         $.each(data, function (index, value) {
                             // Replace the placeholder ":ch_id" with the actual value of value.ch_id
-
+                            var TOT_AMT = value.TOT_AMT;
                             event_data += '<tr class="'+ value.CH_NO + '">';
                             event_data += '<td class="co">' + value.PLOT_NO + '</td>';
                             event_data += '<td class="co">' + value.CH_NO + '</td>';
                             event_data += '<td class="po">' + value.REF_NO + '</td>';
-                            event_data += '<td class="sa">' + value.TOT_AMT + '</td>';
+                            event_data += '<td class="sa">' + parseInt(TOT_AMT).toLocaleString() + '</td>';
                             event_data += '<td class="pr">' + value.DUE_DATE + '</td>';
-                            event_data += '<td><a href="{{route('challan.details',['ch_no'=>":CH_NO"])}}" class="btn btn-primary edit" target="_blank" id="'+ value.CH_NO + '">View Challan</a>    <button type="button" class="btn btn-success edit CardPaymentPopup" id="'+ value.CH_NO + '">Pay Now</button>    <button type="button" class="btn btn-info edit OnlinePaymentPopup" id="'+ value.CH_NO + '">Pay Online</button></td>';
+                            event_data += '<td><a href="{{route('challan.details',['ch_no'=>":CH_NO"])}}" class="btn btn-primary edit" target="_blank" id="'+ value.CH_NO + '">View Challan</a>    <button type="button" class="btn btn-success edit CardPaymentPopup" id="'+ value.CH_NO + '">Pay Now</button>    <button type="button" class="btn btn-info edit OnlinePaymentPopup" id="'+ value.REF_NO + '">Pay Online</button></td>';
                             event_data += '</tr>';
                             event_data = event_data.replace(':CH_NO', value.CH_NO);
                             //event_data = event_data.replace(':plot_id', plot_id);
@@ -423,7 +422,10 @@
             $('#CardPaymentPopupModal').modal('show');
         });
         $("#myTable").on("click",".OnlinePaymentPopup", function(){
-            $('#OnlinePaymentPopupModal').modal('show');
+            var ChallanId = $(this).data('id');
+            //alert(ChallanId);
+            //$('#OnlinePaymentPopupModal').modal('show');
+            $(".modal-body #ChallanId").text(ChallanId);
         });
     </script>
 @endsection

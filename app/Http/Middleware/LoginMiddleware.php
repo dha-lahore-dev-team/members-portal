@@ -18,7 +18,7 @@ class LoginMiddleware
     public function handle(Request $request, Closure $next)
     {
         if (Auth::check()) {
-            return redirect('/front/index');
+            return redirect('/home');
         }
         return $next($request);
     }

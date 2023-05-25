@@ -91,6 +91,7 @@ class PostGuzzleController extends Controller
             $user = new User();
             $user->email = $detials->EMAIL;
             $user->qey_id = $phase->QEY_ID;
+            $user->name = $phase->MEM_NAME;
             $user->password = Hash::make('12345678');
             $user->save();
             $data['details'] = $detials;

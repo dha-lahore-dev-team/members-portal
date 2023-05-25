@@ -28,9 +28,8 @@
                     <div class="card">
                         <div class="card-header" style="background-color: #3d3f7e; color: white">
                             <select name="search" class="form-control select2" style="width: 250px;" onchange="location = this.options[this.selectedIndex].value;">
-                                <option selected disabled>Please Select Plot No</option>
                                 @foreach($dataSanple as $key=>$row)
-                                    <option value="{{route('search.history',['plot_id'=>$row->PLOT_ID] ) }}">{{$row->PHASE_NO}}/{{$row->SECTOR_NAME}}/{{$row->PLOT_NO}}</option>
+                                    <option value="{{route('search.history',['plot_id'=>$row->PLOT_ID] ) }}" {{$row->PLOT_ID ? 'selected' : '' }}>{{$row->PHASE_NO}}/{{$row->SECTOR_NAME}}/{{$row->PLOT_NO}}</option>
                                 @endforeach
                             </select>
                         </div>
