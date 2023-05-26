@@ -13,7 +13,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{route('front.index')}}">Dashboard</a></li>
-                        <li class="breadcrumb-item active">Plot Payment Schedule</li>
+                        <li class="breadcrumb-item active">Financial History</li>
                     </ol>
                 </div>
             </div>
@@ -39,28 +39,22 @@
                                 <thead>
                                 <tr>
                                     <th style="min-width: 45px">Plot No</th>
-                                    <th style="min-width: 45px">Owner Name</th>
-                                    <th style="min-width: 45px">Challan No</th>
                                     <th style="min-width: 45px">Reference No</th>
                                     <th style="min-width: 90px">Issue Date</th>
                                     <th style="min-width: 90px">Due Date</th>
                                     <th style="min-width: 45px">Pay Date</th>
                                     <th style="min-width: 110px">Amount (PKR)</th>
-                                    <th style="min-width: 45px">Amount (In Words)</th>
                                 </tr>
                                 </thead>
                               <tbody>
                               @foreach($data as $k=>$row)
                                 <tr>
                                     <td>{{$row->PLOT_NO}}</td>
-                                    <td>{{$row->MEM_NAME}}</td>
-                                    <td>{{$row->CH_NO}}</td>
                                     <td>{{$row->REF_NO}}</td>
                                     <td>{{$row->ISSUE_DATE}}</td>
                                     <td>{{$row->DUE_DATE}}</td>
                                     <td>{{$row->PAY_DATE}}</td>
                                     <td  style="text-align:center">{{number_format($row->TOT_AMT)}}</td>
-                                    <td>{{$row->AMT_IN_WORDS}}</td>
                                 </tr>
                               @endforeach
                               </tbody>

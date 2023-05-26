@@ -75,63 +75,63 @@
                                         <!-- /.info-box -->
                                     </div>
                                 </div>
-                                        <!-- Info boxes -->
-                                        <div class="row">
-                                            <div class="col-12 hideclass" style="display: none">
-                                                <div class="callout callout-success">
-                                                    <h5><i class="fas fa-info"></i> Payment Info:</h5>
-                                                    Following Info Boxes will reflect the complete Payment Details against the selected Plot No..
-                                                </div>
-                                            </div>
-                                            <!-- /.col -->
-                                            <div class="col-12 col-sm-6 col-md-3 hideclass" style="display: none">
-                                                <div class="info-box bg-warning">
-                                                    <div class="info-box-content">
-                                                        <span class="info-box-text">All Dues</span>
-                                                        <span class="info-box-number">PKR. <span id="tot_bal"></span>/-</span>
-                                                    </div>
-                                                    <!-- /.info-box-content -->
-                                                </div>
-                                                <!-- /.info-box -->
-                                            </div>
-                                            <!-- /.col -->
-                                            <div class="col-12 col-sm-6 col-md-3 hideclass" style="display: none">
-                                                <div class="info-box bg-danger">
-                                                    <div class="info-box-content">
-                                                        <span class="info-box-text">Over Due</span>
-                                                        <span class="info-box-number">PKR. <span id="tot_amt"></span>/-</span>
-                                                    </div>
-                                                    <!-- /.info-box-content -->
-                                                </div>
-                                                <!-- /.info-box -->
-                                            </div>
-                                            <!-- fix for small devices only -->
-                                            <div class="clearfix hidden-md-up"></div>
-
-                                            <div class="col-12 col-sm-6 col-md-3 hideclass" style="display: none">
-                                                <div class="info-box bg-success">
-                                                    <div class="info-box-content">
-                                                        <span class="info-box-text">Upcoming Payment</span>
-                                                        <span class="info-box-number">PKR. <span id="up_amt"></span>/-</span>
-                                                    </div>
-                                                    <!-- /.info-box-content -->
-                                                </div>
-                                                <!-- /.info-box -->
-                                            </div>
-                                            <!-- /.col -->
-<!--                                            <div class="col-12 col-sm-6 col-md-3 hideclass" style="display: none">
-                                                <div class="info-box bg-info">
-                                                    <div class="info-box-content">
-                                                        <span class="info-box-text">Total Amount</span>
-                                                        <span class="info-box-number">PKR. <span id="tot_amt"></span>/-</span>
-                                                    </div>
-                                                    &lt;!&ndash; /.info-box-content &ndash;&gt;
-                                                </div>
-                                                &lt;!&ndash; /.info-box &ndash;&gt;
-                                            </div>-->
-                                            <!-- /.col -->
+                                <!-- Info boxes -->
+                                <div class="row">
+                                    <div class="col-12 hideclass" style="display: none">
+                                        <div class="callout callout-success">
+                                            <h5><i class="fas fa-info"></i> Payment Info:</h5>
+                                            Following Info Boxes will reflect the complete Payment Details against the selected Plot No..
                                         </div>
-                                        <!-- /.row -->
+                                    </div>
+                                    <!-- /.col -->
+                                    <div class="col-12 col-sm-6 col-md-3 hideclass" style="display: none">
+                                        <div class="info-box bg-warning">
+                                            <div class="info-box-content">
+                                                <span class="info-box-text">All Dues</span>
+                                                <span class="info-box-number">PKR. <span id="tot_bal"></span>/-</span>
+                                            </div>
+                                            <!-- /.info-box-content -->
+                                        </div>
+                                        <!-- /.info-box -->
+                                    </div>
+                                    <!-- /.col -->
+                                    <div class="col-12 col-sm-6 col-md-3 hideclass" style="display: none">
+                                        <div class="info-box bg-danger">
+                                            <div class="info-box-content">
+                                                <span class="info-box-text">Over Due</span>
+                                                <span class="info-box-number">PKR. <span id="tot_amt"></span>/-</span>
+                                            </div>
+                                            <!-- /.info-box-content -->
+                                        </div>
+                                        <!-- /.info-box -->
+                                    </div>
+                                    <!-- fix for small devices only -->
+                                    <div class="clearfix hidden-md-up"></div>
+
+                                    <div class="col-12 col-sm-6 col-md-3 hideclass" style="display: none">
+                                        <div class="info-box bg-success">
+                                            <div class="info-box-content">
+                                                <span class="info-box-text">Upcoming Payment</span>
+                                                <span class="info-box-number">PKR. <span id="up_amt"></span>/-</span>
+                                            </div>
+                                            <!-- /.info-box-content -->
+                                        </div>
+                                        <!-- /.info-box -->
+                                    </div>
+                                    <!-- /.col -->
+                                    <div class="col-12 col-sm-6 col-md-3 hideclass" style="display: none">
+                                        <div class="info-box bg-info">
+                                            <div class="info-box-content">
+                                                <span class="info-box-text">Partial Payment</span>
+                                                <span class="info-box-number"><span id="up_amt"></span> </span>
+                                            </div>
+                                            <!-- /.info-box-content -->
+                                        </div>
+                                        <!-- /.info-box -->
+                                    </div>
+                                    <!-- /.col -->
+                                </div>
+                                <!-- /.row -->
                                 <div class="row">
                                     <div class="col-md-3 hideclass" style="display: none">
                                         <div class="form-group">
@@ -151,7 +151,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6 hideclass" style="display: none">
+                                    <div class="col-md-3 hideclass" style="display: none">
                                         <div class="form-group">
                                             <div class="custom-control custom-radio">
                                                 <input class="custom-control-input" type="radio" id="customRadio2" name="amount_total" >
@@ -160,17 +160,17 @@
                                         </div>
                                     </div>
 
-<!--                                    <div class="col-md-6 hideclass" style="display: none">
+                                    <div class="col-md-3 hideclass" style="display: none">
                                         <div class="form-group">
                                             <div class="custom-control custom-radio">
                                                 <input class="custom-control-input" value="0" type="radio" id="customRadio4" name="amount_total" >
                                                 <label for="customRadio4" class="custom-control-label">Partial Payment</label>
                                             </div>
                                         </div>
-                                    </div>-->
+                                    </div>
                                     <div class="col-md-3 hideclass" style="display: none">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" id="amount" placeholder="Amount" >
+                                            <input  type="number" class="form-control" id="amount" onkeydown="if(event.key==='.'){event.preventDefault();}" onpaste="let pasteData = event.clipboardData.getData('text'); if(pasteData){pasteData.replace(/[^0-9]*/g,'');} "  placeholder="Amount" min="1" step="1" pattern="[0-9]">
                                         </div>
                                     </div>
                                     <div class="col-md-3 hideclass" style="display: none">
@@ -236,7 +236,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <button type="button" class="close" data-dismiss="modal">X</button>
                 </div>
                 <div class="modal-body" style="padding-top: 0px;">
                     <h3 align="center">Credit Card Payment</h3>
@@ -254,7 +254,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <button type="button" class="close" data-dismiss="modal">X</button>
 
                 </div>
                 <div class="modal-body" style="padding-top: 0px;">
@@ -278,14 +278,15 @@
     </div>
     <script src="jquery-3.6.3.min.js"></script>
     <script>
-        $('#amount').prop('readonly', false);
+        $('#amount').prop('readonly', true);
         $('input[type="radio"]').change(function() {
-            if ($(this).val() == 0) {
+            if ($("#customRadio4").prop('checked')) {
+                // append goes here
                 $("#amount").val(0);
                 $('#amount').prop('readonly', false);
-            } else{
+            }else{
                 $("#amount").val($(this).val());
-                $('#amount').prop('readonly', false);
+                $('#amount').prop('readonly', true);
             }
         });
         $(document).on('change', 'select', function(event) {
@@ -312,9 +313,12 @@
                     // Radio Button with Values set here
                     $("#customRadio3").val(response.amount[0].TOT_BAL);
                     $("#customRadio1").val(response.amount[0].TOT_OVERDUE);
-                    $("#customRadio2").val(response.amount[0].TOT_RECEIVABLE_TILL_MONTH);
+                    $("#customRadio2").val(response.amount[0].UPCOMING_INST_DUE_AMT);
                     $("#amount").val(response.amount[0].TOT_BAL);
                     $('input[id="customRadio3"]').prop('checked', true);
+                    if(response.amount[0].TOT_OVERDUE!=0){
+                        $('input[id="customRadio2"]').prop('disabled', true);
+                    }
                     //TOP Info Boxes
                     $('#tot_amt_info').text(parseInt(response.amount[0].TOT_AMT).toLocaleString());
                     $('#tot_paid_info').text(parseInt(response.amount[0].TOT_PAID).toLocaleString());
@@ -323,8 +327,8 @@
                     // Detail Info Box Values Display here
                     $('#tot_bal').text(parseInt(response.amount[0].TOT_BAL).toLocaleString());
                     $('#tot_amt').text(parseInt(response.amount[0].TOT_OVERDUE).toLocaleString());
-/*                  $('#tot_paid').text(response.amount[0].TOT_PAID);*/
-                    $('#up_amt').text(parseInt(response.amount[0].TOT_RECEIVABLE_TILL_MONTH).toLocaleString());
+                    /*                  $('#tot_paid').text(response.amount[0].TOT_PAID);*/
+                    $('#up_amt').text(parseInt(response.amount[0].UPCOMING_INST_DUE_AMT).toLocaleString());
                 }
 
             });
@@ -337,7 +341,7 @@
                 },
                 success: function (response) {
                     if (response == 0) {
-                        alert('Could not Generate Challan. Please Try Again')
+                        //alert('Could not Generate Challan. Please Try Again')
                     } else {
                         $('#content').show();
                         // select the table body element
@@ -355,7 +359,7 @@
                             event_data += '<td class="po">' + value.REF_NO + '</td>';
                             event_data += '<td class="sa">' + parseInt(TOT_AMT).toLocaleString() + '</td>';
                             event_data += '<td class="pr">' + value.DUE_DATE + '</td>';
-                            event_data += '<td><a href="{{route('challan.details',['ch_no'=>":CH_NO"])}}" class="btn btn-primary edit" target="_blank" id="'+ value.CH_NO + '">View Challan</a>    <button type="button" class="btn btn-success edit CardPaymentPopup" id="'+ value.CH_NO + '">Pay Now</button>    <a href="#OnlinePaymentDialogue" class="btn btn-info edit OnlinePaymentPopup" data-toggle="modal" data-id="'+ value.REF_NO + '">Pay Online</a></td>';
+                            event_data += '<td>  <button type="button" class="btn btn-success edit CardPaymentPopup" id="'+ value.CH_NO + '">Pay Now</button>    <a href="#OnlinePaymentDialogue" class="btn btn-info edit OnlinePaymentPopup" data-toggle="modal" data-id="'+ value.REF_NO + '">Pay Online</a> <a href="{{route('challan.details',['ch_no'=>":CH_NO"])}}" class="btn btn-primary edit" target="_blank" id="'+ value.CH_NO + '">Print Challan</a>  </td>';
                             event_data += '</tr>';
                             event_data = event_data.replace(':CH_NO', value.CH_NO);
                             //event_data = event_data.replace(':plot_id', plot_id);
@@ -370,7 +374,9 @@
         });
         $("#genrate_chalan").on("click", function () {
             var plot_id = $("#plot_id option:selected").val();
-            var amount = $("#amount").val();
+            var amount = Math.round($("#amount").val());
+            //alert(amount);
+            //exit();
             $.ajax({
                 type: 'POST',
                 url: '{{ route('fetchchallan') }}',
@@ -400,15 +406,15 @@
                             event_data += '<td class="po">' + value.REF_NO + '</td>';
                             event_data += '<td class="sa">' + parseInt(TOT_AMT).toLocaleString() + '</td>';
                             event_data += '<td class="pr">' + value.DUE_DATE + '</td>';
-                            event_data += '<td><a href="{{route('challan.details',['ch_no'=>":CH_NO"])}}" class="btn btn-primary edit" target="_blank" id="'+ value.CH_NO + '">View Challan</a>    <button type="button" class="btn btn-success edit CardPaymentPopup" id="'+ value.CH_NO + '">Pay Now</button>    <button type="button" class="btn btn-info edit OnlinePaymentPopup" id="'+ value.REF_NO + '">Pay Online</button></td>';
+                            event_data += '<td>  <button type="button" class="btn btn-success edit CardPaymentPopup" id="'+ value.CH_NO + '">Pay Now</button>    <a href="#OnlinePaymentDialogue" class="btn btn-info edit OnlinePaymentPopup" data-toggle="modal" data-id="'+ value.REF_NO + '">Pay Online</a> <a href="{{route('challan.details',['ch_no'=>":CH_NO"])}}" class="btn btn-primary edit" target="_blank" id="'+ value.CH_NO + '">Print Challan</a>  </td>';
                             event_data += '</tr>';
                             event_data = event_data.replace(':CH_NO', value.CH_NO);
                             //event_data = event_data.replace(':plot_id', plot_id);
-                            });
+                        });
 
-                            // append the new row to the table body
-                            $("#myTable").empty();
-                            $("#myTable").append(event_data);
+                        // append the new row to the table body
+                        $("#myTable").empty();
+                        $("#myTable").append(event_data);
                     }
 
                     //console.log(response)

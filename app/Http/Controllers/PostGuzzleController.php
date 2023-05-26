@@ -106,9 +106,9 @@ class PostGuzzleController extends Controller
 
     public function otpSend(Request $request)
     {
-        //$otpp = mt_rand(1000000, 9999999);
-        $otpp = '123456';
-        $otp_text = 'Dear Member, Your PIN Code for Member Area Portal Login is '. $otpp . '. Never share it with anyone ever.';
+        $otpp = mt_rand(1000000, 9999999);
+        //$otpp = '123456';
+        $otp_text = 'Dear Member, You can access Member Area Portal by providing '. $otpp . '. Never share it with anyone ever.';
         $otp = new OtpDetails();
         $otp->details_id = $request->details_id;
         $otp->qey_id = $request->qey_id;
@@ -190,8 +190,9 @@ class PostGuzzleController extends Controller
     public function resend($id)
     {
         $otp = OtpDetails::find($id);
-       //$otp->otp = mt_rand(1000000, 9999999);
-        $otp->otp = '123456';
+        $otp->otp = mt_rand(1000000, 9999999);
+        //$otp->otp = '123456';
+        $otp_text = 'Dear Member, You can access Member Area Portal by providing '. $otp->otp . '. Never share it with anyone ever.';
         $otp->created_at = Carbon::now();
         $otp->update();
         if($otp->check=="on"){
@@ -220,7 +221,7 @@ class PostGuzzleController extends Controller
             $string = str_shuffle($pin);
             //$iteL_uri = 'https://api.itelservices.net/send.php?transaction_id=' . $string . '&api_key=WUMKp21gth2UKEpsLp5I7yKABrmyi673&number=92' . $request->phone . '&text=' . $otpp . '&from=4473&type=sms';
             //$m3tech_uri = 'https://secure.m3techservice.com/GenericService/webservice_4_1.asmx/SendSMS?UserId=sms1@dhalahore&Password=E9B30A-cd1d1f&MobileNo=92' . $request->phone . '&MsgId=' . $string . '&SMS=' . $otpp . '&MsgHeader=9460&HandsetPort=0&SMSChannel=0&Telco=0';
-            $zongsms_uri = 'http://192.168.44.103/sms/send_sms.php?app=member_portal&cell=92' . $otp->send . '&msg=' . $otp;
+            $zongsms_uri = 'http://192.168.44.103/sms/send_sms.php?app=member_portal&cell=92' . $otp->send . '&msg=' . $otp_text;
             $response = $client->request('get', $zongsms_uri , $headers);
             if($response){
                 $otp->save();

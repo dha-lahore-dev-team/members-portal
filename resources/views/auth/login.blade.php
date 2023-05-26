@@ -35,12 +35,9 @@
     <!-- Custom style -->
     <link rel="stylesheet" href="{{asset('front/dist/css/custom.css')}}">
 
-
-
-
 </head>
 <body class="hold-transition register-page">
-<div class="register-box" style="width: 25%">
+<div class="register-box">
     <div class="card card-outline card-primary">
         <div class="card-header text-center">
             <img src="{{url('front/dist/img/logo_dhalahore.png')}}" alt="DHA Lahore Logo" height="80" width="80">

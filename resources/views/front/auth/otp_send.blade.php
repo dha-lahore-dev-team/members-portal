@@ -38,7 +38,7 @@
 
 </head>
 <body class="hold-transition register-page">
-<div class="register-box" style="width: 50%">
+<div class="register-box">
     <div class="card card-outline card-primary">
         <div class="card-header text-center">
             <h1>PIN Code <b>Verification</b><h1>

@@ -6,10 +6,10 @@
         <section class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
-                    <div class="col-sm-6">
+                    <div class="col-sm-8">
                         <h1>Welcome <strong></strong>{{Auth::user()->name}}!</h1>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-4">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{route('front.index')}}">Home</a></li>
                             <li class="breadcrumb-item active">Dashboard</li>
@@ -87,7 +87,7 @@
           <div class="col-lg-6">
             <div class="card">
                    <div class="card-header" style="background-color: #3d3f7e; color: white">
-                       <h3 class="card-title">Payment Through Bank Deposit / Credit & Debit Card</h3>
+                       <h3 class="card-title">Payment Through Credit & Debit Card</h3>
                    </div>
                    <div class="card-body">
                        <!-- accepted payments column -->

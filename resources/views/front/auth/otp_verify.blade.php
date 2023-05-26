@@ -46,7 +46,7 @@ $createdAt = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $otp->created_at);
 $now = \Carbon\Carbon::now();
 $diffInMinutes = $createdAt->diffInMinutes($now);
 ?>
-<div class="register-box" style="width: 35%">
+<div class="register-box">
     <div class="card card-outline card-primary">
         <div class="card-header text-center">
             <h1><b>Authentication</b> PIN Code<h1>
