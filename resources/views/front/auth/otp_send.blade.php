@@ -65,7 +65,7 @@
                     <div class="custom-control custom-checkbox">
                         <input class="custom-control-input"  name="customCheckbox2" type="checkbox" id="customCheckbox2">
                         <label for="customCheckbox2" class="custom-control-label">I want to receive PIN Code on my registered Email Address ({{$data['masked_email']}})</label>
-                        <input type="hidden"  name="email" value="{{$data['details']->email}}" class="form-control" placeholder="email">
+                        <input type="hidden"  name="email" value="{{$data['details']->EMAIL}}" class="form-control" placeholder="email">
                     </div>
                 </div>
                 @endif

@@ -116,9 +116,10 @@ class PostGuzzleController extends Controller
         $otp->check = $request->customCheckbox2;
         //{{dd($request->customCheckbox2);}}
         if ($request->customCheckbox2 == 'on') {
+            //dd($request);
             $otp->send = $request->email;
             $details = [
-                'otp' => $otpp,];
+                'otp' => $otp_text,];
             Mail::to($request->email)->send(new NotifyMail($details));
             $otp->save();
             Toastr::success('PIN Code Sent at Registered Email Address!','Success');
