@@ -47,7 +47,7 @@
                                     <th>Challan No</th>
                                     <th style="min-width: 100px">Payment Date</th>
                                     <th style="min-width: 140px">Paid Amount (PKR)</th>
-                                    <th style="min-width: 45px">Payment Status</th>
+                                    <th style="min-width: 45px; text-align: center;">Status</th>
                                     <th style="min-width: 170px">Balance Amount (PKR)</th>
                                 </tr>
                                 </thead>
@@ -61,12 +61,14 @@
                                     <td>{{$row->CH_NO}}</td>
                                     <td>{{$row->PAY_DATE}}</td>
                                     <td style="text-align: center">{{number_format($row->PAID_AMT)}}</td>
-                                    @if($row->BAL_AMT=='0.00')
+                                    @if($row->INST_STATUS=='PAID')
                                         <td style="text-align: center"><span class="badge badge-success">Paid</span></td>
-                                    @elseif($row->SUR_AMT!=null)
-                                        <td style="text-align: center"><span class="badge badge-danger">Overdue Payment</span></td>
+                                    @elseif($row->INST_STATUS=='OVERDUE')
+                                        <td style="text-align: center"><span class="badge badge-danger">Overdue</span></td>
+                                    @elseif($row->INST_STATUS=='UPCOMING')
+                                        <td style="text-align: center"><span class="badge badge-warning">Upcoming</span></td>
                                     @else
-                                        <td style="text-align: center"><span class="badge badge-warning">Upcoming Payment</span></td>
+                                        <td style="text-align: center"><span class="badge badge-info">-</span></td>
                                     @endif
                                     <td style="text-align: center">{{number_format($row->BAL_AMT)}}</td>
                                 </tr>

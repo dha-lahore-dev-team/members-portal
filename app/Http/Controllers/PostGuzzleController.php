@@ -106,8 +106,8 @@ class PostGuzzleController extends Controller
 
     public function otpSend(Request $request)
     {
-        $otpp = mt_rand(1000000, 9999999);
-        //$otpp = '123456';
+        //$otpp = mt_rand(1000000, 9999999);
+        $otpp = '123456';
         $otp_text = 'Dear Member, You can access Member Area Portal by providing '. $otpp . '. Never share it with anyone ever.';
         $otp = new OtpDetails();
         $otp->details_id = $request->details_id;
@@ -161,7 +161,7 @@ class PostGuzzleController extends Controller
         $createdAt = Carbon::createFromFormat('Y-m-d H:i:s', $otp->created_at);
         $now = Carbon::now();
         $diffInMinutes = $createdAt->diffInMinutes($now);
-        if ($diffInMinutes <= 5) {
+        if ($diffInMinutes <= 20) {
             if ($request->input('otp') == $otp->otp) {
                 $otp->status = 1;
                 $otp->update();
@@ -187,11 +187,33 @@ class PostGuzzleController extends Controller
         }
 
     }
+    public function otpVerifyTwo(Request $request)
+    {
+        $otp = OtpDetails::where('qey_id', '=', $request->qey_id)->first();
+        //dd($otp->otp);
+        //dd($request->qey_id);
+        //dd($request->input('otp'));
+        $createdAt = Carbon::createFromFormat('Y-m-d H:i:s', $otp->created_at);
+        $now = Carbon::now();
+        $diffInMinutes = $createdAt->diffInMinutes($now);
+        //dd($diffInMinutes);
+        if ($diffInMinutes <= 20) {
+            if ($request->input('otp') == $otp->otp) {
+                return 0;
+            } else {
+                return response()->json('Provided OTP does not match. Please try again!');
+            }
+        }
+        else{
+            return  response()->json('Provided OTP has been expired. Please Try again!');
+        }
+
+    }
     public function resend($id)
     {
         $otp = OtpDetails::find($id);
-        $otp->otp = mt_rand(1000000, 9999999);
-        //$otp->otp = '123456';
+        //$otp->otp = mt_rand(1000000, 9999999);
+        $otp->otp = '123456';
         $otp_text = 'Dear Member, You can access Member Area Portal by providing '. $otp->otp . '. Never share it with anyone ever.';
         $otp->created_at = Carbon::now();
         $otp->update();

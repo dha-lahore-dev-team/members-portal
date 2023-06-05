@@ -53,20 +53,20 @@ $diffInMinutes = $createdAt->diffInMinutes($now);
         </div>
         <div class="card-body">
 
-            <form action="{{route('otp.verify')}}" method="post">
+            <form action="{{route('otp.verify')}}" method="post" id="yourForm">
                 @csrf
                 <input type="hidden" value="{{$otp->details_id}}" name="details_id">
-                <input type="hidden" value="{{$otp->qey_id}}" name="qey_id">
-                <input type="hidden" value="{{$otp->otp}}" name="otp">
+                <input type="hidden" value="{{$otp->qey_id}}" name="qey_id" id="qey_id">
+                {{--<input type="hidden" value="{{$otp->otp}}" name="otp">--}}
                 <div class="form-group">
                     <label>Enter PIN Code </label>
-                    <input type="text" required class="form-control"  name="otp" placeholder=" Type Authentication PIN Code here...  ">
+                    <input type="text" required class="form-control" id="otp"  name="otp" placeholder=" Type Authentication PIN Code here...  ">
                 </div>
 
                 <div class="row">
                     <!-- /.col -->
                     <div class="col-4">
-                        <button type="submit" class="btn btn-primary btn-block">Verify</button>
+                        <button type="button" class="btn btn-primary btn-block" id="verify">Verify</button>
                     </div>
                     <div class="col-4">
                         <p id="timer" style="color: #ced4da;font-size: 25px"></p>
@@ -82,34 +82,10 @@ $diffInMinutes = $createdAt->diffInMinutes($now);
         <!-- /.form-box -->
     </div><!-- /.card -->
 </div>
-
-
-{{--<script>--}}
-{{--    // Get the created_at timestamp from the Blade template--}}
-{{--    var createdAt = "{{ $otp->created_at }}";--}}
-
-{{--    // Convert the created_at string to a JavaScript Date object--}}
-{{--    createdAt = new Date(createdAt);--}}
-
-{{--    // Set the expiration time to 30 minutes from the created_at time--}}
-{{--    var expirationTime = new Date(createdAt.getTime() + 30 * 60 * 1000);--}}
-{{--    console.log(expirationTime);--}}
-{{--    // Update the expiration time in the HTML every second--}}
-{{--    setInterval(function() {--}}
-{{--        var now = new Date();--}}
-{{--        if (now >= expirationTime) {--}}
-{{--            $("#expiration-time").text("Expired");--}}
-{{--        } else {--}}
-{{--            var timeLeft = (expirationTime - now) / 1000;--}}
-{{--            $("#expiration-time").text(timeLeft + " seconds left");--}}
-{{--        }--}}
-{{--    }, 1000);--}}
-{{--</script>--}}
-
-
+<script src='https://code.jquery.com/jquery-3.6.0.min.js?ver=3.6.0' id='jquery-js'></script>
 <script>
     // Set the timer duration in milliseconds
-    var duration = 300 * 1000;
+    var duration = 60 * 1000;
 
     // Update the timer display every second
     var intervalId = setInterval(function() {
@@ -119,13 +95,38 @@ $diffInMinutes = $createdAt->diffInMinutes($now);
         $("#timer").text(minutes + ":" + seconds);
         if (duration <= 0) {
             clearInterval(intervalId);
-            $("#timer").text("Time's up!");
+            $("#timer").text("OTP Expired");
             $('#disabled').removeClass('disabled');
         }
     }, 1000);
-</script>
-<script>
+    $("#verify").on("click", function () {
+        var qey_id = $("#qey_id").val();
+        var otp = $("#otp").val();
+        //alert(qey_id);
+        //exit();
+        $.ajax({
+            type: 'POST',
+            url: '{{ route('otpverify') }}',
+            data: {
+                _token: "{{ csrf_token() }}",
+                qey_id: qey_id,
+                otp: otp,
+            },
+            success: function (response) {
 
+                if (response == 0) {
+                    $('#yourForm').submit();
+                } else {
+                    $("#error-massage").show();
+                    $("#error-massage").text(response);
+                }
+
+                // console.log(response)
+            }
+
+        });
+
+    });
 </script>
 <!-- jQuery -->
 <script src="{{asset('front/plugins/jquery/jquery.min.js')}}"></script>

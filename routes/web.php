@@ -22,6 +22,7 @@ Route::post('/fetchsector', [App\Http\Controllers\PostGuzzleController::class, '
 Route::post('/details', [App\Http\Controllers\PostGuzzleController::class, 'getDetails'])->name('details');
 Route::post('/otp/send', [App\Http\Controllers\PostGuzzleController::class, 'otpSend'])->name('otp.send');
 Route::post('/otp/verify', [App\Http\Controllers\PostGuzzleController::class, 'otpVerify'])->name('otp.verify');
+Route::post('/otp/verify/two', [App\Http\Controllers\PostGuzzleController::class, 'otpVerifyTwo'])->name('otpverify');
 Route::get('/resend/{id}', [App\Http\Controllers\PostGuzzleController::class, 'resend'])->name('resend');
 Route::get('/home', [App\Http\Controllers\PostGuzzleController::class, 'frontIndex'])->name('front.index')->middleware('role');
 Route::get('/surcharge/{plot_id}', [App\Http\Controllers\PostGuzzleController::class, 'surcharge'])->name('surcharge')->middleware('role');
