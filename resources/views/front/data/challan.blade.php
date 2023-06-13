@@ -231,7 +231,7 @@
         </section>
         <!-- /.content -->
     </div>
-    <!-- /.Card Payment-Modal -->
+<!--    &lt;!&ndash; /.Card Payment-Modal &ndash;&gt;
     <div class="modal fade" id="CardPaymentPopupModal" role="dialog">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -248,14 +248,13 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>-->
     <!-- /.Online Payment-Modal -->
-    <div class="modal fade" id="OnlinePaymentDialogue" role="dialog">
+    <div class="modal" id="OnlinePaymentDialogue" role="dialog">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">X</button>
-
                 </div>
                 <div class="modal-body" style="padding-top: 0px;">
                     <h3 align="centre">Payment Through 1-Bill</h3>
@@ -425,11 +424,12 @@
         });
         // Card Payment Popup Light Box display Called
         $("#myTable").on("click",".CardPaymentPopup", function(){
-            $('#CardPaymentPopupModal').modal('show');
+            alert("Payment Through Credit / Debit Card Will be Available Soon!");
         });
         $("#myTable").on("click",".OnlinePaymentPopup", function(){
             var ChallanId = $(this).data('id');
-            //alert(ChallanId);
+            var alert_text = "Log into your respective Online Banking Application (Any Bank). Go to Bill Payments section and click on 1Bill Option. Click on Invoice / Fixed Payments Biller Option and provide your Reference Number and proceed to next step. Billing details will be displayed. Proceed further and make payment as advised by the application. ";
+            //alert(alert_text);
             //$('#OnlinePaymentPopupModal').modal('show');
             $(".modal-body #ChallanId").text(ChallanId);
         });

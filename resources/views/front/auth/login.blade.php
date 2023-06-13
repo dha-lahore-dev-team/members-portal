@@ -30,11 +30,10 @@
     <link rel="stylesheet" href="{{asset('front/plugins/dropzone/min/dropzone.min.css')}}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{asset('front/dist/css/adminlte.min.css')}}">
-    <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
     <!-- Custom style -->
     <link rel="stylesheet" href="{{asset('front/dist/css/custom.css')}}">
-
-
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 </head>
 <body class="hold-transition register-page">
 <div class="register-box">

@@ -30,9 +30,10 @@
     <link rel="stylesheet" href="{{asset('front/plugins/dropzone/min/dropzone.min.css')}}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{asset('front/dist/css/adminlte.min.css')}}">
-    <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
     <!-- Custom style -->
     <link rel="stylesheet" href="{{asset('front/dist/css/custom.css')}}">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <style>
         .disabled {
             pointer-events: none;
@@ -49,7 +50,7 @@ $diffInMinutes = $createdAt->diffInMinutes($now);
 <div class="register-box">
     <div class="card card-outline card-primary">
         <div class="card-header text-center">
-            <h1><b>Authentication</b> PIN Code<h1>
+            <h1> PIN Code <b>Authentication</b><h1>
         </div>
         <div class="card-body">
 
@@ -72,7 +73,7 @@ $diffInMinutes = $createdAt->diffInMinutes($now);
                         <p id="timer" style="color: #ced4da;font-size: 25px"></p>
                     </div>
                     <div class="col-4">
-                        <a href="{{ route('resend',['id'=>$otp->id]) }}" id="disabled" class="disabled">Resend</a>
+                        <a href="{{ route('resend',['id'=>$otp->id]) }}" id="disabled" class="btn btn-primary btn-block disabled">Resend</a>
                     </div>
                     <!-- /.col -->
                 </div>
@@ -97,6 +98,7 @@ $diffInMinutes = $createdAt->diffInMinutes($now);
             clearInterval(intervalId);
             $("#timer").text("OTP Expired");
             $('#disabled').removeClass('disabled');
+            $('#verify').addClass('disabled');
         }
     }, 1000);
     $("#verify").on("click", function () {
@@ -137,8 +139,8 @@ $diffInMinutes = $createdAt->diffInMinutes($now);
 <script src="{{asset('front/dist/js/adminlte.min.js')}}"></script>
 <!-- Select2 -->
 <script src="{{asset('front/plugins/select2/js/select2.full.min.js')}}"></script>
-<script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
-<script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
 {!! Toastr::message() !!}
 
 
