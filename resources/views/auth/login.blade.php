@@ -67,11 +67,11 @@
                 </div>
                 <div class="form-group">
                     <label>Plot No<span style="color: red">*</span></label>
-                    <input type="text" class="form-control" name="plot_no" placeholder="XXXX/XX " required>
+                    <input type="text" maxlength="15" pattern="[0-9/]*" class="form-control" name="plot_no" placeholder="XXXX/XX " required>
                 </div>
                 <div class="form-group">
                     <label>CNIC<span style="color: red">*</span></label>
-                    <input type="text" class="form-control" name="cnic_no" placeholder="XXXXXXXXXXXXX " required>
+                    <input type="text" maxlength="15" pattern="[0-9]*" class="form-control" name="cnic_no" placeholder="XXXXXXXXXXXXX " required>
                 </div>
 
                 <div class="row">
