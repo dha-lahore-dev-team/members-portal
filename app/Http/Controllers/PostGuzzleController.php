@@ -218,11 +218,14 @@ class PostGuzzleController extends Controller
         $otp_text = 'Dear Member, You can access Member Area Portal by providing '. $otp->otp . '. Never share it with anyone ever.';
         $otp->created_at = Carbon::now();
         $otp->update();
+        //dd($otp);
         if($otp->check=="on"){
             $details = [
                 'otp' => $otp->otp,];
             Mail::to($otp->send)->send(new NotifyMail($details));
-
+            $otp->save();
+            Toastr::success('PIN Code Sent again at Registered Email Address!','Success');
+            return view('front.auth.otp_verify', compact('otp'));
         }
         else{
             $client = new Client();
