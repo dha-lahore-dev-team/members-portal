@@ -7,13 +7,18 @@
     -o-background-size: cover;
     background-size: cover;
 }
+@media screen and (max-width: 900px) and (min-width: 600px), (min-width: 1100px) {
+    .login-box, .register-box {
+        width: 560px;
+    }
+}
 
 [class*="sidebar-dark-"] {
   background-color: #3d3f7e;
 }
 
 .sidebar-dark-primary .nav-sidebar > .nav-item > .nav-link.active,
-.sidebar-light-primary .nav-sidebar > .nav-item > .nav-link.active 
+.sidebar-light-primary .nav-sidebar > .nav-item > .nav-link.active
 {
   background-color: #fff;
   color: #212529;
@@ -49,7 +54,7 @@ a:hover {
   text-decoration: none;
 }
 
-.custom-control-input:checked ~ .custom-control-label::before 
+.custom-control-input:checked ~ .custom-control-label::before
 {
   color: #fff;
   border-color: #3d3f7e;
@@ -57,13 +62,13 @@ a:hover {
   box-shadow: none;
 }
 
-.select2-container--default .select2-results__option--highlighted[aria-selected], .select2-container--default .select2-results__option--highlighted[aria-selected]:hover 
+.select2-container--default .select2-results__option--highlighted[aria-selected], .select2-container--default .select2-results__option--highlighted[aria-selected]:hover
 {
   background-color: #3d3f7e;
   color: #fff;
 }
 
-.select2-container--default.select2-container--focus .select2-selection--multiple, .select2-container--default.select2-container--focus .select2-selection--single 
+.select2-container--default.select2-container--focus .select2-selection--multiple, .select2-container--default.select2-container--focus .select2-selection--single
 {
   border-color: #3d3f7e;
 }

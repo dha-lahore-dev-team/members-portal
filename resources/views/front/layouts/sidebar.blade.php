@@ -86,7 +86,7 @@
                     </a>
                     <ul class="nav nav-treeview">
 			<li class="nav-item ">
-                            <a href="#" class="nav-link {{  request()->is('history/*') || request()->is('history') ||  request()->is('search/history/*') ? 'active':'' }} ">
+                            <a href="{{route('water.bill')}}" class="nav-link {{  request()->is('water-sewerage-bills/*') || request()->is('water-sewerage-bills') ||  request()->is('search/water-sewerage-bills/*') ? 'active':'' }} ">
                                 <i class="nav-icon fas fa-history" style="font-size:22px"></i>
                                 <p>
                                     Water Bill

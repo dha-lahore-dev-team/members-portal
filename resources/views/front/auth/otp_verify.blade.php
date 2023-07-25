@@ -99,6 +99,8 @@ $diffInMinutes = $createdAt->diffInMinutes($now);
             $("#timer").text("OTP Expired");
             $('#disabled').removeClass('disabled');
             $('#verify').addClass('disabled');
+            $('#otp').addClass('disabled');
+
         }
     }, 1000);
     $("#verify").on("click", function () {

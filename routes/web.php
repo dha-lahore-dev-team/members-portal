@@ -34,13 +34,21 @@ Route::get('/schedule/{plot_id}', [App\Http\Controllers\PostGuzzleController::cl
 Route::get('/search/schedule/{plot_id}', [App\Http\Controllers\PostGuzzleController::class, 'searchSchedule'])->name('search.schedule')->middleware('role'); // Dropdown Selection
 
 Route::get('/challan', [App\Http\Controllers\PostGuzzleController::class, 'challanTwo'])->name('challan.two')->middleware('role');
-Route::get('/history', [App\Http\Controllers\PostGuzzleController::class, 'historyTwo'])->name('history.two')->middleware('role');
 Route::get('/search/challan/{plot_id}', [App\Http\Controllers\PostGuzzleController::class, 'searchChallan'])->name('search.challan')->middleware('role');
-Route::get('/search/history/{plot_id}', [App\Http\Controllers\PostGuzzleController::class, 'searchHistory'])->name('search.history')->middleware('role');
+
 Route::post('/fetchamount', [App\Http\Controllers\PostGuzzleController::class, 'fetchAmount'])->name('fetchamount');
 Route::post('/fetchchallan', [App\Http\Controllers\GenCallanDetailsController::class, 'challanDetails'])->name('fetchchallan');
 Route::post('/fetchunpaidchallans/{plot_id?}', [App\Http\Controllers\GenCallanDetailsController::class, 'fetchUnpidChallans'])->name('fetchunpaidchallans')->middleware('role');
 Route::get('/challan/details/{ch_no}', [App\Http\Controllers\GenCallanDetailsController::class, 'detailsChallan'])->name('challan.details')->middleware('role');
+
+//History
+Route::get('/history', [App\Http\Controllers\PostGuzzleController::class, 'historyTwo'])->name('history.two')->middleware('role');
+Route::get('/search/history/{plot_id}', [App\Http\Controllers\PostGuzzleController::class, 'searchHistory'])->name('search.history')->middleware('role');
+
+//Water Sewerage Bills
+Route::get('/water-sewerage-bills', [App\Http\Controllers\WaterSewerageBillsController::class, 'waterSewerageBill'])->name('water.bill')->middleware('role');
+Route::get('/search/water-sewerage-bills/{plot_id}', [App\Http\Controllers\WaterSewerageBillsController::class, 'searchWaterSewerageBill'])->name('search.waterBill')->middleware('role');
+
 Auth::routes();
 
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
