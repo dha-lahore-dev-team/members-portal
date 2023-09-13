@@ -74,6 +74,7 @@
                       <li>Go to Bill Payments section.</li>
                       <li>Click on <strong>"1 Bill"</strong> option.</li>
                       <li>Click on <strong>"Invoice / Fixed Payments"</strong> Biller Option.</li>
+                        <li>Click on <strong>New Payee</strong>.</li>
                       <li>Enter your Reference Number e.g. 342547XXXXXXXXXXX and proceed to next step.</li>
                       <li>Billing details will be displayed.</li>
                       <li>Proceed further and make payment as advised by the application.</li>
@@ -89,6 +90,7 @@
                       <div>
                           <img src="{{asset('front/dist/img/credit/visa.png')}}" alt="Visa">
                           <img src="{{asset('front/dist/img/credit/mastercard.png')}}" alt="Mastercard">
+                          <img src="{{asset('front/dist/img/credit/unionpay.png')}}" alt="Union Pay">
                           {{--<img src="{{asset('front/dist/img/credit/american-express.png')}}" alt="American Express">--}}
                           {{--<img src="{{asset('front/dist/img/credit/paypal2.png')}}" alt="Paypal">--}}
                           <ol style="margin-top: 10px;">
@@ -112,14 +114,22 @@
                         <div>
                             <p>Over the counter payment is also available through any of the following banks:-</p>
                             <ol style="margin-top: 10px;">
-                                <li>Al Baraka Bank Pakistan Ltd.</li>		<li>  JS Bank</li>		<li>Meezan Bank Ltd.</li>
-                                <li>Allied Bank Ltd.</li>			<li>MCB Bank Ltd.</li>	<li>Bank Islamic Ltd.</li>
-                                <li>Askari Bank Ltd.</li>			<li>Sindh Bank Ltd.</li>
-                                <li>Bank Al-Falah</li>				<li>Soneri Bank</li>
-                                <li>Bank Al-Habib</li>				<li>The Bank of Punjab</li>
-                                <li>Dubai Islamic Bank</li>			<li>United Bank Ltd.</li>
-                                <li>Faysal Bank</li>				<li>National Bank of Pakistan</li>
-
+                                <li>Al Baraka Bank Pakistan Ltd.</li>
+                                <li>Allied Bank Ltd.</li>
+                                <li>Askari Bank Ltd.</li>
+                                <li>Bank Al-Falah</li>
+                                <li>Bank Al-Habib</li>
+                                <li>Bank Islamic Ltd.</li>
+                                <li>Dubai Islamic Bank</li>
+                                <li>Faysal Bank</li>
+                                <li>JS Bank</li>
+                                <li>MCB Bank Ltd.</li>
+                                <li>Meezan Bank Ltd.</li>
+                                <li>National Bank of Pakistan</li>
+                                <li>Sindh Bank Ltd.</li>
+                                <li>Soneri Bank</li>
+                                <li>The Bank of Punjab</li>
+                                <li>United Bank Ltd.</li>
                             </ol>
                         </div>
                         <!-- /.col -->

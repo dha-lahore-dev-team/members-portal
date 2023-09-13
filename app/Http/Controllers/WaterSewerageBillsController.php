@@ -31,7 +31,7 @@ class WaterSewerageBillsController extends Controller
         ]);
         $dataSanple = json_decode($response->getBody()->getContents());
         $memasset = $dataSanple[0];
-        $response = $client->request('get', 'http://192.168.43.120/mems_infoportal/api/wb_info/challan_history?plot_id='.$memasset->PLOT_ID, [
+        $response = $client->request('get', 'http://192.168.43.120/mems_infoportal/api/wb_info/utility_bill?plot_id='.$memasset->PLOT_ID, [
             'headers' => $headers,
         ]);
         $data = json_decode($response->getBody()->getContents());
@@ -49,7 +49,7 @@ class WaterSewerageBillsController extends Controller
             'Authorization' => 'Basic ' . $credentials,
             'X-API-KEY' => 'b8e25326-dfc4-4788-DHA-1011141'
         ];
-        $response = $client->request('get', 'http://192.168.43.120/mems_infoportal/api/wb_info/challan_history?plot_id='.$plot_id, [
+        $response = $client->request('get', 'http://192.168.43.120/mems_infoportal/api/wb_info/utility_bill?plot_id='.$plot_id, [
             'headers' => $headers,
         ]);
         $data = json_decode($response->getBody()->getContents());

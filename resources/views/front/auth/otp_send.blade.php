@@ -42,28 +42,31 @@
             <h1>PIN Code <b>Verification</b><h1>
         </div>
         <div class="card-body">
-
             <form action="{{route('otp.send')}}" method="post">
                 @csrf
                 <input type="hidden" value="{{$data['details']->id}}" name="details_id">
                 <input type="hidden" value="{{$data['details']->QEY_ID}}" name="qey_id">
+                <input type="hidden" value="{{$data['details']->phase}}" name="phase">
+                <input type="hidden" value="{{$data['details']->sector}}" name="sector">
+                <input type="hidden" value="{{$data['details']->plot_no}}" name="plot_no">
+                <input type="hidden" value="{{$data['details']->cnic_no}}" name="cnic_no">
 
                 <?php $a=7;?>
                 @if($data['details']->CELL_NO)
                 <div class="input-group mb-3">
-                    <div class="custom-control custom-checkbox">
-                        <input class="custom-control-input" name="customCheckbox3" type="checkbox" id="customCheckbox3" checked>
-                        <label for="customCheckbox3" class="custom-control-label">I want to receive PIN Code on my registered Mobile No. ({{$data['masked_cell_no']}})</label>
-                        <input type="hidden" name="phone" value="{{$data['details']->CELL_NO}}" class="form-control" placeholder="Phone#">
+                    <div class="custom-control form-check">
+                        <input class="form-check-input" name="radio1" type="radio" checked>
+                        <label>I want to receive PIN Code on my registered Mobile No. ({{$data['masked_cell_no']}})</label>
+                        <input type="hidden" name="phone" value="1" class="form-control" placeholder="Phone#">
                     </div>
                 </div>
                 @endif
                 @if($data['details']->EMAIL)
                 <div class="input-group mb-3 email">
-                    <div class="custom-control custom-checkbox">
-                        <input class="custom-control-input"  name="customCheckbox2" type="checkbox" id="customCheckbox2">
-                        <label for="customCheckbox2" class="custom-control-label">I want to receive PIN Code on my registered Email Address ({{$data['masked_email']}})</label>
-                        <input type="hidden"  name="email" value="{{$data['details']->EMAIL}}" class="form-control" placeholder="email">
+                    <div class="custom-control form-check">
+                        <input class="form-check-input"  name="radio1" type="radio">
+                        <label>I want to receive PIN Code on my registered Email Address ({{$data['masked_email']}})</label>
+                        <input type="hidden"  name="email" value="2" class="form-control" placeholder="email">
                     </div>
                 </div>
                 @endif

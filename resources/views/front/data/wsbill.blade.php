@@ -40,21 +40,23 @@
                                 <tr>
                                     <th style="min-width: 45px">Plot No</th>
                                     <th style="min-width: 45px">Reference No</th>
-                                    <th style="min-width: 90px">Issue Date</th>
+                                    <th style="min-width: 90px">Billing Month</th>
                                     <th style="min-width: 90px">Due Date</th>
-                                    <th style="min-width: 45px">Pay Date</th>
-                                    <th style="min-width: 110px">Amount (PKR)</th>
+                                    <th style="min-width: 45px">Amount within Due Date</th>
+                                    <th style="min-width: 110px">Amount After Due Date</th>
+                                    <th style="min-width: 110px">Actions</th>
                                 </tr>
                                 </thead>
                               <tbody>
                               @foreach($data as $k=>$row)
                                 <tr>
                                     <td>{{$row->PLOT_NO}}</td>
-                                    <td>{{$row->REF_NO}}</td>
-                                    <td>{{$row->ISSUE_DATE}}</td>
+                                    <td>{{$row->CUST_REF_NO}}</td>
+                                    <td>{{$row->BILLING_PRD}}</td>
                                     <td>{{$row->DUE_DATE}}</td>
-                                    <td>{{$row->PAY_DATE}}</td>
-                                    <td  style="text-align:center">{{number_format($row->TOT_AMT)}}</td>
+                                    <td>{{number_format($row->AMT_WITHIN_DD)}}</td>
+                                    <td>{{number_format($row->AMT_AFTER_DD)}}</td>
+                                    <td> <a data-toggle="modal" data-target="#exampleModalTwo" id="myModal" onclick="" class="btn btn-success editt">Pay Now</a>  <a href="#OnlinePaymentDialogue" class="btn btn-info edit OnlinePaymentPopup" data-toggle="modal" data-id="'+ value.REF_NO + '">Pay Online</a> <a href="{{route('challan.details',['ch_no'=>":CH_NO"])}}" class="btn btn-primary edit" target="_blank" id="'+ value.CH_NO + '">Print</a>  </td>
                                 </tr>
                               @endforeach
                               </tbody>

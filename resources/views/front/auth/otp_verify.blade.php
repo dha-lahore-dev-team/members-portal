@@ -86,7 +86,7 @@ $diffInMinutes = $createdAt->diffInMinutes($now);
 <script src='https://code.jquery.com/jquery-3.6.0.min.js?ver=3.6.0' id='jquery-js'></script>
 <script>
     // Set the timer duration in milliseconds
-    var duration = 60 * 1000;
+    var duration = 30 * 1000;
 
     // Update the timer display every second
     var intervalId = setInterval(function() {
@@ -100,9 +100,10 @@ $diffInMinutes = $createdAt->diffInMinutes($now);
             $('#disabled').removeClass('disabled');
             $('#verify').addClass('disabled');
             $('#otp').addClass('disabled');
-
+            $('#otp').attr('disabled', 'disabled');
         }
     }, 1000);
+
     $("#verify").on("click", function () {
         var qey_id = $("#qey_id").val();
         var otp = $("#otp").val();
@@ -125,7 +126,7 @@ $diffInMinutes = $createdAt->diffInMinutes($now);
                     $("#error-massage").text(response);
                 }
 
-                // console.log(response)
+                 console.log(response)
             }
 
         });

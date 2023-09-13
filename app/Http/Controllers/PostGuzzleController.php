@@ -106,6 +106,24 @@ class PostGuzzleController extends Controller
 
     public function otpSend(Request $request)
     {
+        $client = new Client();
+        $username = 'lkasoidrhfpaspoe';
+        $password = "f8c98f7e4c394b0796baaab0108b028f";
+        $credentials = base64_encode("{$username}:{$password}");
+        $headers = [
+            'Authorization' => 'Basic ' . $credentials,
+            'X-API-KEY' => 'b8e25326-dfc4-4788-DHA-1011141',
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+            'HOST' => 'members.dhalahore.org',
+        ];
+        //$api_url = 'http://192.168.43.120/mems_infoportal/api/wb_info/memportalaccess?phase=' . $request->phase . '&sect=' . $request->sector . '&plot_no=' . $request->plot_no . '&cnic_no=' . $request->cnic_no;
+        //dd($api_url);
+        $response_one = $client->request('get', 'http://192.168.43.120/mems_infoportal/api/wb_info/memportalaccess?phase=' . $request->phase . '&sect=' . $request->sector . '&plot_no=' . $request->plot_no . '&cnic_no=' . $request->cnic_no, [
+            'headers' => $headers,
+        ]);
+        $phase = json_decode($response_one->getBody()->getContents());
+        //dd($request);
         //$otpp = mt_rand(1000000, 9999999);
         $otpp = '123456';
         $otp_text = 'Dear Member, You can access Member Area Portal by providing '. $otpp . '. Never share it with anyone ever.';
@@ -114,10 +132,11 @@ class PostGuzzleController extends Controller
         $otp->qey_id = $request->qey_id;
         $otp->otp = $otpp;
         $otp->check = $request->customCheckbox2;
+        $otp->check = $request->email;
         //{{dd($request->customCheckbox2);}}
-        if ($request->customCheckbox2 == 'on') {
+        if ($request->customCheckbox2 == "on") {
             //dd($request);
-            $otp->send = $request->email;
+            $otp->send = $phase->EMAIL;
             $details = [
                 'otp' => $otp_text,];
             Mail::to($request->email)->send(new NotifyMail($details));
@@ -125,7 +144,7 @@ class PostGuzzleController extends Controller
             Toastr::success('PIN Code Sent at Registered Email Address!','Success');
             return view('front.auth.otp_verify', compact('otp'));
         } else {
-            $otp->send = $request->phone;
+            $otp->send = $phase->CELL_NO;
             $client = new Client();
             $username = 'lkasoidrhfpaspoe';
             $password = "f8c98f7e4c394b0796baaab0108b028f";
@@ -177,13 +196,13 @@ class PostGuzzleController extends Controller
                 }
 
             } else {
-                Toastr::error('OTP does not match. Please try again :)','Success');
+                Toastr::error('OTP does not match. Please try again :)','Failed');
                 return view('front.auth.otp_verify', compact('otp'));
 
             }
         }
         else{
-            Toastr::error('OTP Expired. Please Try again :)','Success');
+            Toastr::error('OTP Expired. Please Try again :)','Failed');
             return view('front.auth.otp_verify', compact('otp'));
         }
 
