@@ -58,13 +58,17 @@ Route::get('/search/water-sewerage-bills/{plot_id}', [App\Http\Controllers\Water
 Route::get('/payment-digital/{ch_id}/{ins_id}', [App\Http\Controllers\GenCallanDetailsController::class, 'payment'])->name('payment.mobile')->middleware('role');
 Route::post('hbl', [App\Http\Controllers\PaymentMethod\HBLPaymentController::class, 'payment'])->name('hbl');
 
+// Static Pages
+Route::get('/faq', [App\Http\Controllers\MemFaqController::class, 'index'])->name('front.pages.faq')->middleware('role');
+
 // Payment Success & Fail URI
-Route::get('payment-success/{ch_id}/{plot_id}/{amount}', [App\Http\Controllers\PaymentMethod\PaymentController::class, 'success'])->name('payment-success');
+Route::get('payment-success/{ref_no}/{bank_fee}/{amt_challan}/{amt_tobe_paid}', [App\Http\Controllers\PaymentMethod\PaymentController::class, 'success'])->name('payment-success');
 Route::get('payment-fail', [App\Http\Controllers\PaymentMethod\PaymentController::class, 'fail'])->name('payment-fail');
 
 // Payment Data
 Route::post('/hbl/data', [App\Http\Controllers\PostGuzzleController::class, 'hbldata'])->name('hbl.data');
 Route::post('/challanapi', [App\Http\Controllers\GenCallanDetailsController::class, 'detailsChallanApi'])->name('challanapi');
 Auth::routes();
+
 
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

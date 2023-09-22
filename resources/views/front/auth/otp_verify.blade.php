@@ -62,6 +62,7 @@ $diffInMinutes = $createdAt->diffInMinutes($now);
                 <div class="form-group">
                     <label>Enter PIN Code </label>
                     <input type="text" required class="form-control" id="otp"  name="otp" placeholder=" Type Authentication PIN Code here...  ">
+                    <p style="display: none; font-size: 14px; color: red;"  id="error-massage"></p>
                 </div>
 
                 <div class="row">
@@ -104,6 +105,16 @@ $diffInMinutes = $createdAt->diffInMinutes($now);
         }
     }, 1000);
 
+    $('#otp').keypress(function (e) {
+        $("#error-massage").hide();
+        if(e.key === "Enter") {
+            e.preventDefault();
+            //$("#error-massage").show();
+            //$("#error-massage").text('Please Press Button');
+        }
+    });
+
+
     $("#verify").on("click", function () {
         var qey_id = $("#qey_id").val();
         var otp = $("#otp").val();
@@ -122,6 +133,7 @@ $diffInMinutes = $createdAt->diffInMinutes($now);
                 if (response == 0) {
                     $('#yourForm').submit();
                 } else {
+                    //Toastr::error('OTP Expired. Please Try again :)','Failed');
                     $("#error-massage").show();
                     $("#error-massage").text(response);
                 }

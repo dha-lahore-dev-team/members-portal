@@ -4,6 +4,7 @@ namespace App\Http\Controllers\PaymentMethod;
 use App\Http\Controllers\Controller;
 use App\Models\OrderPaymant;
 use App\Models\User;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -90,32 +91,77 @@ WplhZpS43h7nLLZycSXVKuZY8Fx4eNJkbydI7s19LJHeOyo8aMKEo1SmZ41R
 
         return utf8_decode($decrypted);
     }
-    public function success($ch_id,$plot_id,$amount)
+    public function success($ref_no,$bank_fee,$amt_challan,$amt_tobe_paid)
     {
         $encryptedData = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
         $encryptedData = str_replace("data=", "", $encryptedData);
         $url_params = $this->decryptData($encryptedData, $this->privateKey);
+        //dd($url_params);
         $splitToArray = explode("&",$url_params);
         $responseCode = str_replace("RESPONSE_CODE=","",$splitToArray[0]);
         $responseMsg = str_replace("RESPONSE_MESSAGE=","",$splitToArray[1]);
         $orderRefNumber = str_replace("ORDER_REF_NUMBER=","",$splitToArray[2]);
         $paymentType=str_replace("PAYMENT_TYPE=","",$splitToArray[3]);
-        $guid=str_replace("GUID=","",$splitToArray[6]);
-        dd($url_params);
+        if($paymentType){
+            $guid=str_replace("GUID=","",$splitToArray[5]);
+        }else{
+            $guid=str_replace("GUID=","",$splitToArray[5]);
+        }
         $order = new OrderPaymant();
-        $order->ch_id = $ch_id;
-        $order->plot_id = $plot_id;
-        $order->amount = $amount;
+        $order->ref_no = $ref_no;
+        $order->bank_fee = $bank_fee;
+        $order->amt_challan = $amt_challan;
         $order->q_id = Auth::user()->qey_id;
-        $order->code = $responseCode;
+        $order->cc_response_code = $responseCode;
         $order->guid = $guid;
         $order->o_reference = $orderRefNumber;
         $order->p_type = $paymentType;
-        if($responseCode!=100 || $responseCode!=0){
-            $order->status = 2;
+        $order->cc_response_message = $responseMsg;
+        if($responseCode==100 || $responseCode==0 || $responseCode==00){
+            $order->cc_status = 1;
+            $order->amt_paid = $amt_tobe_paid;
+            $tran_auth_id = substr($ref_no, -6);
+            $bank_mnemonic = 'HBLCC';
+            $transaction_time = date("Hms");
+            $transaction_date = date("Ymd");
+            $transaction_amount = sprintf('%010s', $amt_challan) . '00';
+            //$transaction_amount = $amt_challan;
+            $reserved = $bank_fee;
+            $username = 'lkasoidrhfpaspoe';
+            $password = "f8c98f7e4c394b0796baaab0108b028f";
+            $credentials = base64_encode("{$username}:{$password}");
+            $payment_uri = 'http://10.1.1.151/dha_payment/api/application_info/TransactionInformation?ref_no=' . $ref_no . '&tran_auth_id=' . $tran_auth_id . '&bank_mnemonic=' . $bank_mnemonic . '&transaction_time=' . $transaction_time . '&transaction_date=' . $transaction_date . '&transaction_amount=' . $transaction_amount . '&reserved=' . $reserved;
+            //dd('$payment_uri');
+            $client = new Client();
+            $headers = [
+                'Authorization' => 'Basic ' . $credentials,
+                'X-API-KEY' => '2462dhbl-1e87-4808-8144-bc81ee00b17c'
+            ];
+            $user = Auth::user();
+            $response = $client->request('put', 'http://10.1.1.151/dha_payment/api/application_info/TransactionInformation?ref_no=' . $ref_no . '&tran_auth_id=' . $tran_auth_id . '&bank_mnemonic=' . $bank_mnemonic . '&transaction_time=' . $transaction_time . '&transaction_date=' . $transaction_date . '&transaction_amount=' . $transaction_amount . '&reserved=' . $reserved, [
+                'headers' => $headers,
+            ]);
+            $data = json_decode($response->getBody()->getContents());
+            //dd($data);
+            if($data->RESPONSE_CODE=="00"){
+                $order->pms_response_message = $data->IDENTIFICATION_PARAMETER;
+                $order->pms_response_code = $data->RESPONSE_CODE;
+                $order->pms_status = 1;
+            }else{
+                $order->pms_response_message = $data->IDENTIFICATION_PARAMETER;
+                $order->pms_response_code = $data->RESPONSE_CODE;
+                $order->pms_status = 2;
+            }
+        }else{
+            $order->cc_status = 2;
+            $order->amt_paid = 0;
+            $order->pms_response_message = "N/A";
+            $order->pms_response_code = "N/A";
+            $order->pms_status = 2;
         }
         $order->save();
-        return \redirect()->route('challan.two');
+        $find = $order;
+        return view('front.data.single-challan',compact('find','responseMsg'));
     }
     public function fail()
     {

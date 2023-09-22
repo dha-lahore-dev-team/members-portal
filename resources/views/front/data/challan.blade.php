@@ -296,14 +296,16 @@
 
                                             <form action="{{ route('hbl',request()->getQueryString()) }}" method="POST" class="needs-validation" id="hbl-form">
                                                 @csrf
-                                                <input type="hidden" id="nch_id" name="ch_id" >
-<!--                                                <input type="hidden" id="nplot_no"  name="plot_no" >
-                                                <input type="hidden" id="nplot_id"  name="plot_id" >-->
-                                                <input type="hidden" id="nref_no"  name="ref_no" >
-                                                <input type="hidden" id="nmem_name" name="mem_name" >
-                                                <input type="hidden" id="ndue_date" name="due_date" >
-                                                <input type="hidden" id="namount_within" name="ch_amount_within" >
-                                                <input type="hidden" id="namount_after" name="ch_amount_after" >
+                                                <input type="hidden" id="val_ch_id" name="ch_id" >
+                                                <input type="hidden" id="val_plot_no"  name="plot_no" >
+<!--                                                <input type="hidden" id="nplot_id"  name="plot_id" >-->
+                                                <input type="hidden" id="val_ref_no"  name="ref_no" >
+                                                <input type="hidden" id="val_mem_name" name="mem_name" >
+                                                <input type="hidden" id="val_due_date" name="due_date" >
+                                                <input type="hidden" id="val_amt_within" name="ch_amount_within" >
+                                                <input type="hidden" id="val_amt_after" name="ch_amount_after" >
+                                                <input type="hidden" id="val_amt_challan" name="amt_challan" >
+                                                <input type="hidden" id="val_bank_fee" name="bank_fee" >
 <!--                                                <input type="hidden" id="namt_in_words" name="amt_in_words" >-->
                                                 <div class="card">
                                                     <div class="card-header">
@@ -351,16 +353,19 @@
                                                 </div>
                                                 <ul class="list-group list-group-unbordered mb-3">
                                                     <li class="list-group-item">
-                                                        <b>Challan ID</b> <a class="float-right" id="ntref_no"></a>
+                                                        <b>Plot No</b> <a class="float-right" id="nt_plot_no"></a>
                                                     </li>
                                                     <li class="list-group-item">
-                                                        <b>Due Date </b> <a class="float-right" id="ntduedate"></a>
+                                                        <b>Challan ID</b> <a class="float-right" id="nt_ref_no"></a>
                                                     </li>
                                                     <li class="list-group-item">
-                                                        <b>Challan Amount</b> <a class="float-right" id="ntammount"></a>
+                                                        <b>Due Date </b> <a class="float-right" id="nt_due_date"></a>
                                                     </li>
                                                     <li class="list-group-item">
-                                                        <b>Bank Fee (2.5%)</b> <a class="float-right" id="ntbankfee"></a>
+                                                        <b>Challan Amount</b> <a class="float-right" id="nt_amt_challan"></a>
+                                                    </li>
+                                                    <li class="list-group-item">
+                                                        <b>Bank Fee (2.5%)</b> <a class="float-right" id="nt_bank_fee"></a>
                                                     </li>
                                                 </ul>
                                                 <button type="submit" class="btn btn-primary btn-block"><b>Pay Through Credit / Debit Card</b></button>
@@ -537,7 +542,7 @@
         }
 
         function challanInformation(ch_id){
-            console.log(ch_id)
+            console.log('challan ID = ' + ch_id)
             $.ajax({
                 type: 'POST',
                 url: '{{ route('challanapi') }}',
@@ -547,45 +552,75 @@
                     ch_id: ch_id,
                 },
                 success: function (response) {
-
+                    var amt_challan;
                     var bill_status = response.BILL_STATUS;
-
                     var amt_after_due_date = parseInt(response.AMOUNT_AFTER_DUEDATE,0) / 100;
-
                     var amt_within_due_date = parseInt(response.AMOUNT_WITHIN_DUEDATE,0) / 100;
-                    var bank_fee = Math.round((amt_within_due_date * 2.5)/100);
-                    //var bank_fee = (amt_within_due_date * 2.5)/100;
-                    if(bill_status=="P"){
-                        alert ("Bill is Already Paid");
+                    var challan_due_date = response.DUE_DATE;
+                    console.log('Provided Date is ' + challan_due_date);
+                    var year = challan_due_date.substring(0, 4);
+                    var month = challan_due_date.substring(4, 6);
+                    var day = challan_due_date.substring(6, 8);
+                    var challan_due_date = year + "-" + month + "-" + day;
+                    var CurrentDate = new Date();
+                    var year = CurrentDate.getFullYear();
+                    var month = (CurrentDate.getMonth() + 1).toString().padStart(2, '0'); // Months are 0-indexed, so we add 1
+                    var day = CurrentDate.getDate().toString().padStart(2, '0');
+                    var CurrentDate = year + "-" + month + "-" + day;
+                    console.log("Current Date is " + CurrentDate + " and challan due date is " + challan_due_date);
+                    if(challan_due_date > CurrentDate){
+                        amt_challan = amt_within_due_date;
+                        var bank_fee = Math.round((amt_within_due_date * 2.5)/100);
+                        console.log('Challan date is Greater than the current date. Due Amount till current date is ' + amt_challan);
                     }else{
-                        $('#ntref_no').text(response.REF_NO);
-                        $('#ntduedate').text(response.DUE_DATE);
-                        $('#ntammount').text(amt_within_due_date);
-                        $('#addammount').text(amt_after_due_date);
-                        $('#ntbankfee').text(bank_fee);
-                        $('#nch_id').val(ch_id);
-                        $('#nch_status').val(response.BILL_STATUS);
-                        $('#nref_no').val(response.REF_NO);
-                        $('#namount_within').val(amt_within_due_date);
-                        $('#nammount_after').val(amt_after_due_date);
-                        //$('#nplot_no').val(response.PLOT_NO);
+                        amt_challan = amt_after_due_date;
+                        var bank_fee = Math.round((amt_after_due_date * 2.5)/100);
+                        console.log('Challan date is Lower than the current date. Due Amount till current date is ' + amt_challan);
+                    }
+                    var total_value = $('#tot_bal').text();
+                    if(total_value < amt_challan){
+                        alert("Sorry! Challan Amount exceeds the Balance Amount.");
+                        exit();
+                    }
+                    if(bill_status=="P"){
+                        alert ("Challan is Already Paid");
+                    }else{
+                        $('#nt_ref_no').text(response.REF_NO);
+                        $('#nt_due_date').text(response.DUE_DATE);
+                        $('#nt_amt_within').text(amt_within_due_date);
+                        $('#nt_amt_after').text(amt_after_due_date);
+                        $('#nt_amt_challan').text(amt_challan);
+                        $('#nt_bank_fee').text(bank_fee);
+                        $('#nt_plot_no').text(response.RESERVED);
+
+                        // Hidden fields data from here
+                        $('#val_ch_id').val(ch_id);
+                        $('#val_ch_status').val(response.BILL_STATUS);
+                        $('#val_ref_no').val(response.REF_NO);
+                        $('#val_amt_within').val(amt_within_due_date);
+                        $('#val_amt_after').val(amt_after_due_date);
+                        $('#val_amt_challan').val(amt_challan);
+                        $('#val_bank_fee').val(bank_fee);
+                        $('#val_plot_no').val(response.RESERVED);
+                        $('#val_mem_name').val(response.CONSUMER_NAME);
+                        $('#val_due_date').val(response.DUE_DATE);
                         //$('#nplot_id').val(response.PLOT_ID);
-                        $('#nmem_name').val(response.CONSUMER_NAME);
-                        $('#ndue_date').val(response.DUE_DATE);
                         //$('#nch_amount').val(response.TOT_AMT);
                         //$('#namt_in_words').val(response.AMT_IN_WORDS);
+                        //var elementId = $(this).attr('id');
+                        //var elementValue = $(this).val();
                     }
 
-                    console.log(response.BILL_STATUS);
+                    console.log('Bill Status = ' + response.BILL_STATUS);
                 }
 
             });
         }
 
         // Card Payment Popup Light Box display Called
-        $("#myTable").on("click",".CardPaymentPopup", function(){
+        /*$("#myTable").on("click",".CardPaymentPopup", function(){
             alert("Payment Through Credit / Debit Card Will be Available Soon!");
-        });
+        });*/
         $("#myTable").on("click",".OnlinePaymentPopup", function(){
             var ChallanId = $(this).data('id');
             var alert_text = "Log into your respective Online Banking Application (Any Bank). Go to Bill Payments section and click on 1Bill Option. Click on Invoice / Fixed Payments Biller Option. Click on New Payee and provide your Reference Number and proceed to next step. Billing details will be displayed. Proceed further and make payment as advised by the application. ";
@@ -594,10 +629,10 @@
             $(".modal-body #ChallanId").text(ChallanId);
         });
 
-        $('#myModal').on('click', function() {
+        /*$('#myModal').on('click', function() {
             console.log('Credit Card Modal Clicked')
             var elementId = $(this).attr('id');
             var elementValue = $(this).val();
-        });
+        });*/
     </script>
 @endsection

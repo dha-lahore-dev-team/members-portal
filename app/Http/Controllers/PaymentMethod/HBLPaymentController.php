@@ -47,22 +47,23 @@ DBe6lkcxEiOpPsIzxEf8i2kCAwEAAQ==
             $order->city = $request->city;
             $order->p_code = $request->code;
             $order->save();
+            $amt_tobe_paid = $request->amt_challan + $request->bank_fee;
         $data = array(
             "USER_ID" => "dhalahoreadmin",
             "PASSWORD" => "dCAc99Su5!",
             "CLIENT_NAME" => "dhalahoreadmin",
-            "RETURN_URL" => "http://127.0.0.1:8000/payment-success/$request->ref_no/$request->ref_no/$request->ch_amount_within",
+            "RETURN_URL" => "http://127.0.0.1:8000/payment-success/$request->ref_no/$request->bank_fee/$request->amt_challan/$amt_tobe_paid",
             "CANCEL_URL" => "http://127.0.0.1:8000/payment-fail",
             "CHANNEL" => "HBLPay_DHALahore_Website",
             "TYPE_ID" => "0",
             "ORDER" => array(
                 "DISCOUNT_ON_TOTAL" => "0",
-                "SUBTOTAL" => $request->ch_amount_within,
+                "SUBTOTAL" => $amt_tobe_paid,
                 "OrderSummaryDescription" => array(
                     array(
                         "ITEM_NAME" => "Challan Payment",
                         "QUANTITY" => "1",
-                        "UNIT_PRICE" => $request->ch_amount_within,
+                        "UNIT_PRICE" => $amt_tobe_paid,
                         "OLD_PRICE" => "0",
                         "CATEGORY" => "DHA Lahore Dues",
                         "SUB_CATEGORY" => "Challan Payment"
@@ -70,14 +71,14 @@ DBe6lkcxEiOpPsIzxEf8i2kCAwEAAQ==
                 )
             ),
             "SHIPPING_DETAIL" => array(
-                "NAME" => "DHA SERVICE",
-                "ICON_PATH" => null,
+                "NAME" => "null",
+                "ICON_PATH" => "null",
                 "DELIEVERY_DAYS" => "0",
                 "SHIPPING_COST" => "0"
             ),
             "ADDITIONAL_DATA" => array(
                 "REFERENCE_NUMBER" => $request->ref_no,
-                "CUSTOMER_ID" => null,
+                "CUSTOMER_ID" => 123, // Customer ID as per our system
                 "CURRENCY" => "PKR",
                 "BILL_TO_FORENAME" => $request->fname,
                 "BILL_TO_SURNAME" => $request->lname,
@@ -85,10 +86,10 @@ DBe6lkcxEiOpPsIzxEf8i2kCAwEAAQ==
                 "BILL_TO_PHONE" => $request->phone,
                 "BILL_TO_ADDRESS_LINE" => $request->address,
                 "BILL_TO_ADDRESS_CITY" => $request->city,
-                "BILL_TO_ADDRESS_STATE" => $request->state,
-                "BILL_TO_ADDRESS_COUNTRY" => $request->country,
+                "BILL_TO_ADDRESS_STATE" => "PB",
+                "BILL_TO_ADDRESS_COUNTRY" => "PK",
                 "BILL_TO_ADDRESS_POSTAL_CODE" => $request->code,
-                "SHIP_TO_FORENAME" => $request->fname,
+                /*"SHIP_TO_FORENAME" => $request->fname,
                 "SHIP_TO_SURNAME" => $request->lname,
                 "SHIP_TO_EMAIL" => $request->email,
                 "SHIP_TO_PHONE" => $request->phone,
@@ -96,14 +97,13 @@ DBe6lkcxEiOpPsIzxEf8i2kCAwEAAQ==
                 "SHIP_TO_ADDRESS_CITY" => $request->city,
                 "SHIP_TO_ADDRESS_STATE" =>  $request->state,
                 "SHIP_TO_ADDRESS_COUNTRY" => $request->country,
-                "SHIP_TO_ADDRESS_POSTAL_CODE" => $request->code,
-                //"PAYMENT_METHOD" => "VISA / MASTER",
+                "SHIP_TO_ADDRESS_POSTAL_CODE" => $request->code,*/
                 "MerchantFields" => array(
                     "MDD1" => "WC",
                     "MDD2" => "YES",
-                    "MDD4" => "Product Name",
+                    "MDD4" => $request->plot_no, //Dynamic Value
                     "MDD5" => "No",
-                    "MDD7" => "1",
+                    "MDD7" => "1", //Dynamic Value as per Qty
                     "MDD20" => "NO"
                 )
             )
@@ -112,6 +112,7 @@ DBe6lkcxEiOpPsIzxEf8i2kCAwEAAQ==
         // Encode the data to JSON
         $stringData = json_encode($data, JSON_PRETTY_PRINT);
             $cyb = new Cyb($this->publicPEMKey);
+            //dd($cyb);
             function recParamsEncryption($arrJson, $cyb)
             {
                 foreach ($arrJson as $jsonIndex => $jsonValue)
