@@ -470,7 +470,7 @@
                             event_data += '<td class="po">' + value.REF_NO + '</td>';
                             event_data += '<td class="sa">' + parseInt(TOT_AMT).toLocaleString() + '</td>';
                             event_data += '<td class="pr">' + value.DUE_DATE + '</td>';
-                            event_data += '<td> <a data-toggle="modal" data-target="#exampleModalTwo" id="myModal" onclick="challanInformation('+value.CH_NO+')" class="btn btn-success editt">Pay Now</a>  <a href="#OnlinePaymentDialogue" class="btn btn-info edit OnlinePaymentPopup" data-toggle="modal" data-id="'+ value.REF_NO + '">Pay Online</a> <a href="{{route('challan.details',['ch_no'=>":CH_NO"])}}" class="btn btn-primary edit" target="_blank" id="'+ value.CH_NO + '">Print Challan</a>  </td>';
+                            event_data += '<td> <a id="myModal" onclick="challanInformation('+value.CH_NO+')" class="btn btn-success editt">Pay Now</a>  <a href="#OnlinePaymentDialogue" class="btn btn-info edit OnlinePaymentPopup" data-toggle="modal" data-id="'+ value.REF_NO + '">Pay Online</a> <a href="{{route('challan.details',['ch_no'=>":CH_NO"])}}" class="btn btn-primary edit" target="_blank" id="'+ value.CH_NO + '">Print Challan</a>  </td>';
 
                             event_data += '</tr>';
                             event_data = event_data.replace(':CH_NO', value.CH_NO);
@@ -499,9 +499,9 @@
                 },
                 success: function (response) {
                     if (response == 0) {
-                        alert('Could not Generate Challan. Please Try Again')
+                        alert('Could not Generate Challan. Please Try Again');
+                        return false;
                     } else {
-
                         $('#content').show();
 // select the table body element
                         var tableBody = $('#myTable');
@@ -518,7 +518,7 @@
                             event_data += '<td class="po">' + value.REF_NO + '</td>';
                             event_data += '<td class="sa">' + parseInt(TOT_AMT).toLocaleString() + '</td>';
                             event_data += '<td class="pr">' + value.DUE_DATE + '</td>';
-                            event_data += '<td>  <a data-toggle="modal" data-target="#exampleModalTwo" id="myModal" onclick="challanInformation('+value.CH_NO+')" class="btn btn-success editt">Pay Now</a>    <a href="#OnlinePaymentDialogue" class="btn btn-info edit OnlinePaymentPopup" data-toggle="modal" data-id="'+ value.REF_NO + '">Pay Online</a> <a href="{{route('challan.details',['ch_no'=>":CH_NO"])}}" class="btn btn-primary edit" target="_blank" id="'+ value.CH_NO + '">Print Challan</a>  </td>';
+                            event_data += '<td>  <a id="myModal" onclick="challanInformation('+value.CH_NO+')" class="btn btn-success editt">Pay Now</a>    <a href="#OnlinePaymentDialogue" class="btn btn-info edit OnlinePaymentPopup" data-toggle="modal" data-id="'+ value.REF_NO + '">Pay Online</a> <a href="{{route('challan.details',['ch_no'=>":CH_NO"])}}" class="btn btn-primary edit" target="_blank" id="'+ value.CH_NO + '">Print Challan</a>  </td>';
                             event_data += '</tr>';
                             event_data = event_data.replace(':CH_NO', value.CH_NO);
                             //event_data = event_data.replace(':plot_id', plot_id);
@@ -580,10 +580,11 @@
                     var total_value = $('#tot_bal').text();
                     if(total_value < amt_challan){
                         alert("Sorry! Challan Amount exceeds the Balance Amount.");
-                        exit();
+                        return false;
                     }
                     if(bill_status=="P"){
                         alert ("Challan is Already Paid");
+                        return false;
                     }else{
                         $('#nt_ref_no').text(response.REF_NO);
                         $('#nt_due_date').text(response.DUE_DATE);
@@ -592,7 +593,6 @@
                         $('#nt_amt_challan').text(amt_challan);
                         $('#nt_bank_fee').text(bank_fee);
                         $('#nt_plot_no').text(response.RESERVED);
-
                         // Hidden fields data from here
                         $('#val_ch_id').val(ch_id);
                         $('#val_ch_status').val(response.BILL_STATUS);
@@ -609,6 +609,9 @@
                         //$('#namt_in_words').val(response.AMT_IN_WORDS);
                         //var elementId = $(this).attr('id');
                         //var elementValue = $(this).val();
+                        $("#myModal").attr("data-toggle", "modal");
+                        $("#myModal").attr("data-target", "#exampleModalTwo");
+                        $("#exampleModalTwo").modal("show");
                     }
 
                     console.log('Bill Status = ' + response.BILL_STATUS);
@@ -623,16 +626,16 @@
         });*/
         $("#myTable").on("click",".OnlinePaymentPopup", function(){
             var ChallanId = $(this).data('id');
-            var alert_text = "Log into your respective Online Banking Application (Any Bank). Go to Bill Payments section and click on 1Bill Option. Click on Invoice / Fixed Payments Biller Option. Click on New Payee and provide your Reference Number and proceed to next step. Billing details will be displayed. Proceed further and make payment as advised by the application. ";
+            var alert_text = "Login to your respective Online Banking Application (Any Bank). Go to Bill Payments section and click on 1Bill Option. Click on Invoice / Fixed Payments Biller Option. Click on New Payee and provide your Reference Number and proceed to next step. Billing details will be displayed. Proceed further and make payment as advised by the application. ";
             //alert(alert_text);
             //$('#OnlinePaymentPopupModal').modal('show');
             $(".modal-body #ChallanId").text(ChallanId);
         });
 
-        /*$('#myModal').on('click', function() {
-            console.log('Credit Card Modal Clicked')
-            var elementId = $(this).attr('id');
-            var elementValue = $(this).val();
-        });*/
+        $('#myModal').on('click', function() {
+            console.log('Credit Card Modal Clicked');
+            //var elementId = $(this).attr('id');
+            //var elementValue = $(this).val();
+        });
     </script>
 @endsection

@@ -64,7 +64,7 @@
                                     @if($row->INST_STATUS=='PAID')
                                         <td style="text-align: center"><span class="badge badge-success">Paid</span></td>
                                     @elseif($row->INST_STATUS=='OVERDUE')
-                                        <td style="text-align: center"><span c  lass="badge badge-danger">Overdue</span></td>
+                                        <td style="text-align: center"><span class="badge badge-danger">Overdue</span></td>
                                     @elseif($row->INST_STATUS=='UPCOMING')
                                         <td style="text-align: center"><span class="badge badge-warning">Upcoming</span></td>
                                     @else
