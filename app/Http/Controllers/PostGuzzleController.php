@@ -126,44 +126,72 @@ class PostGuzzleController extends Controller
         //dd($request);
         //$otpp = mt_rand(1000000, 9999999);
         $otpp = '123456';
-        $otp_text = 'Dear Member, You can access Member Area Portal by providing '. $otpp . '. Never share it with anyone ever.';
+	$otp_text = 'This is an automated SMS from DHA Members Portal. Your verification PIN is ' . $otpp . '. Please enter the PIN for instant verification. Thank you!';
         $otp = new OtpDetails();
         $otp->details_id = $request->details_id;
         $otp->qey_id = $request->qey_id;
         $otp->otp = $otpp;
-        $otp->check = $request->customCheckbox2;
-        $otp->check = $request->email;
-        //{{dd($request->customCheckbox2);}}
-        if ($request->customCheckbox2 == "on") {
-            //dd($request);
+        //$otp->check = $request->customCheckbox2;
+        //$otp->check = $request->radio1;
+        //{{dd($request);}}
+        if ($request->radio1 == "email") {
+	    // Email Using the Laravel Library
+            ///*
+		$otp->check = 2;
             $otp->send = $phase->EMAIL;
             $details = [
                 'otp' => $otp_text,];
-            Mail::to($request->email)->send(new NotifyMail($details));
-            $otp->save();
-            Toastr::success('PIN Code Sent at Registered Email Address!','Success');
+            Mail::to($phase->EMAIL)->send(new NotifyMail($details));
+	    $otp->save();
+            Toastr::success('PIN Code Sent at Registered Email Address Successfully','Success');
             return view('front.auth.otp_verify', compact('otp'));
-        } else {
-            $otp->send = $phase->CELL_NO;
+	    //*/
+	    // Email Through Laravel Completes here
+	    // Email Using the API System
+	    /*
+            $otp->check = 2;
             $client = new Client();
-            $username = 'lkasoidrhfpaspoe';
-            $password = "f8c98f7e4c394b0796baaab0108b028f";
+            $username = 'dhalhrgapisys';
+            $password = "f8c98f7e4c394b0796b84jfgfb0108b028f";
             $credentials = base64_encode("{$username}:{$password}");
             $headers = [
-                'Cookie' => 'cookiesession1=678A8C88OPQRSTUVWXYZBCDEGHIJ7398',
+                'Authorization' => 'Basic ' . $credentials,
+                'X-API-KEY' => 'b8e25326-keys-4788-gapi-9c4ca0ceb555',
+                'Content-Type' => 'application/json',
+                'Accept' => 'application/json',
             ];
-            // Available alpha caracters
-            $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-            $pin = mt_rand(1000000000, 9999999999)
-                . mt_rand(1000000000, 9999999999)
-                . $characters[rand(0, strlen($characters) - 1)];
-            $string = str_shuffle($pin);
-            //$iteL_uri = 'https://api.itelservices.net/send.php?transaction_id=' . $string . '&api_key=WUMKp21gth2UKEpsLp5I7yKABrmyi673&number=92' . $request->phone . '&text=' . $otpp . '&from=4473&type=sms';
-            //$m3tech_uri = 'https://secure.m3techservice.com/GenericService/webservice_4_1.asmx/SendSMS?UserId=sms1@dhalahore&Password=E9B30A-cd1d1f&MobileNo=92' . $request->phone . '&MsgId=' . $string . '&SMS=' . $otpp . '&MsgHeader=9460&HandsetPort=0&SMSChannel=0&Telco=0';
-            $zongsms_uri = 'http://192.168.44.103/sms/send_sms.php?app=member_portal&cell=92' . $request->phone . '&msg=' . $otp_text;
-            //die($zongsms_uri);
-            $response = $client->request('get', $zongsms_uri, $headers);
-            if($response){
+            $send_otp = $client->request('get', 'http://10.1.1.165/apinet/api/application_info/email?email_from=no-reply@dhalahore.org&email_from_name=No Reply&email_to='.$phase->EMAIL.'&email_subject=OTP - DHA Lahore Member Portal&email_message='. $otp_text, [
+                'headers' => $headers,
+            ]);
+            $send_otp_response = json_decode($send_otp->getBody()->getContents());
+	    if($send_otp_response->STATUS_ID=='00'){
+                $otp->save();
+            	Toastr::success('PIN Code Sent at Registered Email Address Successfully','Success');
+            	return view('front.auth.otp_verify', compact('otp'));
+            }else{
+                Toastr::error('Failed to send PIN Code. Please try again :)','danger');
+                return view('front.auth.otp_verify', compact('otp'));
+            }
+	    */
+	    // Email Through API Completes here
+        } else {
+            $otp->send = $phase->CELL_NO;
+            $otp->check = 1;
+            $client = new Client();
+            $username = 'dhalhrgapisys';
+            $password = "f8c98f7e4c394b0796b84jfgfb0108b028f";
+            $credentials = base64_encode("{$username}:{$password}");
+            $headers = [
+                'Authorization' => 'Basic ' . $credentials,
+                'X-API-KEY' => 'b8e25326-keys-4788-gapi-9c4ca0ceb555',
+                'Content-Type' => 'application/json',
+                'Accept' => 'application/json',
+            ];
+            $send_otp = $client->request('get', 'http://10.1.1.165/apinet/api/application_info/smstitel?mobile_no='.$otp->send.'&message='.$otp_text, [
+                'headers' => $headers,
+            ]);
+            $send_otp_response = json_decode($send_otp->getBody()->getContents());
+            if($send_otp_response->STATUS_ID=='013'){
                 $otp->save();
                 Toastr::success('PIN Code Sent at Registered Cell No Successfully','Success');
                 return view('front.auth.otp_verify', compact('otp'));
@@ -196,13 +224,13 @@ class PostGuzzleController extends Controller
                 }
 
             } else {
-                Toastr::error('OTP does not match. Please try again :)','Failed');
+                Toastr::error('PIN Code does not match. Please try again :)','Failed');
                 return view('front.auth.otp_verify', compact('otp'));
 
             }
         }
         else{
-            Toastr::error('OTP Expired. Please Try again :)','Failed');
+            Toastr::error('PIN Code Expired. Please Try again :)','Failed');
             return view('front.auth.otp_verify', compact('otp'));
         }
 
@@ -221,11 +249,11 @@ class PostGuzzleController extends Controller
             if ($request->input('otp') == $otp->otp) {
                 return 0;
             } else {
-                return response()->json('Provided OTP does not match. Please try again!');
+                return response()->json('Provided PIN Code does not match. Please try again!');
             }
         }
         else{
-            return  response()->json('Provided OTP has been expired. Please Try again!');
+            return  response()->json('Provided PIN Code has been expired. Please Try again!');
         }
 
     }
@@ -234,43 +262,62 @@ class PostGuzzleController extends Controller
         $otp = OtpDetails::find($id);
         //$otp->otp = mt_rand(1000000, 9999999);
         $otp->otp = '123456';
-        $otp_text = 'Dear Member, You can access Member Area Portal by providing '. $otp->otp . '. Never share it with anyone ever.';
+	$otp_text = 'This is an automated SMS from DHA Members Portal. Your verification PIN is ' . $otp->otp . '. Please enter the PIN for instant verification. Thank you!';
         $otp->created_at = Carbon::now();
         $otp->update();
         //dd($otp);
-        if($otp->check=="on"){
-            $details = [
-                'otp' => $otp->otp,];
+        if($otp->check==2){
+        /*
+	    $details = [
+                'otp' => $otp_text,];
             Mail::to($otp->send)->send(new NotifyMail($details));
             $otp->save();
-            Toastr::success('PIN Code Sent again at Registered Email Address!','Success');
+            Toastr::success('PIN Code Sent again at Registered Email Address Successfully','Success');
             return view('front.auth.otp_verify', compact('otp'));
-        }
-        else{
+	*/
+	// Email Through Laravel Completes here
+	// Email Using the API System
             $client = new Client();
-            $username = 'lkasoidrhfpaspoe';
-            $password = "f8c98f7e4c394b0796baaab0108b028f";
+            $username = 'dhalhrgapisys';
+            $password = "f8c98f7e4c394b0796b84jfgfb0108b028f";
             $credentials = base64_encode("{$username}:{$password}");
             $headers = [
                 'Authorization' => 'Basic ' . $credentials,
-                'X-API-KEY' => 'b8e25326-dfc4-4788-DHA-1011141',
+                'X-API-KEY' => 'b8e25326-keys-4788-gapi-9c4ca0ceb555',
                 'Content-Type' => 'application/json',
                 'Accept' => 'application/json',
-                'HOST' => 'members.dhalahore.org',
             ];
-            // Available alpha caracters
-            $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-            $pin = mt_rand(1000000000, 9999999999)
-                . mt_rand(1000000000, 9999999999)
-                . $characters[rand(0, strlen($characters) - 1)];
-            $string = str_shuffle($pin);
-            //$iteL_uri = 'https://api.itelservices.net/send.php?transaction_id=' . $string . '&api_key=WUMKp21gth2UKEpsLp5I7yKABrmyi673&number=92' . $request->phone . '&text=' . $otpp . '&from=4473&type=sms';
-            //$m3tech_uri = 'https://secure.m3techservice.com/GenericService/webservice_4_1.asmx/SendSMS?UserId=sms1@dhalahore&Password=E9B30A-cd1d1f&MobileNo=92' . $request->phone . '&MsgId=' . $string . '&SMS=' . $otpp . '&MsgHeader=9460&HandsetPort=0&SMSChannel=0&Telco=0';
-            $zongsms_uri = 'http://192.168.44.103/sms/send_sms.php?app=member_portal&cell=92' . $otp->send . '&msg=' . $otp_text;
-            $response = $client->request('get', $zongsms_uri , $headers);
-            if($response){
+            $send_otp = $client->request('get', 'http://10.1.1.165/apinet/api/application_info/email?email_from=no-reply@dhalahore.org&email_from_name=No Reply&email_to='.$otp->send.'&email_subject=OTP - DHA Lahore Member Portal&email_message='. $otp_text, [
+                'headers' => $headers,
+            ]);
+            $send_otp_response = json_decode($send_otp->getBody()->getContents());
+	    if($send_otp_response->STATUS_ID=='00'){
                 $otp->save();
-                Toastr::success('PIN Code Re-Sent at Registered Cell No Successfully','Success');
+            	Toastr::success('PIN Code Sent at Registered Email Address Successfully','Success');
+            	return view('front.auth.otp_verify', compact('otp'));
+            }else{
+                Toastr::error('Failed to send PIN Code. Please try again :)','danger');
+                return view('front.auth.otp_verify', compact('otp'));
+            }
+        }
+        else{
+            $client = new Client();
+            $username = 'dhalhrgapisys';
+            $password = "f8c98f7e4c394b0796b84jfgfb0108b028f";
+            $credentials = base64_encode("{$username}:{$password}");
+            $headers = [
+                'Authorization' => 'Basic ' . $credentials,
+                'X-API-KEY' => 'b8e25326-keys-4788-gapi-9c4ca0ceb555',
+                'Content-Type' => 'application/json',
+                'Accept' => 'application/json',
+            ];
+            $send_otp = $client->request('get', 'http://10.1.1.165/apinet/api/application_info/smstitel?mobile_no='.$otp->send.'&message='.$otp_text, [
+                'headers' => $headers,
+            ]);
+            $send_otp_response = json_decode($send_otp->getBody()->getContents());
+            if($send_otp_response->STATUS_ID=='013'){
+                $otp->save();
+                Toastr::success('PIN Code Sent at Registered Cell No Successfully','Success');
                 return view('front.auth.otp_verify', compact('otp'));
             }else{
                 Toastr::error('Failed to send PIN Code. Please try again :)','danger');

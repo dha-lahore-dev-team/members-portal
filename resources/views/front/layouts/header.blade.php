@@ -75,7 +75,7 @@
                 <a href="{{route('front.pages.faq')}}" class="nav-link">FAQ</a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-                <a href="https://webapps.dhalahore.org/support_ticket/apply" class="nav-link" target="_blank">Contact Us</a>
+                <a href="https://dhalahore.org/customer-care/" class="nav-link" target="_blank">Contact Us</a>
             </li>
         </ul>
 

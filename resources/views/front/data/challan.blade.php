@@ -198,14 +198,14 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header" style="background-color: green; color: white">
-                                <h5>Unpaid Challans</h5>
+                                <h5  class="card-title">Unpaid Challans</h5>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <table class="table table-bordered">
+                                <table id="example2" class="table table-bordered table-hover">
                                     <thead>
                                     <tr>
-<!--                                        <th>Plot No</th>-->
+                                        <!--<th>Plot No</th>-->
                                         <th>Challan No</th>
                                         <th>Reference No</th>
                                         <th>Total Amount (PKR)</th>
@@ -256,8 +256,8 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">X</button>
                 </div>
-                <div class="modal-body" style="padding-top: 0px;">
-                    <h3 align="centre">Payment Through 1-Bill</h3>
+                <div class="modal-body" style="padding-top: 0;">
+                    <h3 style="text-align: center">Payment Through 1-Bill</h3>
                     <ol>
                         <li>Log into your respective Online Banking Application (Any Bank).</li>
                         <li>Go to Bill Payments section.</li>
@@ -271,7 +271,7 @@
                     <div style="clear:both;"></div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+<!--                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
                 </div>
             </div>
         </div>
@@ -309,7 +309,7 @@
 <!--                                                <input type="hidden" id="namt_in_words" name="amt_in_words" >-->
                                                 <div class="card">
                                                     <div class="card-header">
-                                                        <h3 class="card-title">Personal Information</h3>
+                                                        <h3 class="card-title">Card Holder’s Information</h3>
                                                     </div>
                                                     <div class="card-body">
                                                         <div class="row">
@@ -356,16 +356,16 @@
                                                         <b>Plot No</b> <a class="float-right" id="nt_plot_no"></a>
                                                     </li>
                                                     <li class="list-group-item">
-                                                        <b>Challan ID</b> <a class="float-right" id="nt_ref_no"></a>
+                                                        <b>Challan No: </b> <a class="float-right" id="nt_ref_no"></a>
                                                     </li>
                                                     <li class="list-group-item">
-                                                        <b>Due Date </b> <a class="float-right" id="nt_due_date"></a>
+                                                        <b>Due Date: </b> <a class="float-right" id="nt_due_date"></a>
                                                     </li>
                                                     <li class="list-group-item">
-                                                        <b>Challan Amount</b> <a class="float-right" id="nt_amt_challan"></a>
+                                                        <b>Challan Amount: </b> <a class="float-right" id="nt_amt_challan"></a>
                                                     </li>
                                                     <li class="list-group-item">
-                                                        <b>Bank Fee (2.5%)</b> <a class="float-right" id="nt_bank_fee"></a>
+                                                        <b>Bank Fee (2.5%): </b> <a class="float-right" id="nt_bank_fee"></a>
                                                     </li>
                                                 </ul>
                                                 <button type="submit" class="btn btn-primary btn-block"><b>Pay Through Credit / Debit Card</b></button>
@@ -387,7 +387,6 @@
             </div>
         </div>
     </div>
-    <script src="jquery-3.6.3.min.js"></script>
     <script>
         $('#amount').prop('readonly', true);
         $('input[type="radio"]').change(function() {
@@ -568,7 +567,7 @@
                     var day = CurrentDate.getDate().toString().padStart(2, '0');
                     var CurrentDate = year + "-" + month + "-" + day;
                     console.log("Current Date is " + CurrentDate + " and challan due date is " + challan_due_date);
-                    if(challan_due_date > CurrentDate){
+                    if(challan_due_date >= CurrentDate){
                         amt_challan = amt_within_due_date;
                         var bank_fee = Math.round((amt_within_due_date * 2.5)/100);
                         console.log('Challan date is Greater than the current date. Due Amount till current date is ' + amt_challan);
@@ -586,8 +585,18 @@
                         alert ("Challan is Already Paid");
                         return false;
                     }else{
+                        var year = response.DUE_DATE.substring(0, 4);
+                        var month = response.DUE_DATE.substring(4, 6);
+                        var day = response.DUE_DATE.substring(6, 8);
+                        const date = new Date();
+                        date.setMonth(month - 1);
+                        const formatter = new Intl.DateTimeFormat('en-us', {
+                            month: 'short',
+                        });
+                        month = formatter.format(date);
+                        var due_date = day + "-" + month + "-" + year;
                         $('#nt_ref_no').text(response.REF_NO);
-                        $('#nt_due_date').text(response.DUE_DATE);
+                        $('#nt_due_date').text(due_date);
                         $('#nt_amt_within').text(amt_within_due_date);
                         $('#nt_amt_after').text(amt_after_due_date);
                         $('#nt_amt_challan').text(amt_challan);

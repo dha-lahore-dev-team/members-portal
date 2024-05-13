@@ -31,7 +31,7 @@
     <link rel="stylesheet" href="{{asset('front/plugins/dropzone/min/dropzone.min.css')}}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{asset('front/dist/css/adminlte.min.css')}}">
-    <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
     <!-- Custom style -->
     <link rel="stylesheet" href="{{asset('front/dist/css/custom.css')}}">
 
@@ -44,7 +44,7 @@
     		<br>
     		<br>
 
-	    <h1><b>Member's </b> Login<h1>
+	    <h1><b>Member's </b> Login</h1>
         </div>
         <div class="card-body">
 
@@ -100,6 +100,9 @@
         </div>
         <!-- /.form-box -->
     </div><!-- /.card -->
+</div>
+<div class="row">
+    <a href="#" class="faqs">Having trouble logging in?</a>
 </div>
 <!-- /.login-box -->
 <div class="modal fade" id="TermsConditionsModal" role="dialog">
@@ -161,6 +164,28 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="faqsModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <button type="button" style="text-align: right;margin-right: 11px;" class="close" data-dismiss="modal">&times;</button>
+            <div class="modal-body" style="padding-top: 0px;">
+                <h2 align="center"><strong align="center">DHA LAHORE MEMBER AREA PORTAL</strong></h2>
+                <h3 align="center">Frequently Asked Questions </h3>
+                <p><strong>How can I log in to the Member's Area Portal?</strong><br>
+                    To log in, you need to provide your plot number and CNIC. If the provided plot number and CNIC are valid and registered in the system, an OTP will be sent to your registered mobile number or email address for authentication.</p>
+                <p><strong>What should I do if I encounter technical issues during login?</strong><br>
+                    If you experience technical problems, such as login errors or issues accessing the portal, contact the portal's support team or customer service for assistance.</p>
+                <p><strong>I am unable to Login, what should I do?</strong><br>
+                    If you cannot find your registered phone number or email address associated with your plot and CNIC, we recommend updating your particulars. Contact us at <a href="https://dhalahore.org/customer-care/" target="_blank">Customer Care</a> and our team will assist you in updating your contact details.</p>
+                <p><strong>Why should I change my contact details?</strong><br>
+                    Keeping your contact details updated will ensure that you will receive important notifications, including OTPs for login and other relevant communication. By having accurate and up-to-date contact information, you can have a seamless experience with the Member's Area Portal.</p>
+
+                <div style="clear:both;"></div>
+                <button type="button" style="text-align: center;margin: auto;" class="close" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- jQuery -->
 <script src="{{asset('front/plugins/jquery/jquery.min.js')}}"></script>
@@ -171,7 +196,7 @@
 <script src="{{asset('front/dist/js/adminlte.min.js')}}"></script>
 <!-- Select2 -->
 <script src="{{asset('front/plugins/select2/js/select2.full.min.js')}}"></script>
-<script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+<script src="https://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script>
 
@@ -224,6 +249,14 @@
     // Terms & Conditions Light Box display Called
     $('.TermsConditions').click(function () {
         $('#TermsConditionsModal').modal({
+            backdrop: 'static',
+            keyboard: false
+        });
+    });
+
+    // FAQs Light Box display Called
+    $('.faqs').click(function () {
+        $('#faqsModal').modal({
             backdrop: 'static',
             keyboard: false
         });

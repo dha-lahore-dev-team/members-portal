@@ -39,6 +39,7 @@
                                 <thead>
                                 <tr>
                                     <th style="min-width: 45px">Plot No</th>
+                                    <th style="min-width: 45px">Challan No</th>
                                     <th style="min-width: 45px">Reference No</th>
                                     <th style="min-width: 90px">Issue Date</th>
                                     <th style="min-width: 90px">Due Date</th>
@@ -50,6 +51,7 @@
                               @foreach($data as $k=>$row)
                                 <tr>
                                     <td>{{$row->PLOT_NO}}</td>
+                                    <td>{{$row->CH_NO}}</td>
                                     <td>{{$row->REF_NO}}</td>
                                     <td>{{$row->ISSUE_DATE}}</td>
                                     <td>{{$row->DUE_DATE}}</td>

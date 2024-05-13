@@ -55,8 +55,8 @@
                 @if($data['details']->CELL_NO)
                 <div class="input-group mb-3">
                     <div class="custom-control form-check">
-                        <input class="form-check-input" name="radio1" type="radio" checked>
-                        <label>I want to receive PIN Code on my registered Mobile No. ({{$data['masked_cell_no']}})</label>
+                        <input class="form-check-input" name="radio1" type="radio" value="cell" checked>
+                        <label>I want to receive PIN Code on my registered Cell No. ({{$data['masked_cell_no']}})</label>
                         <input type="hidden" name="phone" value="1" class="form-control" placeholder="Phone#">
                     </div>
                 </div>
@@ -64,7 +64,7 @@
                 @if($data['details']->EMAIL)
                 <div class="input-group mb-3 email">
                     <div class="custom-control form-check">
-                        <input class="form-check-input"  name="radio1" type="radio">
+                        <input class="form-check-input"  name="radio1" type="radio" value="email">
                         <label>I want to receive PIN Code on my registered Email Address ({{$data['masked_email']}})</label>
                         <input type="hidden"  name="email" value="2" class="form-control" placeholder="email">
                     </div>
@@ -85,7 +85,9 @@
     </div><!-- /.card -->
 </div>
 <!-- /.login-box -->
-
+<div class="row">
+    <a href="https://dhalahore.org/wp-content/uploads/2022/03/Change-of-Address.pdf" class="faqs" target="_blank">Update your Contact Information</a>
+</div>
 <!-- jQuery -->
 <script src="{{asset('front/plugins/jquery/jquery.min.js')}}"></script>
 

@@ -23,7 +23,25 @@
                     <a class="d-block w-100">
                         <div class="card-header">
                             <h4 class="card-title w-100">
-                                1. What should I do if I have overdue payments and want to generate challans for upcoming payments?
+                                1. Can I view my plot payment schedule on the portal?
+                            </h4>
+                        </div>
+                    </a>
+                    <div>
+                        <div class="card-body">
+                            Yes, once logged in, you can access and view your plot payment schedule. It will provide details of upcoming payments, all dues paid, overdue payments and all remaining dues.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row-12">
+            <div class="col-12">
+                <div class="card">
+                    <a class="d-block w-100">
+                        <div class="card-header">
+                            <h4 class="card-title w-100">
+                                2. What should I do if I have overdue payments and want to generate challans for upcoming payments?
                             </h4>
                         </div>
                     </a>
@@ -41,7 +59,7 @@
                     <a class="d-block w-100">
                         <div class="card-header">
                             <h4 class="card-title w-100">
-                                2. Can I print the generated challans?
+                                3. Can I print the generated challans?
                             </h4>
                         </div>
                     </a>
@@ -59,13 +77,13 @@
                     <a class="d-block w-100">
                         <div class="card-header">
                             <h4 class="card-title w-100">
-                                3. What are the payment methods available in the portal?
+                                4. What are the payment methods available in the portal?
                             </h4>
                         </div>
                     </a>
                     <div>
                         <div class="card-body">
-                            secure online payment Through Credit / Debit Card, Payment Through 1-Bill, Over the counter payment is also available through designated banks mentioned on Member’s Area Portal. For Payment Instructions please visit <a href="https://dhalahore.org/epay" target="_blank">https://dhalahore.org/epay</a>
+                            Secure online payment through Credit / Debit Card, 1-Bill, over the counter is also available through designated banks mentioned on Member’s Area Portal. For Payment Instructions please <a href="https://dhalahore.org/epay" target="_blank">click here</a>.
                         </div>
                     </div>
                 </div>
@@ -77,31 +95,13 @@
                     <a class="d-block w-100">
                         <div class="card-header">
                             <h4 class="card-title w-100">
-                                4. Is water bill payment available on the portal?
+                                5. Is water bill payment available on the portal?
                             </h4>
                         </div>
                     </a>
                     <div>
                         <div class="card-body">
-                            Yes, members will have the ability to pay their water bills online through the Member's Area Portal.
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row-12">
-            <div class="col-12">
-                <div class="card">
-                    <a class="d-block w-100">
-                        <div class="card-header">
-                            <h4 class="card-title w-100">
-                                5. Who can I contact for support or assistance with the Member's Area Portal?
-                            </h4>
-                        </div>
-                    </a>
-                    <div>
-                        <div class="card-body">
-                            For any support or assistance related to the Member's Area Portal, you can contact at <a href="mailto:customercare@dhalahore.org">customercare@dhalahore.org</a>
+                            Yes, in the upcoming phase of the project, members will have the ability to pay their water bills online through the Member's Area Portal.
                         </div>
                     </div>
                 </div>
@@ -110,7 +110,7 @@
         <div class="row-12">
             <div class="col-12 mt-3 text-center">
                 <p class="lead">
-                    <a href="https://webapps.dhalahore.org/support_ticket/apply" target="_blank">Contact us</a>,
+                    <a href="https://dhalahore.org/customer-care/" target="_blank">Contact us</a>,
                     if you found not the right anwser or you have a other question?<br/>
                 </p>
             </div>

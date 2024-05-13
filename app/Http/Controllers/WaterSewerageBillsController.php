@@ -61,4 +61,27 @@ class WaterSewerageBillsController extends Controller
         return view('front.data.wsbill',compact('data','dataSanple'));
 
     }
+    public function printWaterSewerageBill($ref_no)
+    {
+        $username = 'lkasoidrhfpaspoe';
+        $password = "f8c98f7e4c394b0796baaab0108b028f";
+        $credentials = base64_encode("{$username}:{$password}");
+        $client = new Client();
+        $headers = [
+            'Authorization' => 'Basic ' . $credentials,
+            'X-API-KEY' => 'b8e25326-dfc4-4788-DHA-1011141'
+        ];
+        $user = Auth::user();
+        $response = $client->request('get', 'http://192.168.43.120/mems_infoportal/api/wb_info/wsbill_printdetail?ref_no='.$ref_no, [
+            'headers' => $headers,
+        ]);
+        $data = json_decode($response->getBody()->getContents());
+        //dd($data);
+        foreach ($data as $row) {
+            if($row->CUST_REF_NO==$ref_no){
+                $find = $row;
+                return view('pdf.waterseweragebill_view',compact('find'));
+            }
+        }
+    }
 }

@@ -15,7 +15,7 @@
                         @if($find->cc_response_code==100 || $find->cc_response_code==00 || $find->cc_response_code==0)
                             <h1 style="color: green;">Congratulations!</h1>
                         @else
-                            <h1 style="color: red;">Congratulations!</h1>
+                            <h1 style="color: red;">Transaction Failed!</h1>
                         @endif
                     </div>
                     <div class="col-sm-6">
@@ -38,9 +38,6 @@
                             </div>
                             <div class="card-body">
                                 <ul>
-                                    <li class="list-group-item">
-                                        <b>Response Code: </b> <a class="float-right">{{$find->cc_response_code}}</a>
-                                    </li>
                                     <li class="list-group-item">
                                         <b>Order Reference No.: </b> <a class="float-right">{{$find->o_reference}}</a>
                                     </li>

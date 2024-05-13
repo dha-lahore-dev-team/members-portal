@@ -40,7 +40,6 @@
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th style="min-width: 45px">Ser #</th>
                                     <th style="min-width: 45px">Description</th>
                                     <th style="min-width: 75px">Due Date</th>
                                     <th style="min-width: 135px">Inst Amount (PKR)</th>
@@ -54,7 +53,6 @@
                               <tbody>
                               @foreach($data as $k=>$row)
                                 <tr>
-                                    <td style="text-align: center">{{$row->SERIAL_NO}}</td>
                                     <td>{{$row->COA_DESCRIPTION}}</td>
                                     <td>{{$row->DUE_DATE}}</td>
                                     <td style="text-align: center">{{number_format($row->INST_AMT)}}</td>

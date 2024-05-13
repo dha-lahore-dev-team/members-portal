@@ -16,7 +16,8 @@ use Illuminate\Support\Facades\Http;
 
 class HBLPaymentController extends Controller
 {
-    private $publicPEMKey = "-----BEGIN PUBLIC KEY-----
+    // Test Environment
+/*    private $publicPEMKey = "-----BEGIN PUBLIC KEY-----
 MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAo5XbXFpig1ZPPKeanPn0
 pRtheFwXxH3fud1KvnvwpQlMQFUHBDSFGQL1pS309QGotTDZZ20fa6b6KrC0fqZG
 dBT++bPGb3vf377J3uRQbGyhK7spK+8Ee0Koa5fmj3YcWxvxd7oxLgchTW9KEBrI
@@ -30,6 +31,23 @@ GFHKDrI9ssuERZo2MEGYPvFJGtdyW3jci0vZVOs9Fi0kM2OzBO/XGFxPrU0kr1sC
 nYGmv/XknD9wjjlXGB3Rg9qtqDEx4H8ADnDhw3Qx+nBRONr/u4qomhExhxipB7g7
 DBe6lkcxEiOpPsIzxEf8i2kCAwEAAQ==
 -----END PUBLIC KEY-----";
+*/
+    //Live Environment
+    private $publicPEMKey = "-----BEGIN PUBLIC KEY-----
+MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAmSDzZeuGLAo+/++ilz8V
+kcVIVZBnRm9iyWztvCPFQFEWt4GeWmJ3fnYwh0Y78loFAPqX8GE/TPuANPBFFfrG
+OShBdyPLbDG2T5Exks3Gnfegg6LdXGTxwEmixgmvzn7vfkcksJd3cgc4r+FamTOE
+8IwprCbPfHYQaDhYJRP+hlPogRx99Gipppcu6y7XASG6OMuGyIn0J6KJ73Zd4a32
+C0xbGbk7+K8gdg6k56B+MGU/uOhP9Z+uBdnkUADQMCypaS22cRO7j1+niJo8dA3f
+5VeGqy3UUShvplvaeHBH/OGdXrJS3tSVVFhbuTTOcazknRLX2g2KD5wjgZsxCBJF
+oAl5T8fI51T81jF4NqgwymN+mixI7r8U5fxhjWBuEV8or+vseh+wasp2f/paCR3f
+l2PyQhkUe8VpaUwM6299g4CVk58jQgyCc2tqueoYN7UpzaLmVaeNUZiUXN/ke/gD
+vUwr0xdpO2CGtc5obH4eEFququsBUCMvlbUE6jtz/9ltolyEMWYUG71yYIXSvQX4
+3FNDrQbc9cjDE5u5c2Lsp8oWUQCb9M5yGuAM/YnnoyQU8TJrRv0T+svDeQUUIayG
+7Y/qHVm3Z0TjzeOWXGePMQsRDHEseSasSS1nafHkKxkY14Hqf59caK57ZqtRcFh8
+WF82fDtY4WyIfsrKsoTVMRECAwEAAQ==
+-----END PUBLIC KEY-----
+";
 
     public function payment(Request $request)
     {
@@ -50,10 +68,11 @@ DBe6lkcxEiOpPsIzxEf8i2kCAwEAAQ==
             $amt_tobe_paid = $request->amt_challan + $request->bank_fee;
         $data = array(
             "USER_ID" => "dhalahoreadmin",
-            "PASSWORD" => "dCAc99Su5!",
+            // "PASSWORD" => "dCAc99Su5!", // Test Environment
+            "PASSWORD" => "BCZ3X#c#mL", // Live Environment
             "CLIENT_NAME" => "dhalahoreadmin",
-            "RETURN_URL" => "http://127.0.0.1:8000/payment-success/$request->ref_no/$request->bank_fee/$request->amt_challan/$amt_tobe_paid",
-            "CANCEL_URL" => "http://127.0.0.1:8000/payment-fail",
+            "RETURN_URL" => "https://members.dhalahore.org/payment-success/$request->ref_no/$request->bank_fee/$request->amt_challan/$amt_tobe_paid",
+            "CANCEL_URL" => "https://members.dhalahore.org/payment-fail",
             "CHANNEL" => "HBLPay_DHALahore_Website",
             "TYPE_ID" => "0",
             "ORDER" => array(
@@ -133,13 +152,15 @@ DBe6lkcxEiOpPsIzxEf8i2kCAwEAAQ==
             $arrJson = json_decode($stringData, true);
             $arrJson = recParamsEncryption($arrJson, $cyb);
             $arrJson = json_encode($arrJson);
-            $url = "https://testpaymentapi.hbl.com/hblpay/api/checkout";
+            // $url = "https://testpaymentapi.hbl.com/hblpay/api/checkout"; // Test Environment
+            $url = "https://digitalbankingportal.hbl.com/hostedcheckout/api/checkout"; //Live Environment
             $response = Http::asJson()->post($url, json_decode($arrJson, true));
 
             $jsonCyberSourceResult = $response->json();
             if ($jsonCyberSourceResult["IsSuccess"] && $jsonCyberSourceResult["ResponseMessage"] == "Success" && $jsonCyberSourceResult["ResponseCode"] == 0) {
                 $sessionId = base64_encode($jsonCyberSourceResult["Data"]["SESSION_ID"]);
-                $payNowUrl = 'https://testpaymentapi.hbl.com/HBLPay/Site/index.html#/checkout?data=' . $sessionId;
+                //$payNowUrl = 'https://testpaymentapi.hbl.com/HBLPay/Site/index.html#/checkout?data=' . $sessionId; // Test Environment
+                $payNowUrl = 'https://digitalbankingportal.hbl.com/hostedcheckout/site/index.html#/checkout?data=' . $sessionId; // Live Environment
             return view('hbl.payment-view')->with([
                 'payNowUrl'         => $payNowUrl,
                 'arrJson'           => $arrJson,

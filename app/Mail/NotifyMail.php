@@ -28,7 +28,7 @@ class NotifyMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('OTP Send')->view('front.mail.otp');
+        return $this->subject('OTP - DHA Lahore Member Portal')->view('front.mail.otp');
 
     }
 }

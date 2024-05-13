@@ -97,7 +97,7 @@ $diffInMinutes = $createdAt->diffInMinutes($now);
         $("#timer").text(minutes + ":" + seconds);
         if (duration <= 0) {
             clearInterval(intervalId);
-            $("#timer").text("OTP Expired");
+            $("#timer").text("PIN Code Expired");
             $('#disabled').removeClass('disabled');
             $('#verify').addClass('disabled');
             $('#otp').addClass('disabled');

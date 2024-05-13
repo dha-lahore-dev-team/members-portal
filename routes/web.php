@@ -53,6 +53,7 @@ Route::get('/search/history/{plot_id}', [App\Http\Controllers\PostGuzzleControll
 //Water Sewerage Bills
 Route::get('/water-sewerage-bills', [App\Http\Controllers\WaterSewerageBillsController::class, 'waterSewerageBill'])->name('water.bill')->middleware('role');
 Route::get('/search/water-sewerage-bills/{plot_id}', [App\Http\Controllers\WaterSewerageBillsController::class, 'searchWaterSewerageBill'])->name('search.waterBill')->middleware('role');
+Route::get('/water-sewerage-bills/print/{ref_no}', [App\Http\Controllers\WaterSewerageBillsController::class, 'printWaterSewerageBill'])->name('print.waterbill')->middleware('role');
 
 // HBL Gateway Integration
 Route::get('/payment-digital/{ch_id}/{ins_id}', [App\Http\Controllers\GenCallanDetailsController::class, 'payment'])->name('payment.mobile')->middleware('role');
