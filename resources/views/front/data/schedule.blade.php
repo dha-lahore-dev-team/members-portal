@@ -40,14 +40,16 @@
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th style="min-width: 45px">Description</th>
-                                    <th style="min-width: 75px">Due Date</th>
-                                    <th style="min-width: 135px">Inst Amount (PKR)</th>
-                                    <th>Challan No</th>
-                                    <th style="min-width: 100px">Payment Date</th>
-                                    <th style="min-width: 140px">Paid Amount (PKR)</th>
+                                    <th style="min-width: 45px; text-align: center;">Description</th>
+                                    <th style="min-width: 100px; text-align: center;">Due Date</th>
+                                    <th style="min-width: 45px; text-align: center;">Installment</th>
+                                    <th  style="min-width: 45px; text-align: center;">Challan No</th>
+                                    <th style="min-width: 45px; text-align: center;">Payment Date</th>
+                                    <th style="min-width: 140px; text-align: center;">Paid Amount</th>
                                     <th style="min-width: 45px; text-align: center;">Status</th>
-                                    <th style="min-width: 170px">Balance Amount (PKR)</th>
+                                    <th style="min-width: 45px; text-align: center;">No of Days Late</th>
+                                    <th style="min-width: 45px; text-align: center;">Surcharge</th>
+                                    <th style="min-width: 45px; text-align: center;">Balance</th>
                                 </tr>
                                 </thead>
                               <tbody>
@@ -68,6 +70,8 @@
                                     @else
                                         <td style="text-align: center"><span class="badge badge-info">-</span></td>
                                     @endif
+                                    <td style="text-align: center">{{number_format($row->SUR_CALC_DAYS)}}</td>
+                                    <td style="text-align: center">{{number_format($row->SUR_AMT)}}</td>
                                     <td style="text-align: center">{{number_format($row->BAL_AMT)}}</td>
                                 </tr>
                               @endforeach

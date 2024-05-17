@@ -29,13 +29,18 @@ Route::get('/resend/{id}', [App\Http\Controllers\PostGuzzleController::class, 'r
 
 // Landing Page after Successful Login
 Route::get('/home', [App\Http\Controllers\PostGuzzleController::class, 'frontIndex'])->name('front.index')->middleware('role');
-Route::get('/surcharge/{plot_id}', [App\Http\Controllers\PostGuzzleController::class, 'surcharge'])->name('surcharge')->middleware('role');
+//Route::get('/surcharge/{plot_id}', [App\Http\Controllers\PostGuzzleController::class, 'surcharge'])->name('surcharge')->middleware('role');
 Route::get('/challan/{plot_id}', [App\Http\Controllers\PostGuzzleController::class, 'challan'])->name('challan')->middleware('role');
 
 // Schedule
 Route::get('/schedule', [App\Http\Controllers\PostGuzzleController::class, 'scheduleTwo'])->name('schedule.two')->middleware('role'); // Left Menu
 Route::get('/schedule/{plot_id}', [App\Http\Controllers\PostGuzzleController::class, 'schedule'])->name('schedule')->middleware('role'); // Dashboard
 Route::get('/search/schedule/{plot_id}', [App\Http\Controllers\PostGuzzleController::class, 'searchSchedule'])->name('search.schedule')->middleware('role'); // Dropdown Selection
+
+// Surcharge
+Route::get('/surcharge', [App\Http\Controllers\SurchargeController::class, 'surcharge'])->name('surcharge')->middleware('role'); // Left Menu
+Route::get('/surcharge/{plot_id}', [App\Http\Controllers\SurchargeController::class, 'surchargePlot'])->name('surcharge.plot')->middleware('role'); // Dashboard
+Route::get('/search/surcharge/{plot_id}', [App\Http\Controllers\SurchargeController::class, 'searchSurcharge'])->name('search.surcharge')->middleware('role'); // Dropdown Selection
 
 
 // Challan

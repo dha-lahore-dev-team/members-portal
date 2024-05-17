@@ -47,6 +47,14 @@
                                 </p>
                             </a>
                         </li>
+                        <li class="nav-item ">
+                        <a href="{{route('surcharge')}}" class="nav-link {{  request()->is('surcharge/*') || request()->is('surcharge') || request()->is('search/surcharge/*') ? 'active':'' }} ">
+                                <i class="nav-icon fas fa-calculator"></i>
+                                <p>
+                                    Surcharge
+                                </p>
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a href="{{route('challan.two')}}" class="nav-link {{  request()->is('challan/*') || request()->is('challan') ||  request()->is('search/challan/*') ? 'active':'' }} ">
                                 <i class="nav-icon fas fa-edit"></i>
@@ -63,15 +71,6 @@
                                 </p>
                             </a>
                         </li>
-<!--                        <li class="nav-item ">
-                            <a href="">
-                                <i class="nav-icon fas fa-newspaper" style="font-size:22px"></i>
-                                <p>
-                                    Surcharge
-                                    <span class="right badge badge-danger">New</span>
-                                </p>
-                            </a>
-                        </li>-->
                     </ul>
                 </li>
 
